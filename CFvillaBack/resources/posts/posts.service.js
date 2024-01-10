@@ -3,10 +3,11 @@ const Post = require('./posts.model');
 
 const postsService = {
 
-    create: async (title, author, body) => {
+    create: async (type, title, author, body) => {
 
         try {
             const post = new Post({
+                type: type,
                 title: title,
                 author: author,
                 body: body
@@ -21,34 +22,25 @@ const postsService = {
             console.log(`ERROR create - post.save FAIL: ${error}`)//!LOG;
         };
     },
-    readOne: async (postTiltle, postAuthor) => {
+    readOne: async (postId) => {
         try {
-            const post = await Post.findOne({
-                title: postTiltle,
-                author: postAuthor
-            }).exec();
-            return post
-
+            return  await Post.findById(postId).exec();
         } catch (error) {
-            console.log(`ERROR  readOne - Post.findOne FAIL: ${error}`)//!LOG;
+            console.log(`ERROR ===> ${error}`)//!LOG;
         }
     },
     readAll: async () => {
         try {
-            const allPosts = [];
-            allPosts = await Post.find({}).exec();
-            return allPosts
-
+            return  await Post.find({}).exec();
         } catch (error) {
             console.log(`ERROR readAll - Post.find FAIL: ${error}`)//!LOG;
         }
     },
-    updateOne: async (postTitle, postAuthor,updatedTitle,updatedType,updatedAutor,updatedBody) => {
+    updateOne: async (postId,updatedTitle,updatedType,updatedAutor,updatedBody) => {
 
         try {
             const updatedPost = await Post.updateOne({
-                title: postTitle,
-                author: postAuthor
+               id: postId
             },{title: updatedTitle,
                 type: updatedType,
                 author: updatedAutor,
@@ -97,34 +89,29 @@ const postsService = {
             console.log(`ERROR updateMany - post.updateMany FAIL: ${error}`)//!LOG;
         };
     },
-    deleteOne: async (postTiltle, postAuthor) => {
+    deleteOne:  async (postId)  => {
         try {
-            const post = await Post.deleteOne({
-                title: postTiltle,
-                author: postAuthor
-            });
+            //console.log(`post deleted ===> ${post}`)//!LOG;
+            return  await Post.findByIdAndDelete(postId);
         } catch (error) {
             console.log(`ERROR  deleteOne - Post.deleteOne FAIL: ${error}`)//!LOG;
         }
     },
-    deleteByAuthor: async (postTiltle, postAuthor) => {
+    deleteByAuthor: async (postAuthor) => {
         try {
-            const post = await Post.deleteMany({
-                author: postAuthor
-            });
+            console.log(`postAuthor(service) ===> ${postAuthor}`)//!LOG;
+            return await Post.deleteMany({author: postAuthor});
         } catch (error) {
             console.log(`ERROR  deleteMany - Post.deleteMany FAIL: ${error}`)//!LOG;
         }
     },
-    deleteByType: async (typeSchema) => {
-        try {
-            const allPosts = [];
-            allPosts = await Post.deleteMany({ type: typeSchema })
-
-        } catch (error) {
-            console.log(`ERROR deleteByType - Post.deleteMany FAIL: ${error}`)//!LOG;
-        }
-    },
+    // deleteByType: async (typeSchema) => {
+    //     try {
+    //         return await Post.deleteMany({ type: typeSchema })
+    //     } catch (error) {
+    //         console.log(`ERROR deleteByType - Post.deleteMany FAIL: ${error}`)//!LOG;
+    //     }
+    // },
 }
 
 module.exports = postsService

@@ -45,46 +45,16 @@ const postsController = {
     },
     updateOneById: async (req, res) => {
         try {
-            console.log(`req.body ===> ${req.body}`)//!LOG;
+            console.log(`post id ===> ${JSON.stringify(req.params.id)}`)//!LOG;
+            console.log(`patch req ===> ${JSON.stringify(req.body)}`)//!LOG;
             const id = req.params.id;
-            const postUpdated = await postsService.updateOne(id)
-            if (post) {
-                res.status(200).json(post).json(postUpdated)
+            const updatedData = req.body;
+            const postUpdated = await postsService.updateOneById(id,updatedData)
+            if (postUpdated) {
+                res.status(200).json(postUpdated)
             } else {
                 console.log(`post not found`)//!LOG;
                 res.status(404)
-            }
-        } catch (error) {
-            console.log(`ERROR controller querry FAILED ${error}`)//!LOG;
-        };
-    },
-    updateByType: async (req, res) => {
-        try {
-            console.log(`req.body ===> ${req.body}`);
-            const query = req.body;
-            const { queryPostType, updatedTitle, updatedType, updatedAutor, updatedBody } = query
-            const postsUpdated = await postsService.updateMany(queryPostType, updatedTitle, updatedType, updatedAutor, updatedBody)
-            if (postsUpdated) {
-                res.status(200).json(postsUpdated)
-            } else {
-                console.log(`no post found`)//!LOG;
-                res.status(404)
-            };
-        } catch (error) {
-            console.log(`ERROR controller querry FAILED ${error}`)//!LOG;
-        };
-    },
-    updateByAuthor: async (req, res) => {
-        try {
-            console.log(`req.body ===> ${req.body}`);
-            const query = req.body
-            const { queryPostAuthor, updatedTitle, updatedType, updatedAutor, updatedBody } = query
-            const postsUpdated = await postsService.updateMany(queryPostAuthor, updatedTitle, updatedType, updatedAutor, updatedBody)
-            if (postsUpdated) {
-                res.status(200)
-            } else {
-                console.log(`no post found`)//!LOG;
-                res.status(404).json(postsUpdated)
             }
         } catch (error) {
             console.log(`ERROR controller querry FAILED ${error}`)//!LOG;
@@ -108,41 +78,5 @@ const postsController = {
             console.log(`ERROR controller querry FAILED ${error}`)//!LOG;
         };
     },
-    deleteByAuthor: async (req, res) => {
-        try {
-            const author = req.body.author
-            const deletedPosts = await postsService.deleteByAuthor(author);
-            console.log(`deletedPosts ===> ${JSON.stringify(deletedPosts)}`)//!LOG;
-
-            if (deletedPosts) {
-                res.status(200).json(deletedPosts)
-            } else {
-                console.log(`no post found`)//!LOG;
-                res.status(404)
-            }
-
-            return true
-
-        } catch (error) {
-            console.log(`ERROR controller querry FAILED ${error}`)//!LOG;
-        }
-    },
-    // deleteByType: async (req, res) => {
-    //     try {
-    //         const type = req.body
-    //         const deletedPosts = await postsService.deleteByType(type);
-    //         if (deletedPosts) {
-    //             res.status(200).json(deletedPosts)
-    //         } else {
-    //             console.log(`no post found`)//!LOG;
-    //             res.status(404)
-    //         }
-
-    //         return true
-
-    //     } catch (error) {
-    //         console.log(`ERROR controller querry FAILED ${error}`)//!LOG;
-    //     }
-    // },
 }
 module.exports = postsController

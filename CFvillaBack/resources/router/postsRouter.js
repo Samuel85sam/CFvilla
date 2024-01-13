@@ -9,7 +9,4 @@ postsRouter.route('/:id').get(postsController.getOneById).delete(postsController
     res.statusCode(405).send('request Unavalable')
 });
 
-
-
-
 module.exports = postsRouter;

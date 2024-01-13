@@ -8,6 +8,6 @@ const userSchema = new Schema({
     jwt: String
 });
 
-const User = mongoose.model('User',postSchema);
+const User = mongoose.model('User',userSchema);
 
 module.exports = User;

@@ -15,8 +15,13 @@ const cors = require('cors');
 
 const app = express();
 async function server() {
+
+  try {
     await mongoose.connect(process.env.DB_CONNECT)
     console.log('===> mongoose.connect OK');
+  } catch (error) {
+    console.log(`DB connection error ===> ${error}`); //!LOG
+  }
 }
 server()
 

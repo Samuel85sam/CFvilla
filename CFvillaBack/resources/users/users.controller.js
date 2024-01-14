@@ -5,7 +5,7 @@ const usersController = {
         try {
             const userData = req.body;
             const {type, firstName, lastName, jwt} = userData
-            const createdUser = await usersService.create(type, firstName, lastName, jwt)
+            const createdUser = await usersService.create(userData)
             if (createdUser){
                 res.status(201)
                 .json(createdUser)

@@ -41,7 +41,18 @@ const usersService = {
             console.log(`ERROR readAll - User.find FAIL: ${error}`)//!LOG;
 
         }
-    }
+    };
+    updateOneById: async (data,userId) => {
+        try {
+            console.log(`usersService ===> userUpdated: userId =  ${userId}`)//!LOG;
+            return  await User.findByIdAndUpdate(
+                userId
+                , data);
+                
+        } catch (error) {
+            console.log(`ERROR updateOne - user.updateOne FAIL: ${error}`)//!LOG;
+        };
+    },
 }
 
 module.exports = usersService

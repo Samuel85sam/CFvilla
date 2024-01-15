@@ -1,43 +1,23 @@
 //const db = require("mongoose");
 const jwt = require("jsonwebtoken");
-const userService= require("../users/users.service")
-
+const userService = require("../users/users.service")
 const authService = {
-    newJwt: async (userData) => {
-        try {
-            const payload = {
-                firstName: String,
-                lastName: String
-            };
-            const secret = process.env.JWT_SECRET;
-            const options ={
-                expireIn: "2d"
-            };
-            const token = jwt.sign(payload, secret, options);
-            if (token){
 
-                return token
-            }
-        } catch (error) {
-                        console.error(`Token generation ERROR ===> ${error}`);//! LOG
-                        console.error(`Token generation ERROR stringed===> ${JSON.stringify(error)}`);//! LOG
-
-        }
-    },
-    verifyJwt: async (token) =>{
+    newJwt: async (userId) => {
+        const payload = { data: userId, };
         const secret = process.env.JWT_SECRET;
-        try {
-            return jwt.verify(token,secret)
-        } catch (error) {
-            console.log(`====> Verification Token FAIL!!!!!!!!!!!!!!!!! ===> ERROR: ${err}`);//!LOG
-        }
-
+        const options = { expiresIn: "2d" };
+        return jwt.sign(payload, secret, options);
     },
-    addJwt: async (token,id) => {
-        userService.updateOneById(token,userId)
-        console.log(`authService ===> jwtUdated: userId =  ${id}`)//!LOG;
+
+    verifyJwt: async (token) => {
+        const secret = process.env.JWT_SECRET;
+        return jwt.verify(token, secret)
+    },
+    
+    addJwt: async (token, userId) => {
+        userService.updateOneById(token, userId)
         return true;
     }
 }
-
 module.exports = authService

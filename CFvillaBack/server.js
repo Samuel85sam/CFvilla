@@ -35,6 +35,15 @@ const authentificator = function async(req, res, next) {
 }
 app.use(authentificator)
 
+//--
+app.use(
+  cookieSession({
+    name: "sam-session",
+    keys: ["COOKIE_SECRET"], 
+    httpOnly: true
+  })
+);
+
 //----------------------------------------------
 
 //*.env
@@ -43,7 +52,7 @@ const port = PORT;
 // *Activation du middleware pour parser les données au format JSON
 app.use(express.json());
 app.listen(port, () => {
-  console.log(`BackEndApp listening on port ${port}`);
+  console.log(`Server is running on port ${PORT}.`);
 })
 app.use(cors());
 // *Ajout du routing avec une base URL '/api' pour respecter le principe RESTful

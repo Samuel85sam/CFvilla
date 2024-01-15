@@ -25,6 +25,17 @@ async function server() {
 }
 server()
 
+const myLogger = function async (req, res, next) {
+  console.log('LOGGED', req.headers)
+  
+  //req.currentUser = ...
+  next()
+}
+
+app.use (myLogger) 
+
+
+
 //.env
 const { PORT, NODE_ENV } = process.env;
 const port = PORT;

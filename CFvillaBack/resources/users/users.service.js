@@ -41,7 +41,7 @@ const usersService = {
             console.log(`ERROR readAll - User.find FAIL: ${error}`)//!LOG;
 
         }
-    };
+    },
     updateOneById: async (data,userId) => {
         try {
             console.log(`usersService ===> userUpdated: userId =  ${userId}`)//!LOG;

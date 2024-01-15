@@ -6,9 +6,9 @@ const usersService = {
     create: async (userData) => {
 
         try {
-            const user = new User({
+            const user = new User(
               userData
-            });
+            );
 
             await user.save();
             console.log(`===> user Saved in dataBase → ${user}`);//!LOG

@@ -4,8 +4,11 @@ const usersController = {
     post: async (req,res) => {
         try {
             const userData = req.body;
-            const {type, firstName, lastName, jwt} = userData
-            const createdUser = await usersService.create(type, firstName, lastName, jwt)
+            console.log(`req.body ===> ${req.body}`)//!LOG;
+            console.log(`req.body stringed ===> ${JSON.stringify(req.body)}`)//!LOG;
+            console.log(`req.body.data ===> ${req.body.data}`)//!LOG;
+            console.log(`req.body.data stringed ===> ${JSON.stringify(req.body.data)}`)//!LOG;
+            const createdUser = await usersService.create(userData)
             if (createdUser){
                 res.status(201)
                 .json(createdUser)

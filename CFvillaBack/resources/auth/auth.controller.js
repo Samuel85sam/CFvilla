@@ -1,6 +1,6 @@
 const authService = require('./auth.service');
 const usersService = require('../users/users.service');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const authController = {
     login: async (req, res) => {
         const { userId, formPassword } = req.body;

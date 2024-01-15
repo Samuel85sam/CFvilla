@@ -7,6 +7,7 @@ const authController = {
 
         //* user check ↓↓↓
         const user = await usersService.readOneById(userId);
+        console.log('user ===> ',user);
         if (user === null) {
             return res.status(401).json({ message: "USER NOT FOUND" });
         } else {
@@ -22,11 +23,17 @@ const authController = {
             const token = await authService.newJwt(userId)
             if (token) {
                 res.setHeader("Authorization", `Bearer ${token}`,);
+                authService.addJwt(token,userId);
                 console.log(`check header? Bearer : `, token);
                 return res.status(200).json({ token, user });
             };
+
         };
 
+    },
+
+    checkin: async (req, res) => {
+        
     }
 }
 module.exports = authController;

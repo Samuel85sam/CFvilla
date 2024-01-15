@@ -27,13 +27,32 @@ const authController = {
                 console.log(`check header? Bearer : `, token);
                 return res.status(200).json({ token, user });
             };
-
         };
 
     },
 
     checkin: async (req, res) => {
-        
-    }
+          //*Get Autorization
+          const bearer = req.headers['authorization'];
+          console.log(`bearer ===>`,bearer);
+          const tokenDecoded = bearer && bearer.split(' ')[1];
+          const secretKey = process.env.JWT_SECRET
+          if (!tokenDecoded) {
+            return res.status(401).json({ message: 'No token provided' });
+          }
+          const checkedToken = authService.verifyJwt(tokenDecoded,secretKey)
+            if (!checkedToken) {
+              return res.status(403).json({ message: 'Invalid token' });
+            }
+            console.log(`checkedJWT ====> `,checkedToken);
+            if (checkedToken) {
+                res.status(200).json(checkedToken)
+                console.log(`====> JWT checked OK !!!`);
+            }else{
+                res.status(401)
+                console.log(`====> unautorized !!!`);
+            }
+            return checkedToken
+        }
 }
 module.exports = authController;

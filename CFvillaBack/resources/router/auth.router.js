@@ -3,11 +3,7 @@ const authRouter = require('express').Router();
 
 authRouter.route('/')
     .post(authController.login)
+    .get(authController.checkin)
     .all((res, req) => { res.statusCode(405).send('request Unavalable') }
     );
-authRouter.route(':id')
-    .post(authController.checkin)
-    .all((res, req) => { res.statusCode(405).send('request Unavalable') }
-    );
-
 module.exports = authRouter;

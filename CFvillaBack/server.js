@@ -10,6 +10,8 @@ const router = require('./resources/router/main.router');
 // *Importation du module 'cors' pour gérer les requêtes CORS (Cross-Origin Resource Sharing)(unquement utile lorsque le FE parle au BE et inversement)
 const cors = require('cors');
 
+const cookieSession = require("cookie-session");
+
 //----------------------------------------------
 
 //* DB connect
@@ -31,11 +33,12 @@ const authentificator = function async(req, res, next) {
   console.log('LOGGED')
   console.log('req.headers ===>', req.headers)
   console.log('req.params ===>', req.params); 
+  console.log('req.body ===>',req.body);
   next()
 }
 app.use(authentificator)
 
-//--
+//--cookie-session helps to stores the session data on the client within a cookie without requiring any database/resources on the server side
 app.use(
   cookieSession({
     name: "sam-session",
@@ -54,12 +57,17 @@ app.use(express.json());
 app.listen(port, () => {
   console.log(`Server is running on port ${PORT}.`);
 })
-app.use(cors());
+var corsOptions = {
+  origin: "https://cfvillabackend.onrender.com/"
+};
+app.use(cors(corsOptions));
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 // *Ajout du routing avec une base URL '/api' pour respecter le principe RESTful
 app.use('/api', router);
 //*tests
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send(`Welcome to Sam's web app`);
 })
 
 module.exports = app;

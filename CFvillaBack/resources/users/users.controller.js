@@ -11,12 +11,12 @@ const usersController = {
 
     getOneById: async (req, res) => {
         const id = req.params.id;
-        const post = await postsService.readOne(id)
-        if (post) {
+        const user = await usersService.readOne(id)
+        if (user) {
             res.status(200)
-                .json(post)
+                .json(user)
         } else {
-            console.log(`post not found`)//!LOG;
+            console.log(`user not found`)//!LOG;
             res.status(404)
         }
     },

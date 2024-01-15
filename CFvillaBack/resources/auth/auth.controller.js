@@ -7,23 +7,23 @@ const authController = {
 
         //* user check ↓↓↓
         const user = await usersService.readOneById(userId);
-        console.log('user ===> ',user);
+        console.log('user ===> ', user);
         if (user === null) {
             return res.status(401).json({ message: "USER NOT FOUND" });
         } else {
 
-        //* passwordCheck ↓↓↓   
+            //* passwordCheck ↓↓↓   
             const hashedPassword = user.password;
             const passwordMatch = await bcrypt.compare(formPassword, hashedPassword);
             if (!passwordMatch) {
                 return res.status(401).json({ message: "Mot de passe incorrect" });
             };
 
-        //* Token creation ↓↓↓    
+            //* Token creation ↓↓↓    
             const token = await authService.newJwt(userId)
             if (token) {
                 res.setHeader("Authorization", `Bearer ${token}`,);
-                authService.addJwt(token,userId);
+                authService.addJwt(token, userId);
                 console.log(`check header? Bearer : `, token);
                 return res.status(200).json({ token, user });
             };
@@ -32,27 +32,27 @@ const authController = {
     },
 
     checkin: async (req, res) => {
-          //*Get Autorization
-          const bearer = req.headers['authorization'];
-          console.log(`bearer ===>`,bearer);
-          const tokenDecoded = bearer && bearer.split(' ')[1];
-          const secretKey = process.env.JWT_SECRET
-          if (!tokenDecoded) {
+        //*Get Autorization (BOOLAN RETURN)
+        const bearer = req.headers['authorization'];
+        console.log(`bearer ===>`, bearer);
+        const tokenDecoded = bearer && bearer.split(' ')[1];
+        const secretKey = process.env.JWT_SECRET
+        if (!tokenDecoded) {
             return res.status(401).json({ message: 'No token provided' });
-          }
-          const checkedToken = authService.verifyJwt(tokenDecoded,secretKey)
-            if (!checkedToken) {
-              return res.status(403).json({ message: 'Invalid token' });
-            }
-            console.log(`checkedJWT ====> `,checkedToken);
-            if (checkedToken) {
-                res.status(200).json(checkedToken)
-                console.log(`====> JWT checked OK !!!`);
-            }else{
-                res.status(401)
-                console.log(`====> unautorized !!!`);
-            }
-            return checkedToken
         }
+        const checkedToken = authService.verifyJwt(tokenDecoded, secretKey)
+        if (!checkedToken) {
+            return res.status(403).json({ message: 'Invalid token' });
+        }
+        if (checkedToken) {
+            res.status(200)
+            .json(checkedToken)
+            console.log(`====> JWT checked OK !!!`);
+        } else {
+            res.status(401)
+            console.log(`====> unautorized !!!`);
+        }
+        return true
+    }
 }
 module.exports = authController;

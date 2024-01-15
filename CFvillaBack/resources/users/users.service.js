@@ -33,9 +33,9 @@ const usersService = {
 
         }
     },
-
     readAll: async () => {
         try {
+
             return await User.find({}).exec();
         } catch (error) {
             console.log(`ERROR readAll - User.find FAIL: ${error}`)//!LOG;

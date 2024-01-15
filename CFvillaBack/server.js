@@ -25,14 +25,14 @@ async function server() {
 }
 server()
 
-const myLogger = function async (req, res, next) {
+const authentificator = function async (req, res, next) {
   console.log('LOGGED', req.headers)
   
   //req.currentUser = ...
-  next()
+    next()
 }
 
-app.use (myLogger) 
+app.use (authentificator) 
 
 
 

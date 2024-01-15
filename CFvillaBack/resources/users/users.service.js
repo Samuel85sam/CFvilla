@@ -1,32 +1,22 @@
 const User = require('./users.model')
+const bcrypt = require('bcrypt')
 
 
 const usersService = {
 
-    create: async (userData) => {
+    create: async (data) => {
+        console.log(`===> data dans service ${JSON.stringify(data)}`);//!LOG
 
-        console.log(`===> userData in  service → ${userData}`);//!LOG
-        console.log(`===> userData in  stringed in service → ${JSON.stringify(userData)}`);//!LOG    
-
-        try {
-            const user = new User(userData);// !!! ← user data
-
-            console.log(`===> user in trycatch service → ${user}`);//!LOG
-            console.log(`===> user in trycatch stringed in service → ${JSON.stringify(user)}`);//!LOG
-
-            await user.save();
-            console.log(`===> user Saved in dataBase → ${user}`);//!LOG
+            const user = new User(data);
+            user.password =  await bcrypt.hash(data.password, 10);
+            createdUser = await user.save();
 
             return user
-
-        } catch (error) {
-            console.log(`ERROR create - user.save FAIL: ${error}`)//!LOG;
-        };
     },
 
-    readOneById: async (userId) =>{
+    readOneById: async (userId) => {
 
-        try{
+        try {
             return await User.findById(postId).exec();
         } catch (error) {
             console.log(`ERROR readOneById - User.findById FAIL: ${error}`)//!LOG;
@@ -42,17 +32,24 @@ const usersService = {
 
         }
     },
-    updateOneById: async (data,userId) => {
+    updateOneById: async (data, userId) => {
         try {
             console.log(`usersService ===> userUpdated: userId =  ${userId}`)//!LOG;
-            return  await User.findByIdAndUpdate(
+            return await User.findByIdAndUpdate(
                 userId
                 , data);
-                
+
         } catch (error) {
             console.log(`ERROR updateOne - user.updateOne FAIL: ${error}`)//!LOG;
         };
     },
+    createPassword: async () => {
+        try {
+            const clearPword = req.body.data.password
+        } catch (error) {
+
+        }
+    }
 }
 
 module.exports = usersService

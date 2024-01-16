@@ -13,9 +13,10 @@ const usersService = {
         readAll: async () => {
                 return await User.find({}).exec();
         },
-        updateOneById: async (data, userId) => {
-                return await User.findByIdAndUpdate(userId, data);
+        updateOneById: async (userId,token) => {
+                console.log('user id ===>',userId);
+                console.log('token ===>',token);
+                return await User.findByIdAndUpdate(userId,{ jwt: token});
         }
 }
-
 module.exports = usersService

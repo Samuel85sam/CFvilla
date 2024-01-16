@@ -10,7 +10,9 @@ const router = require('./resources/router/main.router');
 // *Importation du module 'cors' pour gérer les requêtes CORS (Cross-Origin Resource Sharing)(unquement utile lorsque le FE parle au BE et inversement)
 const cors = require('cors');
 
+const authController = require('./resources/auth/auth.controller');
 const cookieSession = require("cookie-session");
+const User = require('./resources/users/users.model');
 
 //----------------------------------------------
 
@@ -28,12 +30,11 @@ server()
 
 //----------------------------------------------
 
-//*auth
-const authentificator = function async(req, res, next) {
-  console.log('LOGGED')
-  console.log('req.headers ===>', req.headers)
-  console.log('req.params ===>', req.params); 
-  console.log('req.body ===>',req.body);
+//*auth middleWares (chaque (req,res) passe par les middleware)
+const authentificator = async function (req, res, next) {
+  const bearer = req.headers['authorization'];
+  const tokenDecoded = bearer && bearer.split(' ')[1];
+  req.currentUser = await User.findOne({jwt:`${tokenDecoded}`}).exec();
   next()
 }
 app.use(authentificator)

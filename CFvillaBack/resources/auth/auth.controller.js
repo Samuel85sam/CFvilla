@@ -7,7 +7,6 @@ const authController = {
 
         //* user check ↓↓↓
         const user = await usersService.readOneById(userId);
-        console.log('user ===> ', user);
         if (user === null) {
             return res.status(401).json({ message: "USER NOT FOUND" });
         } else {
@@ -23,8 +22,7 @@ const authController = {
             const token = await authService.newJwt(userId)
             if (token) {
                 res.setHeader("Authorization", `Bearer ${token}`,);
-                authService.addJwt(token, userId);
-                console.log(`check header? Bearer : `, token);
+                await authService.addJwt(userId,token);
                 return res.status(200).json({ token, user });
             };
         };
@@ -32,9 +30,8 @@ const authController = {
     },
 
     checkin: async (req, res) => {
-        //*Get Autorization (BOOLAN RETURN)
+        //*Get Autorization → return checkedToken
         const bearer = req.headers['authorization'];
-        console.log(`bearer ===>`, bearer);
         const tokenDecoded = bearer && bearer.split(' ')[1];
         const secretKey = process.env.JWT_SECRET
         if (!tokenDecoded) {
@@ -46,13 +43,13 @@ const authController = {
         }
         if (checkedToken) {
             res.status(200)
-            .json(checkedToken)
+            .json(req.currentUser)
             console.log(`====> JWT checked OK !!!`);
+            return true
         } else {
             res.status(401)
             console.log(`====> unautorized !!!`);
         }
-        return true
     }
 }
 module.exports = authController;

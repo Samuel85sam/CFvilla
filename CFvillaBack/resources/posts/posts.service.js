@@ -1,13 +1,8 @@
 const Post = require('./posts.model');
 const postsService = {
 
-    create: async (type, title, author, body) => {
-        const post = new Post({
-            type: type,
-            title: title,
-            author: author,
-            body: body
-        });
+    create: async (data) => {
+        const post = new Post(data);
         return await post.save();
     },
 

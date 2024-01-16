@@ -14,8 +14,8 @@ const authService = {
         return jwt.verify(token, secret)
     },
     
-    addJwt: async (token, userId) => {
-        userService.updateOneById(token, userId)
+    addJwt: async ( userId,token) => {
+        await userService.updateOneById(userId,token)
         return true;
     },
 }

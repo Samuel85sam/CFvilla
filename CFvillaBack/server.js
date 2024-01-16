@@ -10,7 +10,6 @@ const router = require('./resources/router/main.router');
 // *Importation du module 'cors' pour gérer les requêtes CORS (Cross-Origin Resource Sharing)(unquement utile lorsque le FE parle au BE et inversement)
 const cors = require('cors');
 
-const authController = require('./resources/auth/auth.controller');
 const cookieSession = require("cookie-session");
 const User = require('./resources/users/users.model');
 
@@ -39,14 +38,27 @@ const authentificator = async function (req, res, next) {
 }
 app.use(authentificator)
 
+//*img middlewares
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../../../uploads/imgs')
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, file.fieldname + '-' + uniqueSuffix)
+  }
+});
+
+const upload = multer({ storage: storage })
+
 //--cookie-session helps to stores the session data on the client within a cookie without requiring any database/resources on the server side
-app.use(
-  cookieSession({
-    name: "sam-session",
-    keys: ["COOKIE_SECRET"], 
-    httpOnly: true
-  })
-);
+// app.use(
+//   cookieSession({
+//     name: "sam-session",
+//     keys: ["COOKIE_SECRET"], 
+//     httpOnly: true
+//   })
+// );
 
 //----------------------------------------------
 

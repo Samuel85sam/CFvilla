@@ -9,11 +9,10 @@ const accessControl = () => {
                 .send({ error: 'unauthorized' })
             console.error('!!! unauthorized !!!');
             next('unauthorized')
-
             //une fois qu'un argument est envoyé dans le next()
             //express comprend que req s'arrête là et qu'on ne va pas dans le controller ou tt autrre action. (dans ce cas là il ne va pas dans next()↓↓)
         }
-
+        console.log('req passed accessControlMiddleware ');
         next()
     }
 

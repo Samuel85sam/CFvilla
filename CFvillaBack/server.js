@@ -9,12 +9,8 @@ const mongoose = require('mongoose');
 const router = require('./resources/router/main.router');
 // *Importation du module 'cors' pour gérer les requêtes CORS (Cross-Origin Resource Sharing)(unquement utile lorsque le FE parle au BE et inversement)
 const cors = require('cors');
-
-const cookieSession = require("cookie-session");
-const User = require('./resources/users/users.model');
-
-//----------------------------------------------
-
+//*log chech
+const logMiddleware = require('./middlewares/log.middleware')
 //* DB connect
 const app = express();
 async function server() {
@@ -27,40 +23,7 @@ async function server() {
 }
 server()
 
-//----------------------------------------------
-
-//*auth middleWares (chaque (req,res) passe par les middleware)
-const authentificator = async function (req, res, next) {
-  const bearer = req.headers['authorization'];
-  const tokenDecoded = bearer && bearer.split(' ')[1];
-  req.currentUser = await User.findOne({jwt:`${tokenDecoded}`}).exec();
-  next()
-}
-app.use(authentificator)
-
-//*img middlewares
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, '../../../uploads/imgs')
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, file.fieldname + '-' + uniqueSuffix)
-  }
-});
-
-const upload = multer({ storage: storage })
-
-//--cookie-session helps to stores the session data on the client within a cookie without requiring any database/resources on the server side
-// app.use(
-//   cookieSession({
-//     name: "sam-session",
-//     keys: ["COOKIE_SECRET"], 
-//     httpOnly: true
-//   })
-// );
-
-//----------------------------------------------
+// app.use(authMiddleware)
 
 //*.env
 const { PORT, NODE_ENV } = process.env;
@@ -77,7 +40,7 @@ app.use(cors(corsOptions));
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 // *Ajout du routing avec une base URL '/api' pour respecter le principe RESTful
-app.use('/api', router);
+app.use('/api',router);
 //*tests
 app.get('/', (req, res) => {
   res.send(`Welcome to Sam's web app`);

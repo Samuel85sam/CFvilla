@@ -1,5 +1,7 @@
 const usersController = require('../users/users.controller');
 const usersRouter = require('express').Router();
+const logMiddleware = require('../../middlewares/log.middleware');
+
 
 usersRouter.route('/')
     .post(usersController.post)

@@ -4,6 +4,7 @@ const userSchema = new Schema({
     admin: Boolean,
     firstName: String,
     lastName: String,
+    adressMail:String,
     jwt: String,
     password:String
 });

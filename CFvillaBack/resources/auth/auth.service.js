@@ -13,9 +13,11 @@ const authService = {
         const secret = process.env.JWT_SECRET;
         return jwt.verify(token, secret)
     },
-    
-    addJwt: async ( userId,token) => {
-        await userService.updateOneById(userId,token)
+
+    addJwt: async (userId, token) => {
+
+        const data = { jwt: token };
+        await userService.updateOneById(userId, data)
         return true;
     },
 }

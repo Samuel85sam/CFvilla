@@ -6,12 +6,8 @@ const postsService = {
         return await post.save();
     },
 
-    readOne: async (postId) => {
+    readOneById: async (postId) => {
         return await Post.findById(postId).exec();
-    },
-
-    readAll: async () => {
-        return await Post.find({}).exec();
     },
 
     updateOneById: async (postId, data) => {
@@ -21,5 +17,11 @@ const postsService = {
     deleteOne: async (postId) => {
         return await Post.findByIdAndDelete(postId);
     },
+
+    deleteAll: async () => {
+        return await Post.deleteMany();
+    },
+
 }
+
 module.exports = postsService

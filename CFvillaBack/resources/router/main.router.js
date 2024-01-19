@@ -8,7 +8,7 @@ const router = require('express').Router();
 // router.post('/posts',postsController.post);
 // router.get('/posts',postsController.getAll);
 // ou
-//          callBack ↓↓↓↓↓↓↓↓↓↓
+//              callBack ↓↓↓↓↓↓↓↓↓↓
 // router.post('/posts',async (req, res) => {
 //         const currentUser = req.currentUser;
 //         if (!currentUser) {
@@ -18,7 +18,6 @@ const router = require('express').Router();
 //         const postData = req.body
 //         console.log(`currentUser ===> `, req.currentUser);
 //         //* verif match currentUser >< {admin : true}
-
 //         if (postedData) {
 //             res.status(201)
 //                 .json(postedData)

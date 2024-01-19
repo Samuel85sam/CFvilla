@@ -13,7 +13,7 @@ const postsController = {
 
     getOneById: async (req, res) => {
         id = req.params.id;
-        const post = await postsService.readOne(id)
+        const post = await postsService.readOneById(id)
         if (post) {
             res.status(200)
                 .json(post)
@@ -32,6 +32,7 @@ const postsController = {
             res.status(404)
         }
     },
+
     updateOneById: async (req, res) => {
         const id = req.params.id;
         const updatedData = req.body;
@@ -43,6 +44,7 @@ const postsController = {
             res.status(404)
         }
     },
+
     deleteOneById: async (req, res) => {
         const id = req.params.id;
         const deletedPost = await postsService.deleteOne(id)
@@ -51,9 +53,18 @@ const postsController = {
             res.status(200)
                 .json(deletedPost)
         } else {
-            console.log(`post not found(controller)`)//!LOG;
             res.status(404)
         };
     },
+
+    deleteAll: async (req, res) => {
+        try {
+            const cb = await postsService.deleteAll()
+            res.status(200).json(cb)
+        } catch (error) {
+            console.log(error);//!LOG
+        };
+        
+    }
 }
 module.exports = postsController

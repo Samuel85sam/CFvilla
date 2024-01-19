@@ -11,7 +11,7 @@ const usersController = {
 
     getOneById: async (req, res) => {
         const id = req.params.id;
-        const user = await usersService.readOne(id)
+        const user = await usersService.readOneById(id)
         if (user) {
             res.status(200)
                 .json(user)
@@ -23,6 +23,7 @@ const usersController = {
 
     getAll: async (req, res) => {
         const allUsers = await usersService.readAll();
+        console.log(allUsers);
         if (allUsers) {
             res.status(200).json(allUsers)
         } else {
@@ -34,21 +35,23 @@ const usersController = {
     updateOneById: async (req, res) => {
         const id = req.params.id;
         const updatedData = req.body;
-        const userUpdated = await usersService.updateOneById(id, updatedData)
-        if (userUpdated) {
-            res.status(200).json(userUpdated)
-        } else {
-            console.log(`user not found`)//!LOG;
+        const cb = await usersService.updateOneById(id, updatedData)
+        if (!cb) {
+            console.log(`no call-back`)//!LOG;
             res.status(404)
         }
+            res.status(200).json(cb)
+
+        
     },
 
     deleteOneById: async (req, res) => {
-        const id = req.params.id;
-        if (deletedUser) {
-            const deletedUser = await usersService.deleteOne(id)
+        const userId = req.params.id;
+        const cb = await usersService.deleteOne(userId)
+        if (cb) {
             res.status(200)
-                .json(deletedUser)
+                .json(cb)
+                
         } else {
             console.log(`user not found(controller)`)//!LOG;
             res.status(404)

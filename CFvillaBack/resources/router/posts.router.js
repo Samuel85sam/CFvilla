@@ -1,4 +1,4 @@
-const postsController = require('../posts/text.posts/posts.controller');
+const postsController = require('../posts/obj.posts/posts.controller');
 const postsRouter = require('express').Router();
 const accessControl = require('../../middlewares/access-control.middleware');
 const logMiddleware = require('../../middlewares/log.middleware');
@@ -17,5 +17,8 @@ postsRouter.route('/:id')
     .patch(authMiddleware(),accessControl(),postsController.updateOneById)
     .all((req,res) => { res.statusCode(405).send('request Unavalable') }
     );
+
+postsRouter.route('/patch/:id')
+    .patch(authMiddleware(),accessControl(),postsController.populateOneById)
 
 module.exports = postsRouter;

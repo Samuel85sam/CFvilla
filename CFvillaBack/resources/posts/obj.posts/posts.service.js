@@ -14,6 +14,16 @@ const postsService = {
         return await Post.findByIdAndUpdate(postId, data);
     },
 
+    // checkPopulatedById : async (postId, fieldName) => {
+    //     const resFieldName = await Post.findOne({ _id: postId }).populate(fieldName, '_id').exec();
+    //     console.log(resFieldName); 
+    // },
+     transformOneById : async (postId,fieldName,data) => {
+        const post = await Post.findById({_id: postId}).populate([{
+            path: fieldName,
+            transform: (post, postId)}]);//! → pas s^r de comprendre le but de "populate"
+     },
+
     deleteOne: async (postId) => {
         return await Post.findByIdAndDelete(postId);
     },

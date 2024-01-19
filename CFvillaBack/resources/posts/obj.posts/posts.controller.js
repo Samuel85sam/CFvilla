@@ -45,6 +45,14 @@ const postsController = {
         }
     },
 
+    populateOneById: async (req, res) => {   const postId = req.params;
+        const fieldName = req.body.fieldName;
+        const {data} = req.body.data;
+        const populated = await postsService.checkPopulatedById(postId);
+
+        return populated? postsService.populateOneById(postId, fieldName,data) : res.status(404) 
+    },
+
     deleteOneById: async (req, res) => {
         const id = req.params.id;
         const deletedPost = await postsService.deleteOne(id)

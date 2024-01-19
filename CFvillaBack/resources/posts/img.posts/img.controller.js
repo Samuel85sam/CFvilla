@@ -1,5 +1,5 @@
 const imgService = require('./img.service');
-
+const postsService = require('../obj.posts/posts.service')
 const imgController = {
 
     post: async (req, res) => {

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const { Schema } = mongoose;
 const postSchema = new Schema({
     type: String,
@@ -9,6 +10,7 @@ const postSchema = new Schema({
 });
 const Post = mongoose.model('Post', postSchema);
 module.exports = Post;
+
 
 //Validator
 // check types (enum) 

@@ -21,8 +21,6 @@ const imgService = {
     },
 
     deleteAll: async () => {
-        console.log('deleAll-imgService');
-
         return await Img.deleteMany();
     },
 }

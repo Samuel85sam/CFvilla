@@ -47,20 +47,6 @@ const postsController = {
         }
     },
 
-    // populateOneById: async (postId) => {
-    //     const id = postId;
-    //     let post = undefined;
-
-    //     !id ? res.status(500).json({ message: "no postId return from create function" }) : postToPopulate = await Post.findOne({ _id: id })
-    //         .populate('img')
-    //         .populate('author')
-    //         .exec();
-
-    //     !postToPopulate ? res.status(500).json({ message: "no post to populate found whith id: ",id }) : console.log('populated values', post.img, ' + ', post.author);
-    //     res.status(200).json(post)
-    // },
-
-
     populateOne: async (req, res) => {
         const postId = req.params
         !postId ?

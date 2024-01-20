@@ -6,5 +6,5 @@ const imgSchema = new Schema({
     type: String,
     size: Number
 });
-module.exports.imgShema = imgSchema;
-module.exports.Img = mongoose.model('Img', imgSchema);
+const Img = mongoose.model('Img', imgSchema);
+module.exports = Img;

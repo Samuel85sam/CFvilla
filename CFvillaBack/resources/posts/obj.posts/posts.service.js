@@ -3,9 +3,14 @@ const postsService = {
 
     create: async (data) => {
         const post = new Post(data);
-        console.log('post dans service ==>',post);
+        !post ? res.status(404).json({ message: "post cration failure in service" }) : await post.save();
+        const newPostId = post._id;
+        console.log('newPostId ==> ', newPostId);
+        return newPostId
+    },
 
-        return await post.save();
+    readAll: async () => {
+        return await Post.find().exec()
     },
 
     readOneById: async (postId) => {
@@ -16,20 +21,18 @@ const postsService = {
         return await Post.findByIdAndUpdate(postId, data);
     },
 
-    populateOneById: async ({ postId }) => {
-        const id = JSON.stringify({ postId });
-        !id ? res.status(404).json({ message: "no postId to find to populate" }) : async (id) => {
-            const post = await Post.findOne({ _id: id })
-                .populate('img')
-                .populate('author')
-                .exec();
+    populateOneById: async (postId) => {
+        const id = postId;
+        let post = undefined;
+        !id ? res.status(404).json({ message: "no postId to find to populate" }) : post = await Post.findOne({ _id: id })
+            .populate('img')
+            .populate('author')
+            .exec();
 
-                console.log('post populated ==> ', post);
+        console.log('post populated ==> ', post);
 
-            !post ? res.status(404).json({ message: "no post to populate" }) : console.log('populated values', post.img, ' + ', post.author);
-            res.status(200).json({ post })
-            return true
-        }
+        !post ? res.status(404).json({ message: "no post to populate" }) : console.log('populated values', post.img, ' + ', post.author);
+        return [post.img, post.author]
     },
 
     deleteOne: async (postId) => {

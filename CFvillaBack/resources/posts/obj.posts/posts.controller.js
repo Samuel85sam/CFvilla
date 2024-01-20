@@ -5,15 +5,12 @@ const postsController = {
 
     post: async (req, res) => {
         const postData = req.body;
-        console.log('postData dans controller ==>',postData);
-        !postData? res.statut(404).json({message: "req.body undefined"}) : console.log('postData ok dans ternaire controller ==>');
-        // async (postData) => { 
-        //     console.log('fonct async dans ternaire controller ==>');
-            const postedData = await postsService.create(postData) 
-        console.log('postedData ==> ', postedData)
-        //res.status(201).json(postedData)
-        !postedData ? res.status(404).json({ massage: "post creation failure" }) : res.status(200).json(postedData)
-    //}
+        let newPostId = undefined;
+        let populatedValues = undefined;
+        !postData ? res.statut(404).json({ message: "req.body undefined" }) : newPostId = await postsService.create(postData);
+        !newPostId ? res.status(404).json({ massage: "post creation failure" }) : populatedValues = await postsService.populateOneById(newPostId)
+
+        res.status(200).json(populatedValues)
     },
 
     getOneById: async (req, res) => {
@@ -50,20 +47,19 @@ const postsController = {
         }
     },
 
-    populateOneById: async ({ postId }) => {
-        const id = postId
-        //JSON.stringify({ postId });
-        console.log('{postId} stringified');
-        !id ? res.status(404).json({ message: "no postId to find to populate" }) : async (id) => {
-            const post = await Post.findOne({ _id: id })
-                .populate('img')
-                .populate('author')
-                .exec();
+    // populateOneById: async (postId) => {
+    //     const id = postId;
+    //     let post = undefined;
 
-            !post ? res.status(404).json({ message: "no post to populate" }) : console.log('populated values', post.img, ' + ', post.author);
-            res.status(200).json(post)
-        }
-    },
+    //     !id ? res.status(500).json({ message: "no postId return from create function" }) : postToPopulate = await Post.findOne({ _id: id })
+    //         .populate('img')
+    //         .populate('author')
+    //         .exec();
+
+    //     !postToPopulate ? res.status(500).json({ message: "no post to populate found whith id: ",id }) : console.log('populated values', post.img, ' + ', post.author);
+    //     res.status(200).json(post)
+    // },
+
 
     populateOne: async (req, res) => {
         const postId = req.params
@@ -89,33 +85,33 @@ const postsController = {
             }
     },
 
-    populateOneById: async (req, res) => {
+        populateOneById: async (req, res) => {
 
-        const postId = req.params
-        populated = postsService.populateOneById(postId);
-        populated = false ? res.status(404).json({ message: "post population failure" }) : res.status(200).json({ message: "post populated" })
-    },
+            const postId = req.params
+            populated = postsService.populateOneById(postId);
+            populated = false ? res.status(404).json({ message: "post population failure" }) : res.status(200).json({ message: "post populated" })
+        },
 
-    deleteOneById: async (req, res) => {
-        const id = req.params.id;
-        const deletedPost = await postsService.deleteOne(id)
-        console.log(`post deleted ===> ${JSON.stringify(deletedPost)}`)//!LOG;
-        if (deletedPost) {
-            res.status(200)
-                .json(deletedPost)
-        } else {
-            res.status(404)
-        };
-    },
+            deleteOneById: async (req, res) => {
+                const id = req.params.id;
+                const deletedPost = await postsService.deleteOne(id)
+                console.log(`post deleted ===> ${JSON.stringify(deletedPost)}`)//!LOG;
+                if (deletedPost) {
+                    res.status(200)
+                        .json(deletedPost)
+                } else {
+                    res.status(404)
+                };
+            },
 
-    deleteAll: async (req, res) => {
-        try {
-            const cb = await postsService.deleteAll()
-            res.status(200).json(cb)
-        } catch (error) {
-            console.log(error);//!LOG
-        };
+                deleteAll: async (req, res) => {
+                    try {
+                        const cb = await postsService.deleteAll()
+                        res.status(200).json(cb)
+                    } catch (error) {
+                        console.log(error);//!LOG
+                    };
 
-    }
+                }
 }
 module.exports = postsController

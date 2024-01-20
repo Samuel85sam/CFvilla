@@ -18,7 +18,8 @@ const usersService = {
         },
 
         updateOneById: async (userId, data) => {
-                return await User.findByIdAndUpdate(userId, data);
+                 await User.findByIdAndUpdate(userId, data);
+                 return User.findById(userId)
         },
 
         deleteOne: async (userId) => {

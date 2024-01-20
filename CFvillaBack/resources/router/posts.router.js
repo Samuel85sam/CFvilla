@@ -8,6 +8,7 @@ postsRouter.route('/')
     .post(authMiddleware(),accessControl(),postsController.post)
     .get(postsController.getAll)
     .delete(authMiddleware,accessControl(),postsController.deleteAll)
+    .patch(authMiddleware(),accessControl(),postsController.populateOne)
     .all((req,res) => { res.statusCode(405).send('request Unavalable') }
     );
 
@@ -19,6 +20,6 @@ postsRouter.route('/:id')
     );
 
 postsRouter.route('/patch/:id')
-    .patch(authMiddleware(),accessControl(),postsController.populateOneById)
+    
 
 module.exports = postsRouter;

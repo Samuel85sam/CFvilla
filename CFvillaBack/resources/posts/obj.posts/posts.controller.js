@@ -1,3 +1,5 @@
+const { Types } = require('mongoose')
+const Post = require('./posts.model')
 const postsService = require('./posts.service')
 
 const postsController = {
@@ -45,13 +47,43 @@ const postsController = {
         }
     },
 
-    populateOneById: async (req, res) => {   const postId = req.params;
+    populateOneById: async (req, res) => {
+        const postId = req.params;
         const fieldName = req.body.fieldName;
-        const {data} = req.body.data;
-        const populated = await postsService.checkPopulatedById(postId);
+        const post = await Post.findOne({ _id: postId }).
+            populate('img').
+            exec();
+        post.img.fileName = imgName;
+        post.img.size = imgSize;
+        console.log('img values', imgName, ' + ', imgSize);
 
-        return populated? postsService.populateOneById(postId, fieldName,data) : res.status(404) 
+        // const populated = await postsService.populateOneById(postId);
+        // console.log('populated in postController ==> ',populated);
     },
+
+    populateOne: async (req, res) => {
+        try {
+            const post = await Post.findOne({ title: "mon code" }).populate('img');
+
+            if (!post) {
+                return res.status(404).json({ message: "Post non trouvé" });
+            };
+
+            const img = post.img;
+            const imgName = img.fileName;
+            const imgSize = img.size;
+
+            console.log('img values', imgName, ' + ', imgSize);
+
+            res.status(200).json({ post });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Erreur serveur" });
+        }
+    },
+
+
 
     deleteOneById: async (req, res) => {
         const id = req.params.id;
@@ -72,7 +104,7 @@ const postsController = {
         } catch (error) {
             console.log(error);//!LOG
         };
-        
+
     }
 }
 module.exports = postsController

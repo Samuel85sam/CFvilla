@@ -7,7 +7,7 @@ const authMiddleware =require('../../middlewares/auth.middleware');
 postsRouter.route('/')
     .post(authMiddleware(),accessControl(),postsController.post)
     .get(postsController.getAll)
-    .delete(authMiddleware,accessControl(),postsController.deleteAll)
+    .delete(authMiddleware(),accessControl(),postsController.deleteAll)
     .patch(authMiddleware(),accessControl(),postsController.populateOne)
     .all((req,res) => { res.statusCode(405).send('request Unavalable') }
     );

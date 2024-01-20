@@ -3,6 +3,8 @@ const postsService = {
 
     create: async (data) => {
         const post = new Post(data);
+        console.log('post dans service ==>',post);
+
         return await post.save();
     },
 
@@ -14,20 +16,21 @@ const postsService = {
         return await Post.findByIdAndUpdate(postId, data);
     },
 
-    populateOneById: async (postId,fieldName) => {
+    populateOneById: async ({ postId }) => {
+        const id = JSON.stringify({ postId });
+        !id ? res.status(404).json({ message: "no postId to find to populate" }) : async (id) => {
+            const post = await Post.findOne({ _id: id })
+                .populate('img')
+                .populate('author')
+                .exec();
 
-        return await Post.findOne({_id: ObjectId(`${postId}`)}).populate(fieldName).exec();
+                console.log('post populated ==> ', post);
+
+            !post ? res.status(404).json({ message: "no post to populate" }) : console.log('populated values', post.img, ' + ', post.author);
+            res.status(200).json({ post })
+            return true
+        }
     },
-
-    // checkPopulatedById : async (postId, fieldName) => {
-    //     const resFieldName = await Post.findOne({ _id: postId }).populate(fieldName, '_id').exec();
-    //     console.log(resFieldName); 
-    // },
-    //  transformOneById : async (postId,fieldName,data) => {
-    //     const post = await Post.findById({_id: postId}).populate([{
-    //         path: fieldName,
-    //         transform: (post, postId)}]);//! → pas s^r de comprendre le but de "populate"
-    //  },
 
     deleteOne: async (postId) => {
         return await Post.findByIdAndDelete(postId);

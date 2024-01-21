@@ -1,17 +1,29 @@
-const usersService = require('./users.service')
+const userValidator = require('./user.validator');
+const usersService = require('./users.service');
+
 const usersController = {
+
     post: async (req, res) => {
-        const userData = req.body
-        const createdUser = await usersService.create(userData)
-        if (createdUser) {
-            res.status(201)
-                .json(createdUser)
-        };
+
+        const reqData = req.body;
+        let userData =  undefined;
+        let newUserId = undefined;
+
+        !reqData? res.status(404).json({ message: 'user creation failure' }) : userData = await userValidator.validate(reqData);
+        
+        !userData? res.status(404).json({message: 'userValidation  failure'}) : newUserId = await usersService.create(userData);
+
+        !newUserId? res.status(500).json({message: 'userService.create cb failure'}) : res.status(201).json({ 
+            message: 'new User created and stored in database',
+            newUserId: `${newUserId}` });
+        
     },
 
     getOneById: async (req, res) => {
         const id = req.params.id;
         const user = await usersService.readOneById(id)
+        const validatedUser = userValidator.validate(user)
+        console.log('validatedUser from db ===> ',validatedUser);
         if (user) {
             res.status(200)
                 .json(user)

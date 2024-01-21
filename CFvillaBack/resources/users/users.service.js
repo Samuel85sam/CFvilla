@@ -3,10 +3,11 @@ const bcrypt = require('bcryptjs')
 const usersService = {
 
         create: async (data) => {
+                console.log('data dans service' , data);
                 const user = new User(data);
                 user.password = await bcrypt.hash(data.password, 10);
                 createdUser = await user.save();
-                return user
+                return user._id
         },
 
         readOneById: async (userId) => {

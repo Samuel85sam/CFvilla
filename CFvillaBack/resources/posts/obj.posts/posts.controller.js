@@ -4,10 +4,13 @@ const postsService = require('./posts.service')
 const postsController = {
 
     post: async (req, res) => {
+
         const postData = req.body;
         let newPostId = undefined;
         let populatedValues = undefined;
+
         !postData ? res.statut(404).json({ message: "req.body undefined" }) : newPostId = await postsService.create(postData);
+        
         !newPostId ? res.status(404).json({ massage: "post creation failure" }) : populatedValues = await postsService.populateOneById(newPostId)
 
         res.status(200).json(populatedValues)

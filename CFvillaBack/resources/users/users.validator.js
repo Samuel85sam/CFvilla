@@ -2,7 +2,7 @@ const yup = require("yup");
 const { object } = require('yup');
 
 //.shape?
-const userValidator = object({
+const usersValidator = object({
     admin: yup.boolean(),
     firstName: yup.string().min(2).max(30).required(),
     lastName: yup.string().min(2).max(30).required(),
@@ -12,4 +12,4 @@ const userValidator = object({
   })
 
 
-module.exports = userValidator
+module.exports = usersValidator

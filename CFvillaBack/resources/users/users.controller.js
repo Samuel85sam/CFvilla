@@ -1,4 +1,4 @@
-const userValidator = require('./user.validator');
+const usersValidator = require('./users.validator');
 const usersService = require('./users.service');
 
 const usersController = {
@@ -9,7 +9,7 @@ const usersController = {
         let userData =  undefined;
         let newUserId = undefined;
 
-        !reqData? res.status(404).json({ message: 'user creation failure' }) : userData = await userValidator.validate(reqData);
+        !reqData? res.status(404).json({ message: 'user creation failure' }) : userData = await usersValidator.validate(reqData);
         
         !userData? res.status(404).json({message: 'userValidation  failure'}) : newUserId = await usersService.create(userData);
 

@@ -11,7 +11,6 @@ const storage = multer.diskStorage({
     },
     //* ↓ ajout du .type de fichier après le "filename" ↓
     filename: function (req, file, cb) {
-        console.log(file);
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
         cb(null, uniqueSuffix+file.originalname)
     }

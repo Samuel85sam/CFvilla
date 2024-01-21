@@ -1,19 +1,24 @@
 const imgService = require('./img.service');
-const postsService = require('../obj.posts/posts.service')
+const imgValidator = require('./img.validator')
+
 const imgController = {
 
     post: async (req, res) => {
-        const data =  {
+
+        const reqData =  {
             fileName: req.file.filename,
             originalFileName: req.file.originalname,
-            type: req.body.type,
+            type: req.file.mimetype,
             size: req.file.size
         };
-        const postedImg = await imgService.create(data);
-        if (postedImg) {
-            res.status(201).json(postedImg)
-            return console.log('img posted');
-        }
+        let data = undefined;
+        let newImgId = undefined;
+
+        !reqData? res.status(404).json({message:'no req.data'}) : data  = await imgValidator.validate(reqData);
+
+        !data? res.status(404).json({message:'no data'}) : newImgId = await imgService.create(data);
+        res.status(201).json(newImgId)
+            return console.log('Image Object created + stored + posted to database');     
     },
 
     getAll: async (req, res) => {

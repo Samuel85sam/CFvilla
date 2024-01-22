@@ -25,9 +25,11 @@ utilisation d'une API pour l'envoi de mail et trouver un moyen de collecter les 
 
 To Do:
 		
-1. check models user/img/post + all CRUD tunderClient OK  ===> (22/1)
+1. check models user/img/post + all CRUD tunderClient OK  ===> (22/1) ==> OK
 
-2. check contraintes dans MongoDB (foreign keys, notNull, etc...) ===> (22/1) 
+2.1 check contraintes dans MongoDB (foreign keys, notNull, etc...) ===> (22/1) 
+
+2.2 fusionner img.controller et post.controller + lien video youtube
 
 3. videos upload? ===> (24/1)
 

@@ -1,49 +1,30 @@
 const Post = require('./posts.model')
 const postsService = require('./posts.service');
-const postsValidator = require('./posts.validator');
+const imgService = require('../posts-img/img.service');
+//const postsValidator = require('./posts.validator');
 
 const postsController = {
 
-    // post: async (req, res) => {
-
-    //     const reqData = req.body;
-    //     let data = undefined;
-    //     let newPostId = undefined;
-    //     let populatedValues = undefined;
-
-    //     !reqData ? res.statut(417).json({ message: "req.data expectation failed ==> log=", reqData }) : data = await postsValidator.validate(reqData);
-    //     !data ? res.statut(501).json({ message: "data from validator not implemented" }) : newPostId = await postsService.create(postData);
-
-    //     !newPostId ? res.status(503).json({ massage: "post creation service unavalable" }) : populatedValues = await postsService.populateOneById(newPostId)
-
-    //     res.status(201).json({
-    //         message: 'post created',
-    //         postId: `${newPostId}`,
-    //         body: `${populatedValues}`
-    //     })
-    // },
+    
     post: async (req, res) => {
-
+        console.log('req.body dans img controller ==>', req.body);
+        console.log('req.file dans img controller ==>', req.file);
         try {
+            const reqfileData =  {
+                fileName: req.file.filename,
+                originalFileName: req.file.originalname,
+                type: req.file.mimetype,
+                size: req.file.size
+            };
             const reqData = req.body;
-            const data = await postsValidator.validate(reqData);
-
-            if (!data) {
-                return res.status(501).json({ message: "data from validator not implemented" });
-            }
-
-            const newPostId = await postsService.create(data);
-
-            if (!newPostId) {
-                return res.status(503).json({ message: "post creation service unavailable" });
-            }
-
-            const populatedValues = await postsService.populateOneById(newPostId);
-
+            //const data = await postsValidator.validate(reqData)
+            const newPostId = await postsService.create(reqData);
+            const newImgId = await await imgService.create(reqfileData);
+           
             res.status(201).json({
                 message: 'post created',
                 postId: `${newPostId}`,
-                body: `${populatedValues}`
+                imgId: `${newImgId}`
             });
         } catch (error) {
             console.error(error);

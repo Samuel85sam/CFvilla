@@ -22,7 +22,7 @@ const authController = {
             const token = await authService.newJwt(userId)
             if (token) {
                 res.setHeader("Authorization", `Bearer ${token}`,);
-                await authService.addJwt(userId,token);
+                await authService.addJwt(userId, token);
                 return res.status(200).json({ token, user });
             };
         };
@@ -30,26 +30,32 @@ const authController = {
     },
 
     checkin: async (req, res) => {
-        //*Get Autorization → return checkedToken
         const bearer = req.headers['authorization'];
+        console.log('bearer ==> ', bearer);
         const tokenDecoded = bearer && bearer.split(' ')[1];
         const secretKey = process.env.JWT_SECRET
-        if (!tokenDecoded) {
-            return res.status(401).json({ message: 'No token provided' });
-        }
-        const checkedToken = authService.verifyJwt(tokenDecoded, secretKey)
-        if (!checkedToken) {
-            return res.status(403).json({ message: 'Invalid token' });
-        }
-        if (checkedToken) {
-            res.status(200)
-            .json(req.currentUser)
-            console.log(`====> JWT checked OK !!!`);
-            return true
-        } else {
-            res.status(401)
-            console.log(`====> unautorized !!!`);
-        }
+        response =  await authService.verifyJwt(tokenDecoded, secretKey)
+        console.log('response dans controller ==>',response);
+        response? res.status(200).json(response) : res.status(417).json(response) 
+
     }
+
+    //     if (bearer === undefined) {
+    //         return res.status(401).json({ message: 'No token provided' });
+    //     }
+    //     const checkedToken = authService.verifyJwt(tokenDecoded, secretKey)
+    //     if (!checkedToken) {
+    //         return res.status(403).json({ message: 'Invalid token' });
+    //     }
+    //     if (checkedToken) {
+    //         res.status(200)
+    //         .json(req.currentUser)
+    //         console.log(`====> JWT checked OK !!!`);
+    //         return true
+    //     } else {
+    //         res.status(401)
+    //         console.log(`====> unautorized !!!`);
+    //     }
+    // }
 }
 module.exports = authController;

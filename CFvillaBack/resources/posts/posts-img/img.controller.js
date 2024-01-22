@@ -4,7 +4,6 @@ const imgValidator = require('./img.validator')
 const imgController = {
 
     post: async (req, res) => {
-
         const reqData =  {
             fileName: req.file.filename,
             originalFileName: req.file.originalname,

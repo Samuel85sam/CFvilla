@@ -1,11 +1,25 @@
-const postsController = require('../posts/obj.posts/posts.controller');
+const postsController = require('../posts/posts-obj/posts.controller');
+const postValidator = require('../posts/posts-obj/posts.validator');
 const postsRouter = require('express').Router();
 const accessControl = require('../../middlewares/access-control.middleware');
-const logMiddleware = require('../../middlewares/log.middleware');
 const authMiddleware =require('../../middlewares/auth.middleware');
+const validator = require('../../middlewares/validator.middleware')
+const logMiddleware = require('../../middlewares/log.middleware');
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/')
+    },
+    //* ↓ ajout du .type de fichier après le "filename" ↓
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        cb(null, uniqueSuffix+file.originalname)
+    }
+});
+const upload = multer({dest:'uploads/',storage});
 
 postsRouter.route('/')
-    .post(authMiddleware(),accessControl(),postsController.post)
+    .post(authMiddleware(),accessControl(),upload.single('uploaded_file'),validator(postValidator),postsController.post)
     .get(postsController.getAll)
     .delete(authMiddleware(),accessControl(),postsController.deleteAll)
     .patch(authMiddleware(),accessControl(),postsController.populateOne)

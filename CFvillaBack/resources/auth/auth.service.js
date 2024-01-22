@@ -10,8 +10,16 @@ const authService = {
     },
 
     verifyJwt: async (token) => {
-        const secret = process.env.JWT_SECRET;
-        return jwt.verify(token, secret)
+
+        try {
+            const secret = process.env.JWT_SECRET;
+        response =  jwt.verify(token, secret)
+        console.log('response dans service ==>',response)
+        return response
+        } catch (error) {
+           res.status(422).json('unprocessable entity', error)
+        }
+        
     },
 
     addJwt: async (userId, token) => {

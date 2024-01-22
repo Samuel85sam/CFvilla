@@ -1,10 +1,12 @@
-const imgsController = require('../posts/img.posts/img.controller');
+const imgsController = require('../posts/posts-img/img.controller');
+const imgValidator = require('../posts/posts-img/img.validator');
 const imgsRouter = require('express').Router();
-const authMiddleware =require('../../middlewares/auth.middleware');
+const authControl =require('../../middlewares/auth.middleware');
 const accessControl = require('../../middlewares/access-control.middleware');
 const logMiddleware = require('../../middlewares/log.middleware');
 const multer = require('multer');
-const imgController = require('../posts/img.posts/img.controller');
+const imgController = require('../posts/posts-img/img.controller');
+const validator = require('../../middlewares/validator.middleware')
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/')
@@ -18,15 +20,15 @@ const storage = multer.diskStorage({
 const upload = multer({dest:'uploads/',storage});
 
 imgsRouter.route('/')
-    .post(authMiddleware(),accessControl(),upload.single('uploaded_file'),imgsController.post)
+    .post(authControl(),accessControl(),upload.single('uploaded_file'),validator(imgValidator),imgsController.post)
     .get(imgController.getAll)
-    .delete(authMiddleware(),accessControl(),imgsController.deleteAll)
+    .delete(authControl(),accessControl(),imgsController.deleteAll)
     .all((req,res) => { res.statusCode(405).send('request Unavalable') }
     );
 
 imgsRouter.route('/:id')
     .get(imgsController.getOneById)
-    .delete(authMiddleware(),accessControl(),imgsController.deleteOneById)
+    .delete(authControl(),accessControl(),imgsController.deleteOneById)
     .all((req,res) => { res.statusCode(405).send('request Unavalable') }
     );
 

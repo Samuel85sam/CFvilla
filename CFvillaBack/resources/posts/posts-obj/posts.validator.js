@@ -5,10 +5,11 @@ const mongoose = require('mongoose');
 const postsValidator = new yup.object({
     type: yup.string().min(2).max(30).required(),
     title: yup.string().min(2).max(30).required(),
-    author: { type: mongoose.Types.ObjectId, ref: 'User' },
+    author: yup.string().min(2).max(30).required(),// check user existe en db? 
     body: yup.string().min(2).max(5000).required(),
-    img: { type: mongoose.Types.ObjectId, ref: 'Img' }
+    img: yup.string().min(2).max(30)// check img existe dans storage?dans db? 
 })
 
+//*==> middlwr avec trycatch chck req.body 
 
 module.exports = postsValidator

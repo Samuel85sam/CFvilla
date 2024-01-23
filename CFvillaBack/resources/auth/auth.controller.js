@@ -9,9 +9,7 @@ const authController = {
             return res.status(401).json({ message: "USER NOT FOUND" });
         } else {
             const user = await usersService.readOneById(userId);
-            console.log(user);
             const hashedPassword = user.password
-            console.log('hashedPassword : ',hashedPassword);
             const passwordMatch = bcrypt.compare(req.body.formPassword, hashedPassword);
             if (!passwordMatch) {
                 return res.status(401).json({ message: "Mot de passe incorrect" });
@@ -21,7 +19,7 @@ const authController = {
             if (token) {
                 res.setHeader("Authorization", `Bearer ${token}`,);
                 await authService.addJwt(userId, token);
-                return res.status(200).json({ token, user });
+                return res.status(200).json({ token });
             };
         };
 

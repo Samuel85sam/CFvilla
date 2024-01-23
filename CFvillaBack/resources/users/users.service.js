@@ -11,7 +11,7 @@ const usersService = {
         },
 
         readOne: async (fieldData) => {
-                return await User.findOne(userId).exec();
+                return await User.findOne(fieldData).exec();
         },
 
         readOneById: async (userId) => {
@@ -22,9 +22,15 @@ const usersService = {
                 return await User.find({}).exec();
         },
 
-        updateOneById: async (userId, data) => {
-                await User.findByIdAndUpdate(userId, data);
-                return User.findById(userId)
+        updateOneById: async (id, data) => {
+                try {
+                        const updated = await User.findByIdAndUpdate(id, data, { new: true });
+                console.log('updated dans service : ', updated);
+                return updated;
+                } catch (error) {
+                        console.error(error);
+                }
+                
         },
 
         deleteOne: async (userId) => {

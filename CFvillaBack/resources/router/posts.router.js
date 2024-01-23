@@ -21,7 +21,7 @@ const upload = multer({dest:'uploads/',storage});
 postsRouter.route('/')
     .post(authMiddleware(),accessControl(),upload.single('uploaded_file'),validator(postValidator),postsController.post)
     .get(postsController.getAll)
-    .delete(authMiddleware(),accessControl(),postsController.deleteAll)
+    .delete(postsController.deleteAll)
     .patch(authMiddleware(),accessControl(),postsController.populateOne)
     .all((req,res) => { res.statusCode(405).send('request Unavalable') }
     );

@@ -12,9 +12,9 @@ const authMiddleware = () => {
             const tokenDecoded = bearer.split(' ')[1];
             console.log('tokenDecoded =>', tokenDecoded);
 
-            req.currentUser = await User.exists({ jwt: tokenDecoded }).exec();
-            console.log('current user ===>', req.currentUser);
-            return next();
+            req.currentUser = await User.exists({ jwt: tokenDecoded })
+            console.log('authMW current user ===>', req.currentUser);
+             next();
         } catch (error) {
             console.error('Error in authMiddleware:', error);
             return res.status(500).json({ error: 'Internal Server Error' });

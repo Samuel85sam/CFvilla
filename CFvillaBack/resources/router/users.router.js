@@ -17,7 +17,7 @@ usersRouter.route('/')
 usersRouter.route('/:id')
     .get(usersController.getOneById)
     .delete(authMiddleware(), accessControl(), usersController.deleteOneById)
-    .patch(authMiddleware(), accessControl(), usersController.updateOneById)
+    .patch(authMiddleware(), accessControl(), logMiddleware,usersController.updateOneById)
     .all((req, res) => { res.statusCode(405).send('request Unavalable') }
     );
 

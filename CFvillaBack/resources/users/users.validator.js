@@ -1,7 +1,6 @@
 const yup = require("yup");
 const { object } = require('yup');
 
-//.shape?
 const usersValidator = object({
     admin: yup.boolean(),
     firstName: yup.string().min(2).max(30).required(),

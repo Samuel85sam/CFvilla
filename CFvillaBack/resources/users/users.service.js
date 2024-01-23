@@ -1,5 +1,6 @@
 const User = require('./users.model')
 const bcrypt = require('bcryptjs')
+
 const usersService = {
 
         create: async (data) => {
@@ -7,6 +8,10 @@ const usersService = {
                 user.password = await bcrypt.hash(data.password, 10);
                 createdUser = await user.save();
                 return user._id
+        },
+
+        readOne: async (fieldData) => {
+                return await User.findOne(userId).exec();
         },
 
         readOneById: async (userId) => {
@@ -18,8 +23,8 @@ const usersService = {
         },
 
         updateOneById: async (userId, data) => {
-                 await User.findByIdAndUpdate(userId, data);
-                 return User.findById(userId)
+                await User.findByIdAndUpdate(userId, data);
+                return User.findById(userId)
         },
 
         deleteOne: async (userId) => {

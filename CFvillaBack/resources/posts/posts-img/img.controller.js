@@ -4,20 +4,26 @@ const imgValidator = require('./img.validator')
 const imgController = {
 
     post: async (req, res) => {
-        const reqData =  {
-            fileName: req.file.filename,
-            originalFileName: req.file.originalname,
-            type: req.file.mimetype,
-            size: req.file.size
-        };
-        let data = undefined;
-        let newImgId = undefined;
-
-        !reqData? res.status(404).json({message:'no req.data'}) : data  = await imgValidator.validate(reqData);
-
-        !data? res.status(404).json({message:'no data'}) : newImgId = await imgService.create(data);
-        res.status(201).json(newImgId)
-            return console.log('Image Object created + stored + posted to database');     
+        try {
+            const data = {
+                fileName: req.file.filename,
+                originalFileName: req.file.originalname,
+                type: req.file.mimetype,
+                size: req.file.size
+            };
+            console.log(data);
+            const newImgId = await imgService.create(data);
+            
+            res.statusCode(201).json({
+                massage: 'image created, stored, posted to db',
+                newImgId: newImgId
+            })
+        } catch (error) {
+            res.json({
+                massage: 'imgController.post failure ==>',
+                error: error
+            })
+        }
     },
 
     getAll: async (req, res) => {
@@ -45,8 +51,6 @@ const imgController = {
     },
 
     deleteOneById: async (req, res) => {
-        console.log('deleOne-imgController');
-
         const id = req.params.id;
         const cb = await imgService.deleteOne(id)
         console.log(cb);

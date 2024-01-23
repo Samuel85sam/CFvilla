@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 const upload = multer({dest:'uploads/',storage});
 
 imgsRouter.route('/')
-    .post(authControl(),accessControl(),upload.single('uploaded_file'),validator(imgValidator),imgsController.post)
+    .post(authControl(),accessControl(),upload.single('uploaded_file'),imgsController.post)
     .get(imgController.getAll)
     .delete(authControl(),accessControl(),imgsController.deleteAll)
     .all((req,res) => { res.statusCode(405).send('request Unavalable') }

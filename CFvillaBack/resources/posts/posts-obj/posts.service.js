@@ -3,7 +3,8 @@ const postsService = {
 
     create: async (data) => {
         const post = new Post(data);
-        !post ? res.status(404).json({ message: "post cration failure in service" }) : await post.save();
+        posted = await post.save();
+        console.log('posted===>',posted);
         const newPostId = post._id;
         console.log('newPostId ==> ', newPostId);
         return newPostId
@@ -18,7 +19,8 @@ const postsService = {
     },
 
     updateOneById: async (postId, data) => {
-        return await Post.findByIdAndUpdate(postId, data);
+        const updatedPost = await Post.findByIdAndUpdate(postId, data);
+        return updatedPost;
     },
 
     populateOneById: async (postId) => {

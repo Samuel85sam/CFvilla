@@ -59,7 +59,8 @@ const postsController = {
         const updatedData = req.body;
         const postUpdated = await postsService.updateOneById(id, updatedData)
         if (postUpdated) {
-            res.status(200).json(postUpdated)
+            res.status(200).json({message : "post updated"})
+            
         } else {
             console.log(`post not found`)//!LOG;
             res.status(404)

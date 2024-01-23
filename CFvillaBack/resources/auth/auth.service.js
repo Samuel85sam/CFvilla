@@ -1,7 +1,13 @@
-//const db = require("mongoose");
 const jwt = require("jsonwebtoken");
-const userService = require("../users/users.service")
+const User = require('../users/users.model');
+const userService = require("../users/users.service");
 const authService = {
+
+    exists: async (field, data) => {
+        
+        return await User.exists({ [field]: data }); //  [field] pour utiliser la valeur dynamique de field :)
+    },
+
     newJwt: async (userId) => {
         const payload = { data: userId, };
         const secret = process.env.JWT_SECRET;
@@ -13,13 +19,13 @@ const authService = {
 
         try {
             const secret = process.env.JWT_SECRET;
-        response =  jwt.verify(token, secret)
-        console.log('response dans service ==>',response)
-        return response
+            response = jwt.verify(token, secret)
+            console.log('response dans service ==>', response)
+            return response
         } catch (error) {
-           res.status(422).json('unprocessable entity', error)
+            res.status(422).json('unprocessable entity', error)
         }
-        
+
     },
 
     addJwt: async (userId, token) => {

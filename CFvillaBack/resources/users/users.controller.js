@@ -3,19 +3,20 @@ const usersService = require('./users.service');
 
 const usersController = {
 
-    post: async (req, res) => {
-        
-        const userData =  req.body;;
+    create: async (req, res) => {
         try {
+            const userData = req.body;;
             const newUserId = await usersService.create(userData);
             res.status(201).json({
                 message: 'new User created and stored in database',
-                newUserId: `${newUserId}` }); 
+                newUserId: `${newUserId}`
+            });
         } catch (error) {
             res.status(500).json({
                 message: 'userService.create cb failure',
-            error: error})
-        }  
+                error: error
+            })
+        }
     },
 
     getOneById: async (req, res) => {
@@ -49,9 +50,9 @@ const usersController = {
             console.log(`no call-back`)//!LOG;
             res.status(404)
         }
-            res.status(200).json(cb)
+        res.status(200).json(cb)
 
-        
+
     },
 
     deleteOneById: async (req, res) => {
@@ -60,12 +61,22 @@ const usersController = {
         if (cb) {
             res.status(200)
                 .json(cb)
-                
+
         } else {
             console.log(`user not found(controller)`)//!LOG;
             res.status(404)
         };
     },
+
+    deleteAll: async (req, res) => {
+        try {
+            const cb = await usersService.deleteAll()
+            res.status(200).json(cb)
+        } catch (error) {
+            console.log(error);//!LOG
+        };
+
+    }
 
 }
 

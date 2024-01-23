@@ -1,30 +1,39 @@
 const Post = require('./posts.model')
 const postsService = require('./posts.service');
+const authService = require('../../auth/auth.service');
 const imgService = require('../posts-img/img.service');
-//const postsValidator = require('./posts.validator');
+const imgValidator = require('../posts-img/img.validator')
 
 const postsController = {
 
-    
+
     post: async (req, res) => {
-        console.log('req.body dans img controller ==>', req.body);
-        console.log('req.file dans img controller ==>', req.file);
         try {
-            const reqfileData =  {
-                fileName: req.file.filename,
-                originalFileName: req.file.originalname,
+            const imgData = {
+                originalName: req.file.originalname,
                 type: req.file.mimetype,
+                fileName: req.file.filename,
+                path: req.file.path,
                 size: req.file.size
+            }
+            console.log('imgData', imgData);
+            await imgValidator.validate(imgData);
+            const imgId = await imgService.create(imgData);
+            const currentUser = await authService.exists('_id', req.currentUser);
+            const data = {
+                type: req.body.type,
+                title: req.body.itle,
+                author: currentUser,
+                body: req.body.body,
+                img: imgId
             };
-            const reqData = req.body;
-            //const data = await postsValidator.validate(reqData)
-            const newPostId = await postsService.create(reqData);
-            const newImgId = await await imgService.create(reqfileData);
-           
+
+            const postId = await postsService.create(data);
+
             res.status(201).json({
                 message: 'post created',
-                postId: `${newPostId}`,
-                imgId: `${newImgId}`
+                postId: `${postId}`,
+                imgId: `${imgId}`
             });
         } catch (error) {
             console.error(error);
@@ -56,11 +65,12 @@ const postsController = {
 
     updateOneById: async (req, res) => {
         const id = req.params.id;
-        const updatedData = req.body;
+        const updatedData = req.file;
         const postUpdated = await postsService.updateOneById(id, updatedData)
+        console.log(postUpdated);
         if (postUpdated) {
-            res.status(200).json({message : "post updated"})
-            
+            res.status(200).json({ message: "post updated" })
+
         } else {
             console.log(`post not found`)//!LOG;
             res.status(404)
@@ -79,8 +89,6 @@ const postsController = {
                     if (!post) {
                         return res.status(404).json({ message: "Post non trouvé" });
                     };
-
-                    console.log(img, ' & ', author, ' are populated');
 
                     res.status(200).json({ post });
 
@@ -101,7 +109,6 @@ const postsController = {
     deleteOneById: async (req, res) => {
         const id = req.params.id;
         const deletedPost = await postsService.deleteOne(id)
-        console.log(`post deleted ===> ${JSON.stringify(deletedPost)}`)//!LOG;
         if (deletedPost) {
             res.status(200)
                 .json(deletedPost)

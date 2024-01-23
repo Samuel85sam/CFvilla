@@ -11,9 +11,6 @@ const Post = mongoose.model('Post', postSchema);
 module.exports = Post;
 
 
-//Validator
-// check types (enum)
-//required
-//relation (foreign key) user >< author 
+
 
 

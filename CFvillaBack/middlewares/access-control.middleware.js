@@ -10,7 +10,7 @@ const accessControl = () => {
             //une fois qu'un argument est envoyé dans le next()
             //express comprend que req s'arrête là et qu'on ne va pas dans le controller ou tt autrre action. (dans ce cas là il ne va pas dans next()↓↓)
         } else {
-            console.log('accCtrl currUser : ', crntUser);
+            console.log('accCtrl OK, current User : ', crntUser);
             next()
         }
     };

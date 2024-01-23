@@ -25,12 +25,11 @@ const usersService = {
         updateOneById: async (id, data) => {
                 try {
                         const updated = await User.findByIdAndUpdate(id, data, { new: true });
-                console.log('updated dans service : ', updated);
-                return updated;
+                        return updated;
                 } catch (error) {
                         console.error(error);
                 }
-                
+
         },
 
         deleteOne: async (userId) => {

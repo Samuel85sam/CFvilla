@@ -16,7 +16,6 @@ const imgService = {
     },
 
     deleteOne: async (imgId) => {
-        console.log('deleAll-imgService');
 
         return await Img.findByIdAndDelete(imgId);
     },

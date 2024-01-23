@@ -4,9 +4,7 @@ const postsService = {
     create: async (data) => {
         const post = new Post(data);
         posted = await post.save();
-        console.log('posted===>',posted);
         const newPostId = post._id;
-        console.log('newPostId ==> ', newPostId);
         return newPostId
     },
 
@@ -19,7 +17,7 @@ const postsService = {
     },
 
     updateOneById: async (postId, data) => {
-        const updatedPost = await Post.findByIdAndUpdate(postId, data);
+        const updatedPost = await Post.findByIdAndUpdate(postId, data,{option: "after"});
         return updatedPost;
     },
 
@@ -31,7 +29,6 @@ const postsService = {
             .populate('author')
             .exec();
 
-        console.log('post populated ==> ', post);
 
         !post ? res.status(404).json({ message: "no post to populate" }) : console.log('populated values', post.img, ' + ', post.author);
         return [post.img, post.author]

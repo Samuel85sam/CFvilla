@@ -11,7 +11,6 @@ const imgController = {
                 type: req.file.mimetype,
                 size: req.file.size
             };
-            console.log(data);
             const newImgId = await imgService.create(data);
             
             res.statusCode(201).json({
@@ -28,7 +27,6 @@ const imgController = {
 
     getAll: async (req, res) => {
         const cb = await imgService.readAll();
-        console.log(cb);
         if (cb) {
             res.status(200).json(cb)
         } else {
@@ -40,7 +38,6 @@ const imgController = {
     getOneById: async (req, res) => {
         id = req.params.id;
         const cb = await imgService.readOneById(id)
-        console.log(cb);
         if (cb) {
             res.status(200)
                 .json(cb)
@@ -53,7 +50,6 @@ const imgController = {
     deleteOneById: async (req, res) => {
         const id = req.params.id;
         const cb = await imgService.deleteOne(id)
-        console.log(cb);
         if (cb) {
             res.status(200)
                 .json(cb)
@@ -64,7 +60,6 @@ const imgController = {
 
     deleteAll: async (req, res) => {
         try {
-            console.log('deleAll-imgController');
             const cb = await imgService.deleteAll()
             res.status(200).json(cb)
         } catch (error) {

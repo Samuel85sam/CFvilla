@@ -19,8 +19,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({dest:'uploads/',storage});
 
-imgsRouter.route('/')
-    .post(authControl(),accessControl(),upload.single('uploaded_file'),imgsController.post)
+imgsRouter.route('/')//! CyberDanger?   ↓↓↓ pas de validation de fichier???                             
+    .post(authControl(),accessControl(),upload.single('uploaded_file'),imgsController.post, )
     .get(imgController.getAll)
     .delete(imgsController.deleteAll)
     .all((req,res) => { res.statusCode(405).send('request Unavalable') }

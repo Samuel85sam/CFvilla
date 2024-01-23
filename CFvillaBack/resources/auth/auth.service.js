@@ -20,7 +20,6 @@ const authService = {
         try {
             const secret = process.env.JWT_SECRET;
             response = jwt.verify(token, secret)
-            console.log('response dans service ==>', response)
             return response
         } catch (error) {
             res.status(422).json('unprocessable entity', error)

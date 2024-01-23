@@ -33,7 +33,6 @@ const usersController = {
 
     getAll: async (req, res) => {
         const allUsers = await usersService.readAll();
-        console.log(allUsers);
         if (allUsers) {
             res.status(200).json(allUsers)
         } else {
@@ -45,15 +44,12 @@ const usersController = {
     updateOneById: async (req, res) => {
         const id = req.params.id;
         const data = req.body;
-        console.log('data dans controller :', data);
         const cb = await usersService.updateOneById(id, data)
-        console.log('cb dans controller ==> ',cb);
         if (!cb) {
             console.log(`no user for this id`)//!LOG;
             res.status(404)
         }
         res.status(200).json(cb)
-
 
     },
 

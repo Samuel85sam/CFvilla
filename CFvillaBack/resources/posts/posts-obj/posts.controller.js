@@ -22,7 +22,7 @@ const postsController = {
             const currentUser = await authService.exists('_id', req.currentUser);
             const data = {
                 type: req.body.type,
-                title: req.body.itle,
+                title: req.body.title,
                 author: currentUser,
                 body: req.body.body,
                 img: imgId
@@ -65,7 +65,11 @@ const postsController = {
 
     updateOneById: async (req, res) => {
         const id = req.params.id;
-        const updatedData = req.file;
+        const updatedData = {
+            title: req.body.title,
+            body: req.body.body
+        }
+        console.log(updatedData);
         const postUpdated = await postsService.updateOneById(id, updatedData)
         console.log(postUpdated);
         if (postUpdated) {

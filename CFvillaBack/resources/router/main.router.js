@@ -4,6 +4,8 @@ const authRouter = require('./auth.router')
 const imgsRouter = require('./imgs.router')
 const logMiddleware = require('../../middlewares/log.middleware');
 
+
+
 const router = require('express').Router();
 router.use('/posts', postsRouter);
 router.use('/users', usersRouter);

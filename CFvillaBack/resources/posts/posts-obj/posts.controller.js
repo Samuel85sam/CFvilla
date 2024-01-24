@@ -16,7 +16,6 @@ const postsController = {
                 path: req.file.path,
                 size: req.file.size
             }
-            console.log('imgData', imgData);
             await imgValidator.validate(imgData);
             const imgId = await imgService.create(imgData);
             const currentUser = await authService.exists('_id', req.currentUser);
@@ -27,9 +26,10 @@ const postsController = {
                 body: req.body.body,
                 img: imgId
             };
-
+            console.log('data', data);
+            
             const postId = await postsService.create(data);
-
+            
             res.status(201).json({
                 message: 'post created',
                 postId: `${postId}`,
@@ -64,6 +64,7 @@ const postsController = {
     },
 
     updateOneById: async (req, res) => {
+        throw new Error ('erreur test')
         const id = req.params.id;
         const updatedData = {
             title: req.body.title,

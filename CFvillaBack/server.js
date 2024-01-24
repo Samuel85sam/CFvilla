@@ -30,7 +30,7 @@ server()
 const { PORT } = process.env;
 const port = PORT;
 // *Activation du middleware pour parser les données au format JSON
-app.use(express.json());
+app.use(express.json()); // ==> express attend un format json par defaut !!!!!
 app.listen(port, () => {
   console.log(`Server is running on port ${PORT}.`);
 })

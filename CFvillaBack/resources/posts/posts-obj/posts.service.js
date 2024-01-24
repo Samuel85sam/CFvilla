@@ -17,7 +17,9 @@ const postsService = {
     },
 
     updateOneById: async (postId, data) => {
-        const updatedPost = await Post.findByIdAndUpdate(postId, data,{option: "after"});
+        console.log('data ==> ',data);
+        const updatedPost = await Post.findByIdAndUpdate(postId, data,{new: "true"});
+    
         return updatedPost;
     },
 

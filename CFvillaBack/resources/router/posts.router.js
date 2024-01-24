@@ -29,7 +29,7 @@ postsRouter.route('/')//! CyberDanger?   ↓↓↓ pas de validation de fichier?
 postsRouter.route('/:id')
     .get(postsController.getOneById)
     .delete(authMiddleware(),accessControl(),postsController.deleteOneById)
-    .patch(authMiddleware(),accessControl(),postsController.updateOneById)
+    .patch(authMiddleware(),accessControl(),upload.single('uploaded_file'),postsController.updateOneById)
     .all((req,res) => { res.statusCode(405).send('request Unavalable') }
     );
 

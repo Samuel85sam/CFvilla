@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const authController = {
 
     login: async (req, res) => {
-        const userId = await authService.exists('adressMail',req.body.adressMail);
+        const userId = await authService.exists('adressMail', req.body.adressMail);
         if (userId === null) {
             return res.status(401).json({ message: "USER NOT FOUND" });
         } else {
@@ -14,12 +14,16 @@ const authController = {
             if (!passwordMatch) {
                 return res.status(401).json({ message: "Mot de passe incorrect" });
             };
-   
+
             const token = await authService.newJwt(userId)
             if (token) {
                 res.setHeader("Authorization", `Bearer ${token}`,);
                 await authService.addJwt(userId, token);
-                return res.status(200).json({ token });
+                return res.status(200)
+                    .json({
+                        token: token,
+                        id: userId
+                    });
             };
         };
 

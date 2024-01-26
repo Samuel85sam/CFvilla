@@ -19,33 +19,32 @@ import { useAuthStore } from "../../store-zustand/authStore";
 //import { useNavigate } from "react-router-dom";
 //import { GetToken } from '../../services/auth.services';
 const defaultTheme = createTheme();
-const SignIn = () => {
-  const currentUser = useAuthStore(state => state.currentUser)
-  console.log(currentUser)
+const SignIn =  () => {
+  const setUser =  useAuthStore((state) => state.addUserData)
+  
   const formik = useFormik({
 
     initialValues: {
-      adressMail: 'louis@gmail.com',
-      formPassword: "password"
+      adressMail: 'louis@gmail.com2',
+      formpassword: "password"
     },
 
-    onSubmit: (values) => {
-      postCheckAndRedirect(values)
-    },
+    onSubmit: (values) => {postCheckAndRedirect(values)}
 
   });
-//==========↓↓↓ à déplacer
+  //==========↓↓↓ à déplacer
   const postCheckAndRedirect = async (data) => {
-    console.log(data);
     try {
       const route = 'auth/';
       const response = await CRUD.postForm(data, route);
+      console.log('response CRUD ===> ',response.data);
       if (response.status === 200) {
-        const userId = response.data.id;
-        const token = response.data.token
-        console.log('userId : ',userId);
-        console.log('token : ',token);
-        //loadUserInfos(userId);
+        const userData = {
+          currentUser: response.data.id,
+          jwt : response.data.jwt,
+          isAuthenticated : true
+        }
+        setUser(userData);
       }
 
       //*↓↓↓ Yup fonctionne très bien avec Formik... just saying ^^
@@ -66,7 +65,7 @@ const SignIn = () => {
       console.log(`ERROR: ===> ${error}`);
     }
   };
-//==========↑↑↑ à déplacer
+  //==========↑↑↑ à déplacer
   return (
 
     <form onSubmit={formik.handleSubmit}>
@@ -98,10 +97,10 @@ const SignIn = () => {
             <label htmlFor="password">Password</label>
             <input
               id="password"
-              formPassword="password"
+              formpassword="password"
               type="password"
               onChange={formik.handleChange}
-              value={formik.values.formPassword}
+              value={formik.values.formpassword}
             />
             <Button
               type="submit"

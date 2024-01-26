@@ -15,7 +15,7 @@ const Auth = () => {
 
     <div id= "choiceButton">
       <Button
-      color = 'secondary'
+      color = 'info'
       onClick={handleAction}
       fullwidh= {'false'}
       size= 'large'

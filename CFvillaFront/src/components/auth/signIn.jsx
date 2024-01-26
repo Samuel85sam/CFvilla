@@ -3,71 +3,48 @@ import { useFormik } from 'formik';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CRUD from "../../business/api-requests/CRUD";
 import { useAuthStore } from "../../store-zustand/authStore";
-//import { useAuthStore } from "../../store/authStore";
-//import { useNavigate } from "react-router-dom";
-//import { GetToken } from '../../services/auth.services';
-const defaultTheme = createTheme();
-const SignIn =  () => {
-  const setUser =  useAuthStore((state) => state.addUserData)
-  
-  const formik = useFormik({
+import { useNavigate } from "react-router-dom";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+const defaultTheme = createTheme();
+const SignIn = () => {
+  const setUser = useAuthStore((state) => state.addUserData)
+  const navigate = useNavigate();
+
+  const formik = useFormik({
     initialValues: {
       adressMail: 'louis@gmail.com2',
       formpassword: "password"
     },
-
-    onSubmit: (values) => {postCheckAndRedirect(values)}
-
+    onSubmit: (values) => { postCheckAndRedirect(values) }
   });
-  //==========↓↓↓ à déplacer
-  const postCheckAndRedirect = async (data) => {
-    try {
-      const route = 'auth/';
-      const response = await CRUD.postForm(data, route);
-      console.log('response CRUD ===> ',response.data);
-      if (response.status === 200) {
-        const userData = {
-          currentUser: response.data.id,
-          jwt : response.data.jwt,
-          isAuthenticated : true
-        }
-        setUser(userData);
-      }
 
-      //*↓↓↓ Yup fonctionne très bien avec Formik... just saying ^^
-      else if (response.status === 401) {
-        navigate('/auth')
-        alert("Utilisateur inexistant");
+  const postCheckAndRedirect = async (data) => {
+    const route = 'auth/';
+    const response = await CRUD.postForm(data, route);
+    if (response === 404) {
+      console.alert('adresse mail ou password incorrect')
+      navigate('/auth')
+    } else {
+      const userData = {
+        currentUser: response.data.id,
+        jwt: response.data.jwt,
+        isAuthenticated: true
       }
-      else if (response.status === 418) {
-        navigate('/auth')
-        alert('I refuse the attempt to brew coffee    with a      teapot.')
-      }
-      else {
-        console.log(`(4)response stringifié dans signIn.postCkeckAndRedirect ===> ${JSON.stringify(response)}`);//!LOG
-      }
-    }
-    catch (error) {
-      console.log("LOGIN POST TO API OR RESPONSE FAILED");
-      console.log(`ERROR: ===> ${error}`);
+      setUser(userData);
+      navigate('/index')
     }
   };
-  //==========↑↑↑ à déplacer
-  return (
 
+  return (
     <form onSubmit={formik.handleSubmit}>
       <ThemeProvider theme={defaultTheme}>
         <Container component="main" maxWidth="xs">
@@ -121,5 +98,6 @@ const SignIn =  () => {
     </form>
   )
 }
+
 
 export default SignIn

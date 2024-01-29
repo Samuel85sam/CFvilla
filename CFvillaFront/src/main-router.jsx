@@ -14,7 +14,7 @@ const  mainRouter = createBrowserRouter([{
   path: "/",
     element: <Index />,
     errorElement: <div>ROOT Oops! There was an error.</div>,
-    exact: true,//← !!!
+    exact: true,//← !!! pour éviter que chaque url inconnue se retrouve là 
 }, {
   path: "auth",
   element: <Auth />,

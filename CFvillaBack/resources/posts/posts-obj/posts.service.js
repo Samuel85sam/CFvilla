@@ -10,9 +10,9 @@ const postsService = {
                 'author'
             ]
         }
-        postsService.readOneById(param);
         const newPostId = post._id;
-       
+        
+        await postsService.readOneById(newPostId,param);
         return newPostId
     },
 

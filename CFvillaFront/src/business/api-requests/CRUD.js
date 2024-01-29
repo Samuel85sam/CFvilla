@@ -13,9 +13,9 @@ const CRUD = {
         }
     },
 
-    getForm: async (route,data) => {
+    getForm: async (route,params) => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/${route}`,data)
+            const response = await axios.get(`http://localhost:3000/api/${route}`,{params})
             console.log('resonse in CRUD ==>', response);
             if (response.status === 200) {
                 return response.data

@@ -10,12 +10,11 @@ const authController = {
         } else {
             const user = await usersService.readOneById(userId);
             const hashedPassword = user.password
-            const passwordMatch = bcrypt.compare(req.body.formpassword, hashedPassword);
+            const passwordMatch = bcrypt.compare(req.body.formPassword, hashedPassword);
+            const token = await authService.newJwt(userId)
             if (!passwordMatch) {
                 return res.status(401).json({ message: "Mot de passe incorrect" });
             };
-
-            const token = await authService.newJwt(userId)
             if (token) {
                 res.setHeader("Authorization", `Bearer ${token}`,);
                 await authService.addJwt(userId, token);

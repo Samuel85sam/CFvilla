@@ -8,7 +8,7 @@ const postsController = {
 
 
     post: async (req, res) => {
-        try {
+       
             const imgData = {
                 originalName: req.file.originalname,
                 type: req.file.mimetype,
@@ -25,9 +25,7 @@ const postsController = {
                 author: currentUser,
                 body: req.body.body,
                 img: imgId
-            };
-            console.log('data', data);
-            
+            };            
             const postId = await postsService.create(data);
             
             res.status(201).json({
@@ -35,10 +33,7 @@ const postsController = {
                 postId: `${postId}`,
                 imgId: `${imgId}`
             });
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: "Internal Server Error" });
-        }
+            
     },
 
     getOneById: async (req, res) => {
@@ -54,7 +49,9 @@ const postsController = {
     },
 
     getAll: async (req, res) => {
-        const allPosts = await postsService.readAll();
+
+        const allPosts = await postsService.readAll(req.query);
+        console.log('req.query ==>',req.query);
         if (allPosts) {
             res.status(200).json(allPosts)
         } else {
@@ -64,7 +61,7 @@ const postsController = {
     },
 
     updateOneById: async (req, res) => {
-        throw new Error ('erreur test')
+        //throw new Error ('erreur test')
         const id = req.params.id;
         const updatedData = {
             title: req.body.title,

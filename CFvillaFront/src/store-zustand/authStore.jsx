@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { createJSONStorage, persist } from 'zustand/middleware'
+import { persist, devtools } from 'zustand/middleware'
 
 const initialUserState = {
     currentUser: null,
@@ -8,7 +8,7 @@ const initialUserState = {
 };
 
 export const useAuthStore = create(
-    persist(
+    persist(devtools(
         (set, get) => ({
             ...initialUserState,
             addUserData: (newUserData) => set((state) => (
@@ -17,20 +17,16 @@ export const useAuthStore = create(
                     jwt: newUserData.jwt,
                     isAuthenticated: true
                 }
+            )),
+            logout: ()=> set((state) =>(
+                {...initialUserState}
             ))
         })
-        ,
-        {
-            name: "authStorage",
-           
-
-            // partialize: (state) =>
-            // Object.fromEntries(
-            //   Object.entries(state).filter(([key]) => !['foo'].includes(key)),
-            // ),
-    
-        }
     )
+    ,
+    {
+        name: "authStorage"
+    })
 
 
 )

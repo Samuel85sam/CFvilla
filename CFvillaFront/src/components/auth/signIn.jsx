@@ -40,7 +40,7 @@ const SignIn = () => {
         isAuthenticated: true
       }
       setUser(userData);
-      navigate('/index')
+      navigate('/')
     }
   };
 

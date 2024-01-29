@@ -3,16 +3,25 @@ const postsService = {
 
     create: async (data) => {
         const post = new Post(data);
-        posted = await post.save();
+        const posted = await post.save();
+        const param = {
+            populate : [
+                'img',
+                'author'
+            ]
+        }
+        postsService.readOneById(param);
         const newPostId = post._id;
+       
         return newPostId
     },
 
-    readAll: async () => {
-        return await Post.find().exec()
+    readAll: async (param) => {
+       //console.log('param', param);
+        return await Post.find().populate(param.populate).exec()
     },
 
-    readOneById: async (postId) => {
+    readOneById: async (postId,param) => {
         return await Post.findById(postId).exec();
     },
 

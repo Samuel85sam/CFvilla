@@ -2,6 +2,7 @@ require('dotenv').config();
 require('express-async-errors');
 const express = require('express');
 const app = express();
+app.use('/static', express.static('uploads'));
 
 //process.env.NODE_ENV = "production"
 
@@ -43,6 +44,7 @@ app.use(cors(corsOptions));
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/static', express.static('uploads'));
 app.use('/api', router);
 
 //*tests

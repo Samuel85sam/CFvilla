@@ -12,36 +12,34 @@ import {
 
 const  mainRouter = createBrowserRouter([{
   path: "/",
-    element: <Index  />,
+    element: <Index />,
     errorElement: <div>ROOT Oops! There was an error.</div>,
-    children: [
-      {
-        path: "auth",
-        element: <Auth />,
-        errorElement: <div>ROOT Oops! There was an error.</div>,
-      },
-      {
-        path: "imgList",
-        element: <ImgList />,
-        errorElement: <div>ROOT Oops! There was an error.</div>,
-      },
-      {
-        path: "navBar",
-        element: <NavBar />,
-        errorElement: <div>ROOT Oops! There was an error.</div>,
-      },
-      {
-        path: "postForm",
-        element: <PostForm />,
-        errorElement: <div>ROOT Oops! There was an error.</div>,
-      },
-      {
-        path: "postList",
-        element: <PostList />,
-        errorElement: <div>ROOT Oops! There was an error.</div>,
-      },
-
-    ]
-}])
+    exact: true,//← !!!
+}, {
+  path: "auth",
+  element: <Auth />,
+  errorElement: <div>ROOT Oops! There was an error.</div>,
+},
+{
+  path: "imgList",
+  element: <ImgList />,
+  errorElement: <div>ROOT Oops! There was an error.</div>,
+},
+{
+  path: "navBar",
+  element: <NavBar />,
+  errorElement: <div>ROOT Oops! There was an error.</div>,
+},
+{
+  path: "postForm",
+  element: <PostForm />,
+  errorElement: <div>ROOT Oops! There was an error.</div>,
+},
+{
+  path: "postList",
+  element: <PostList />,
+  errorElement: <div>ROOT Oops! There was an error.</div>,
+},]
+)
 
 export default mainRouter

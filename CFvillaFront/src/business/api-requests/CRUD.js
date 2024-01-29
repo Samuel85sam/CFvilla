@@ -4,7 +4,7 @@ const CRUD = {
     postForm: async (data, route) => {
         try {
             const response = await axios.post(`http://localhost:3000/api/${route}`, data);
-            if (response === 200) {
+            if (response.status === 200) {
                 return response
             }
         } catch (error) {
@@ -13,18 +13,19 @@ const CRUD = {
         }
     },
 
-    getForm: async (data, route) => {
+    getForm: async (route,data) => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/${route}`, data)
-            if (response === 200) {
-                return response
+            const response = await axios.get(`http://localhost:3000/api/${route}`,data)
+            console.log('resonse in CRUD ==>', response);
+            if (response.status === 200) {
+                return response.data
             }
-        } catch (error) {
+        } catch (err) {
             console.log('getForm err ===> ', err.response);
             return err.response //!  ← ?? utile?
         }
     },
-
+ 
     patchForm: async (data, route) => {
         try {
             const response = await axios.patch(`http://localhost:3000/api/${route}`, data)

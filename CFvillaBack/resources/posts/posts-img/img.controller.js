@@ -13,11 +13,13 @@ const imgController = {
             };
             const newImgId = await imgService.create(data);
             
-            res.statusCode(201).json({
+            return res.status(201).json({
                 massage: 'image created, stored, posted to db',
                 newImgId: newImgId
             })
+            
         } catch (error) {
+            console.log(error);
             res.json({
                 massage: 'imgController.post failure ==>',
                 error: error
@@ -27,6 +29,7 @@ const imgController = {
 
     getAll: async (req, res) => {
         const cb = await imgService.readAll();
+        console.log('cb du readAll', cb);
         if (cb) {
             res.status(200).json(cb)
         } else {

@@ -31,7 +31,7 @@ const CRUD = {
 
     },
 
-    patchForm: async (data, route) => {
+    patchFormById: async (route,data) => {
         try {
             const response = await axios.patch(`http://localhost:3000/api/${route}`, data)
             if (response === 200) {
@@ -39,15 +39,15 @@ const CRUD = {
             } else {
                 return response.status
             }
-        } catch (error) {
+        } catch (err) {
             console.log('patchForm err ===> ', err.response);
             return err.response //!  ← ?? utile?
         }
     },
 
-    deleteForm: async (route, data) => {
-        console.log('route & data  CRUD.delete ==>',route ,' &',' ', data );
-        const response = await axios.delete(`http://localhost:3000/api/${route}`, data)
+    deleteFormById: async (route) => {
+        console.log('route   CRUD.delete ==>',route  );
+        const response = await axios.delete(`http://localhost:3000/api/${route}`)
         console.log('response CRUD.delete ==>',response);
         if (response === 200) {
             return response

@@ -23,20 +23,20 @@ const PostList = () => {
     setpost(posts)
   };
 
+  const deletePost = async (postId, posts) => {
+    console.log('postId index.deletePost ==> ', postId);
+    const route = `posts/${postId}`
+    await CRUD.deleteFormById(route)
+    allPosts()
+  };
+  
+  const redirect = (route) => {
+    navigate(route)
+  };
+  
   useEffect(() => {
     allPosts()
-  }, []);
-
-  const deletePost = (postId) => {
-    console.log('postId index.deletePost ==> ', postId);
-    const route = `posts/`
-    CRUD.deleteForm(route, postId)
-  };
-//TODO: req.params ==> postId ↑↑↑
-  const redirect = () => {
-    navigate('../postForm')
-  };
-
+  },[]);
   //   const post = (id, author, img, title, body) => {
   //     return {id, author, img, title, body}
   // }
@@ -83,13 +83,26 @@ const PostList = () => {
                   size='small'>
                   {'SUPPRIMER'}
                 </Button>
+                <Button
+                  color='error'
+                  onClick={
+                    (post) => {
+                      const postId = post._id
+                    redirect('../updatePost')
+                  }
+                }
+                  //TODO: faire un composant pour createPost et un autre pour updatePost ==> les deux enfants de postForm
+                  fullwidth={'false'}
+                  size='small'>
+                  {'Update'}
+                </Button>
               </TableRow>
             ))}
           </TableBody>
         </Table>
         <Button
           color='warning'
-          onClick={redirect}
+          onClick={() => redirect('../postForm')}
           fullwidth={'false'}
           size='medium'>
           {'poster du contenu'}

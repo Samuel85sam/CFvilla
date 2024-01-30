@@ -67,9 +67,9 @@ const postsController = {
             title: req.body.title,
             body: req.body.body
         }
-        console.log(updatedData);
+        console.log('updatedData dans postController',updatedData);
         const postUpdated = await postsService.updateOneById(id, updatedData)
-        console.log(postUpdated);
+        console.log('postUpdated dans postController',postUpdated);
         if (postUpdated) {
             res.status(200).json({ message: "post updated" })
 

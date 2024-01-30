@@ -5,6 +5,7 @@ import ImgList from './routes/back-office/img-list';
 import NavBar from './routes/back-office/nav-bar';
 import PostForm from './routes/back-office/post-form';
 import PostList from './routes/back-office/post-list';
+import UpdatePost from './components/postForm/update-post';
 
 import {
   createBrowserRouter,
@@ -14,7 +15,7 @@ const  mainRouter = createBrowserRouter([{
   path: "/",
     element: <Index />,
     errorElement: <div>ROOT Oops! There was an error.</div>,
-    exact: true,//← !!! pour éviter que chaque url inconnue se retrouve là 
+    exact: true,//← !!! pour éviter que chaque url inconnue se retrouve là
 }, {
   path: "auth",
   element: <Auth />,
@@ -33,6 +34,11 @@ const  mainRouter = createBrowserRouter([{
 {
   path: "postForm",
   element: <PostForm />,
+  errorElement: <div>ROOT Oops! There was an error.</div>,
+},
+{
+  path: "updatePost",
+  element: <UpdatePost />,
   errorElement: <div>ROOT Oops! There was an error.</div>,
 },
 {

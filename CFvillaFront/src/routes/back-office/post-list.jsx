@@ -11,22 +11,31 @@ import Paper from '@mui/material/Paper';
 import { useNavigate } from "react-router-dom";
 
 
+
 const PostList = () => {
 
   const navigate = useNavigate();
   const [posts, setpost] = useState([])
   const allPosts = async () => {
-    const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
-    console.log('posts ===>', posts);
+    // const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
+    const posts = await CRUD.getForm('posts/')
+    //console.log('posts ===>', posts);
     setpost(posts)
   };
 
   useEffect(() => {
     allPosts()
   }, []);
-  const redirect = () =>{
+
+  const deletePost = (postId) => {
+    console.log('postId index.deletePost ==> ', postId);
+    const route = `posts/`
+    CRUD.deleteForm(route, postId)
+  };
+//TODO: req.params ==> postId ↑↑↑
+  const redirect = () => {
     navigate('../postForm')
-  }
+  };
 
   //   const post = (id, author, img, title, body) => {
   //     return {id, author, img, title, body}
@@ -39,10 +48,11 @@ const PostList = () => {
             <TableRow>
               <TableCell>List des posts</TableCell>
               <TableCell align="right">id</TableCell>
-              <TableCell align="right">author</TableCell>
-              <TableCell align="right">img</TableCell>
+              {/* <TableCell align="right">author</TableCell>
+              <TableCell align="right">img</TableCell> */}
               <TableCell align="right">title</TableCell>
               <TableCell align="right">body</TableCell>
+              <TableCell align="right"> ******** </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -54,27 +64,37 @@ const PostList = () => {
                 <TableCell component="th" scope="row">
                   {post.title}
                 </TableCell>
-                <TableCell align="right">{post.id}</TableCell>
-                <TableCell align="right">{post.author.firstName}</TableCell>
-                <TableCell align="right">{post.img.path}</TableCell>
-                <img
+                <TableCell align="right">{post._id}</TableCell>
+                {/* <TableCell align="right">{post.author.firstName}</TableCell> */}
+                {/* <TableCell align="right">{post.img.path}</TableCell> */}
+                {/* <img
+                  with= "50 px"
+                  height="50 px"
                   src={`http://localhost:3000/static/${post.img.fileName}`}
                   alt={post.img.title}
                   loading="lazy"
-                />
+                /> */}
                 <TableCell align="right">{post.title}</TableCell>
                 <TableCell align="right">{post.body}</TableCell>
+                <Button
+                  color='error'
+                  onClick={() => deletePost(post._id)}
+                  fullwidth={'false'}
+                  size='small'>
+                  {'SUPPRIMER'}
+                </Button>
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        <Button
+          color='warning'
+          onClick={redirect}
+          fullwidth={'false'}
+          size='medium'>
+          {'poster du contenu'}
+        </Button>
       </TableContainer>
-      <Button color='inherit'
-        onClick={redirect}
-        fullwidth={'false'}
-        size='medium'>
-        {'poster du contenu'}
-      </Button>
     </>
   );
 };

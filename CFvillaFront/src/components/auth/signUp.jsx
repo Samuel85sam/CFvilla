@@ -47,7 +47,7 @@ const SignUp = () => {
   const postStoreAndRedirect = async (inputValue) => {
     const formValues = inputValue
     const route = 'users/';
-    const result = await CRUD.postForm(formValues, route);
+    const result = await CRUD.postForm(route, formValues);
     try {
       if (result.status === 201) {
         window.location.reload(true)

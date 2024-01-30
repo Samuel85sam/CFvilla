@@ -8,30 +8,30 @@ const postsController = {
 
 
     post: async (req, res) => {
-       
-            const imgData = {
-                originalName: req.file.originalname,
-                type: req.file.mimetype,
-                fileName: req.file.filename,
-                path: req.file.path,
-                size: req.file.size
-            }
-            await imgValidator.validate(imgData);
-            const imgId = await imgService.create(imgData);
-            const currentUser = await authService.exists('_id', req.currentUser);
+        console.log('req.file in postController ==> ', req.file);
+            // const imgData = {
+            //     originalname: req.file.originalname,
+            //     type: req.file.mimetype,
+            //     fileName: req.file.filename,
+            //     path: req.file.path,
+            //     size: req.file.size
+            // }
+           //await imgValidator.validate(imgData);
+           // const imgId = await imgService.create(imgData);
+           // const currentUser = await authService.exists('_id', req.currentUser);
             const data = {
                 type: req.body.type,
                 title: req.body.title,
-                author: currentUser,
+                //author: currentUser,
                 body: req.body.body,
-                img: imgId
+               // img: imgId
             };            
             const postId = await postsService.create(data);
             
             res.status(201).json({
                 message: 'post created',
                 postId: `${postId}`,
-                imgId: `${imgId}`
+               // imgId: `${imgId}`
             });
             
     },
@@ -51,7 +51,7 @@ const postsController = {
     getAll: async (req, res) => {
 
         const allPosts = await postsService.readAll(req.query);
-        console.log('req.query ==>',req.query);
+        console.log('req.query ==>',JSON.stringify(req.query));
         if (allPosts) {
             res.status(200).json(allPosts)
         } else {
@@ -109,7 +109,11 @@ const postsController = {
     },
 
     deleteOneById: async (req, res) => {
+        console.log('req.params back-postController.deleOne ==> ', JSON.stringify(req.params));
+
         const id = req.params.id;
+        console.log('id back-postController.deleOne ==> ', id);
+
         const deletedPost = await postsService.deleteOne(id)
         if (deletedPost) {
             res.status(200)

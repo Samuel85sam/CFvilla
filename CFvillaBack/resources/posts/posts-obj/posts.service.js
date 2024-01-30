@@ -46,6 +46,7 @@ const postsService = {
     },
 
     deleteOne: async (postId) => {
+        console.log('postId back-postService.deleOne ==> ', postId);
         return await Post.findByIdAndDelete(postId);
     },
 

@@ -12,7 +12,8 @@ import PostList from './post-list'
 const Index = () => {
 
   const [isLoggedIn, setisLoggedIn] = useState(false);
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  // const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  const isAuthenticated = true
   const setInitialState = useAuthStore((state) => state.logout)
   const navigate = useNavigate()
   const logout = () => {

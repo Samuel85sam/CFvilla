@@ -1,8 +1,9 @@
 import { create } from "zustand"
 import { persist, devtools } from 'zustand/middleware'
+import { setUserJwt } from "../business/api-requests/CRUD";
 
 const initialUserState = {
-    currentUser: null,
+    currentUser: 'ksdfgelrifg',
     jwt: null,
     isAuthenticated: false,
 };
@@ -25,7 +26,10 @@ export const useAuthStore = create(
     )
     ,
     {
-        name: "authStorage"
+        name: "authStorage",
+        onRehydrateStorage: (state) => {
+            setUserJwt(state.jwt)
+        }
     })
 
 

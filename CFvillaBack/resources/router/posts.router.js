@@ -12,6 +12,7 @@ const storage = multer.diskStorage({
     },
     //* ↓ ajout du .type de fichier après le "filename" ↓
     filename: function (req, file, cb) {
+        console.log('file dans multer ',file);
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
         cb(null, uniqueSuffix+file.originalname)
     }
@@ -19,9 +20,10 @@ const storage = multer.diskStorage({
 const upload = multer({dest:'uploads/',storage});
 
 postsRouter.route('/')//! CyberDanger?   ↓↓↓ pas de validation de fichier???              
-    .post(authMiddleware(),accessControl(),upload.single('uploaded_file'),validator(postValidator),postsController.post)//*img validator?
+    // .post(authMiddleware(),accessControl(),upload.single('uploaded_file'),validator(postValidator),postsController.post)//*img validator?
+    .post(postsController.post)
     .get(postsController.getAll)
-    .delete(postsController.deleteAll)
+    .delete(postsController.deleteOneById)
     .patch(authMiddleware(),accessControl(),postsController.populateOne)
     .all((req,res) => { res.statusCode(405).send('request Unavalable') }
     );

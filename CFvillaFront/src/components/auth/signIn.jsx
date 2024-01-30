@@ -13,6 +13,7 @@ import CRUD from "../../business/api-requests/CRUD";
 import { useAuthStore } from "../../store-zustand/authStore";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from "axios";
 
 const defaultTheme = createTheme();
 const SignIn = () => {
@@ -21,7 +22,7 @@ const SignIn = () => {
 
   const formik = useFormik({
     initialValues: {
-      adressMail: 'louis@gmail.com2',
+      adressMail: 'samuel@gmail.com2',
       formpassword: "password"
     },
     onSubmit: (values) => { postCheckAndRedirect(values) }
@@ -29,7 +30,11 @@ const SignIn = () => {
 
   const postCheckAndRedirect = async (data) => {
     const route = 'auth/';
-    const response = await CRUD.postForm(data, route);
+    const response = await CRUD.postForm(route, data,{
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
     if (response === 404) {
       console.alert('adresse mail ou password incorrect')
       navigate('/auth')
@@ -39,6 +44,7 @@ const SignIn = () => {
         jwt: response.data.jwt,
         isAuthenticated: true
       }
+      axios.defaults.headers.common['Authorization'] = `Bearer ${userData.jwt}`;
       setUser(userData);
       navigate('/')
     }

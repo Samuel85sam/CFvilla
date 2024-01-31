@@ -8,31 +8,31 @@ const postsController = {
 
 
     post: async (req, res) => {
-            // const imgData = {
-            //     originalname: req.file.originalname,
-            //     type: req.file.mimetype,
-            //     fileName: req.file.filename,
-            //     path: req.file.path,
-            //     size: req.file.size
-            // }
-           //await imgValidator.validate(imgData);
-           // const imgId = await imgService.create(imgData);
-           // const currentUser = await authService.exists('_id', req.currentUser);
-            const data = {
-                type: req.body.type,
-                title: req.body.title,
-                //author: currentUser,
-                body: req.body.body,
-               // img: imgId
-            };            
-            const postId = await postsService.create(data);
-            
-            res.status(201).json({
-                message: 'post created',
-                postId: `${postId}`,
-               // imgId: `${imgId}`
-            });
-            
+        // const imgData = {
+        //     originalname: req.file.originalname,
+        //     type: req.file.mimetype,
+        //     fileName: req.file.filename,
+        //     path: req.file.path,
+        //     size: req.file.size
+        // }
+        //await imgValidator.validate(imgData);
+        // const imgId = await imgService.create(imgData);
+        // const currentUser = await authService.exists('_id', req.currentUser);
+        const data = {
+            type: req.body.type,
+            title: req.body.title,
+            //author: currentUser,
+            body: req.body.body,
+            // img: imgId
+        };
+        const postId = await postsService.create(data);
+
+        res.status(201).json({
+            message: 'post created',
+            postId: `${postId}`,
+            // imgId: `${imgId}`
+        });
+
     },
 
     getOneById: async (req, res) => {
@@ -62,7 +62,7 @@ const postsController = {
         //throw new Error ('erreur test')
         const id = req.params.id;
         const updatedData = {
-            type : req.body.type,
+            type: req.body.type,
             title: req.body.title,
             body: req.body.body
         }

@@ -20,13 +20,13 @@ const PostForm = (props) => {
     // }
 
     const sendPost = async (data) => {
-        if (post == undefined ) {
+        if (post == undefined) {
             const route = 'posts/';
-             await CRUD.postForm(route, data);
-             navigate('/');
-        }else{
+            await CRUD.postForm(route, data);
+            navigate('/');
+        } else {
             const route = `posts/${post._id}`;
-             await CRUD.patchFormById(route, data);
+            await CRUD.patchFormById(route, data);
             navigate('/');
         }
     };

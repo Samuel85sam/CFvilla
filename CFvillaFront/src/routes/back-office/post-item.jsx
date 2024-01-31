@@ -31,7 +31,7 @@ const PostItem = () => {
   return (
     <PostForm
       post={post}
-  
+
     />
   )
 }

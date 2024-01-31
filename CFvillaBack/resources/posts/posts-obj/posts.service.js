@@ -5,14 +5,14 @@ const postsService = {
         const post = new Post(data);
         const posted = await post.save();
         const param = {
-            populate : [
+            populate: [
                 'img',
                 'author'
             ]
         }
         const newPostId = post._id;
-        
-        await postsService.readOneById(newPostId,param);
+
+        await postsService.readOneById(newPostId, param);
         return newPostId
     },
 
@@ -20,13 +20,13 @@ const postsService = {
         return await Post.find().populate(param.populate).exec()
     },
 
-    readOneById: async (postId,param) => {
+    readOneById: async (postId, param) => {
         return await Post.findById(postId).exec();
     },
 
     updateOneById: async (postId, data) => {
-        const updatedPost = await Post.findByIdAndUpdate(postId, data,{new: "true"});
-    
+        const updatedPost = await Post.findByIdAndUpdate(postId, data, { new: "true" });
+
         return updatedPost;
     },
 

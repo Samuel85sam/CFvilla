@@ -8,7 +8,6 @@ const postsController = {
 
 
     post: async (req, res) => {
-        console.log('req.file in postController ==> ', req.file);
             // const imgData = {
             //     originalname: req.file.originalname,
             //     type: req.file.mimetype,
@@ -51,7 +50,6 @@ const postsController = {
     getAll: async (req, res) => {
 
         const allPosts = await postsService.readAll(req.query);
-        console.log('req.query ==>',JSON.stringify(req.query));
         if (allPosts) {
             res.status(200).json(allPosts)
         } else {
@@ -64,12 +62,11 @@ const postsController = {
         //throw new Error ('erreur test')
         const id = req.params.id;
         const updatedData = {
+            type : req.body.type,
             title: req.body.title,
             body: req.body.body
         }
-        console.log('updatedData dans postController',updatedData);
         const postUpdated = await postsService.updateOneById(id, updatedData)
-        console.log('postUpdated dans postController',postUpdated);
         if (postUpdated) {
             res.status(200).json({ message: "post updated" })
 
@@ -109,10 +106,8 @@ const postsController = {
     },
 
     deleteOneById: async (req, res) => {
-        console.log('req.params back-postController.deleOne ==> ', JSON.stringify(req.params));
 
         const id = req.params.id;
-        console.log('id back-postController.deleOne ==> ', id);
 
         const deletedPost = await postsService.deleteOne(id)
         if (deletedPost) {

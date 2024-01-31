@@ -44,10 +44,10 @@ const postToUpdate = async (postId) => {
  
    const postToPatch = postToUpdate(postId)
    
-  // console.log('  postToPatch  ==>', postToPatch);
-  // console.log('  postToPatch.type  ==>', postToPatch.type);
-  // console.log('  postToPatch.title ==>', postToPatch.title);
-  // console.log('  postToPatch.body ==>', postToPatch.body);
+  console.log('  postToPatch  ==>', postToPatch);
+  console.log('  postToPatch.type  ==>', postToPatch.type);
+  console.log('  postToPatch.title ==>', postToPatch.title);
+  console.log('  postToPatch.body ==>', postToPatch.body);
   
   //const route = `posts/${postId}`
   //const postToPatch = await CRUD.getForm(route)

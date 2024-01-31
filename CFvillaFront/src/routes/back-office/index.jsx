@@ -45,7 +45,7 @@ const Index = () => {
   return (
     <>
     
-      {isLoggedIn ? <PostList /> :<Auth />}
+      {isLoggedIn ? <PostList /> : <Auth />}
 
       <div id='logoutButton'>
         <Button color='primary'

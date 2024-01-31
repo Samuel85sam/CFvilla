@@ -7,6 +7,7 @@ app.use('/static', express.static('uploads'));
 //process.env.NODE_ENV = "production"
 
 const errorHandling = (err, req, res, next) => {
+  console.log(err);
   res.status(500).json({
     msg: err.message,
     success: false

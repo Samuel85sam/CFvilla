@@ -16,30 +16,27 @@ const PostList = () => {
 
   const navigate = useNavigate();
   const [posts, setpost] = useState([])
+
   const allPosts = async () => {
     // const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
-    const posts = await CRUD.getForm('posts/')
-    //console.log('posts ===>', posts);
+    const posts = await CRUD.getForm('posts/');
     setpost(posts)
   };
 
-  const deletePost = async (postId, posts) => {
-    console.log('postId index.deletePost ==> ', postId);
+  const deletePost = async (postId) => {
     const route = `posts/${postId}`
     await CRUD.deleteFormById(route)
     allPosts()
   };
-  
+
   const redirect = (route) => {
     navigate(route)
   };
-  
+
   useEffect(() => {
     allPosts()
-  },[]);
-  //   const post = (id, author, img, title, body) => {
-  //     return {id, author, img, title, body}
-  // }
+  }, []);
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -48,6 +45,7 @@ const PostList = () => {
             <TableRow>
               <TableCell>List des posts</TableCell>
               <TableCell align="right">id</TableCell>
+              <TableCell align="right">type</TableCell>
               {/* <TableCell align="right">author</TableCell>
               <TableCell align="right">img</TableCell> */}
               <TableCell align="right">title</TableCell>
@@ -61,10 +59,9 @@ const PostList = () => {
                 key={post._id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  {post.title}
-                </TableCell>
+                <TableCell component="th" scope="row"></TableCell>
                 <TableCell align="right">{post._id}</TableCell>
+                <TableCell align="right">{post.type}</TableCell>
                 {/* <TableCell align="right">{post.author.firstName}</TableCell> */}
                 {/* <TableCell align="right">{post.img.path}</TableCell> */}
                 {/* <img
@@ -76,33 +73,29 @@ const PostList = () => {
                 /> */}
                 <TableCell align="right">{post.title}</TableCell>
                 <TableCell align="right">{post.body}</TableCell>
-                <Button
-                  color='error'
-                  onClick={() => deletePost(post._id)}
-                  fullwidth={'false'}
-                  size='small'>
-                  {'SUPPRIMER'}
-                </Button>
-                <Button
-                  color='error'
-                  onClick={
-                    (post) => {
-                      const postId = post._id
-                    redirect('../updatePost')
-                  }
-                }
-                  //TODO: faire un composant pour createPost et un autre pour updatePost ==> les deux enfants de postForm
-                  fullwidth={'false'}
-                  size='small'>
-                  {'Update'}
-                </Button>
+                <TableCell align="justify">
+                  <Button
+                    color='error'
+                    onClick={() => deletePost(post._id)}
+                    fullwidth={'false'}
+                    size='small'>
+                    {'SUPPRIMER'}
+                  </Button>
+                  <Button
+                    color='info'
+                    onClick={() => redirect(`posts/${post._id}`)}
+                    fullwidth={'false'}
+                    size='small'>
+                    {'Update'}
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
         <Button
-          color='warning'
-          onClick={() => redirect('../postForm')}
+          color='info'
+          onClick={() => redirect(`posts/new`)}
           fullwidth={'false'}
           size='medium'>
           {'poster du contenu'}
@@ -111,9 +104,5 @@ const PostList = () => {
     </>
   );
 };
-
-
-
-
 
 export default PostList

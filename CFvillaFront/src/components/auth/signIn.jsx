@@ -29,7 +29,7 @@ const SignIn = () => {
   });
 
   const postCheckAndRedirect = async (data) => {
-    const route = 'auth/';
+    const route = 'auth';
     const response = await CRUD.postForm(route, data,{
       headers: {
         'Content-Type': 'multipart/form-data'

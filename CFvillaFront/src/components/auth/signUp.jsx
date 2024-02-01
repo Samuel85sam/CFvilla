@@ -46,7 +46,7 @@ const SignUp = () => {
     
   const postStoreAndRedirect = async (inputValue) => {
     const formValues = inputValue
-    const route = 'users/';
+    const route = 'users';
     const result = await CRUD.postForm(route, formValues);
     try {
       if (result.status === 201) {

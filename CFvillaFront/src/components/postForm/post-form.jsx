@@ -21,7 +21,7 @@ const PostForm = (props) => {
 
     const sendPost = async (data) => {
         if (post == undefined) {
-            const route = 'posts/';
+            const route = 'posts';
             await CRUD.postForm(route, data);
             navigate('/');
         } else {

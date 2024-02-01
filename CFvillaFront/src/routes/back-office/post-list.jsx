@@ -25,7 +25,10 @@ const PostList = () => {
 
   const deletePost = async (postId) => {
     const route = `posts/${postId}`
-    await CRUD.deleteFormById(route)
+    const response = await CRUD.deleteFormById(route);
+    if (response===401) {
+      navigate('auth/')
+    }
     allPosts()
   };
 

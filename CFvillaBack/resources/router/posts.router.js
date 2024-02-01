@@ -2,7 +2,7 @@ const postsController = require('../posts/posts-obj/posts.controller');
 const postValidator = require('../posts/posts-obj/posts.validator');
 const postsRouter = require('express').Router();
 const accessControl = require('../../middlewares/access-control.middleware');
-const authMiddleware =require('../../middlewares/auth.middleware');
+const authMiddleware = require('../../middlewares/auth.middleware');
 const validator = require('../../middlewares/validator.middleware')
 const logMiddleware = require('../../middlewares/log.middleware');
 const multer = require('multer');
@@ -12,32 +12,30 @@ const storage = multer.diskStorage({
     },
     //* ↓ ajout du .type de fichier après le "filename" ↓
     filename: function (req, file, cb) {
-        console.log('file dans multer ',file);
+        console.log('file dans multer ', file);
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-        cb(null, uniqueSuffix+file.originalname)
+        cb(null, uniqueSuffix + file.originalname)
     }
 });
-const upload = multer({dest:'uploads/',storage});
+const upload = multer({ dest: 'uploads/', storage });
 
-postsRouter.route('/')//! CyberDanger?   ↓↓↓ pas de validation de fichier???              
-    // .post(authMiddleware(),accessControl(),upload.single('uploaded_file'),validator(postValidator),postsController.post)//*img validator?
-    .post(postsController.post)
+postsRouter.route('/')
+    .post(authMiddleware(), accessControl(), upload.single('uploaded_file'), validator(postValidator), postsController.post)
+    //*img validator?↑↑↑
+    //.post(postsController.post)
     .get(postsController.getAll)
-    .delete(postsController.deleteOneById)
-    .patch(authMiddleware(),accessControl(),postsController.populateOne)
-    .all((req,res) => { res.statusCode(405).send('request Unavalable') }
+    .delete(authMiddleware(), accessControl(), postsController.deleteAll)
+    .patch(authMiddleware(), accessControl(),validator(postValidator), postsController.populateOne)
+    .all((req, res) => { res.status(405).send('request Unavalable') }
     );
 
 postsRouter.route('/:id')
-    .get(postsController.getOneById)
-    //.delete(authMiddleware(),accessControl(),postsController.deleteOneById)
-    .delete(postsController.deleteOneById)
-    // .patch(authMiddleware(),accessControl(),upload.single('uploaded_file'),postsController.updateOneById)
-    .patch(postsController.updateOneById)
-    .all((req,res) => { res.statusCode(405).send('request Unavalable') }
+    //.get(postsController.getOneById)
+    .delete(authMiddleware(),accessControl(),logMiddleware,postsController.deleteOneById)
+    //.delete(postsController.deleteOneById)
+    .patch(authMiddleware(),accessControl(),validator(postValidator),postsController.updateOneById)
+    //.patch(authMiddleware(),accessControl(),upload.single('uploaded_file'),validator(postValidator),postsController.updateOneById)
+    .all((req, res) => { res.status(405).send('request Unavalable') }
     );
-
-postsRouter.route('/patch/:id')
-    
 
 module.exports = postsRouter;

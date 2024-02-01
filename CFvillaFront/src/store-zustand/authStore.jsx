@@ -3,7 +3,7 @@ import { persist, devtools } from 'zustand/middleware'
 import { setUserJwt } from "../business/api-requests/CRUD";
 
 const initialUserState = {
-    currentUser: 'ksdfgelrifg',
+    currentUser: 'the dev User',
     jwt: null,
     isAuthenticated: false,
 };

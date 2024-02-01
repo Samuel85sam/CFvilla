@@ -30,7 +30,7 @@ const CRUD = {
 
     postForm: async (route, data) => {
         console.log('data in CRUD.postform ==> ==> ', data);
-        const response = await axios.post(`${process.env.API_HOST}${route}`, data);
+        const response = await axios.post(`${process.env.API_HOST}`,`${route}`, data);
         console.log('response CRUD.post ==>', response);
 
 

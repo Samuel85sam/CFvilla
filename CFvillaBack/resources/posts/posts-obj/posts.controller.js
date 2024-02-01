@@ -27,7 +27,7 @@ const postsController = {
         };
         const postId = await postsService.create(data);
 
-        res.status(201).json({
+        res.status(200).json({
             message: 'post created',
             postId: `${postId}`,
             // imgId: `${imgId}`
@@ -48,7 +48,7 @@ const postsController = {
     },
 
     getAll: async (req, res) => {
-
+     
         const allPosts = await postsService.readAll(req.query);
         if (allPosts) {
             res.status(200).json(allPosts)

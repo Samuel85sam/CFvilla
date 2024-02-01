@@ -3,7 +3,6 @@ import guestRouter from "./guest-router";
 import { React, useState, useEffect } from 'react';
 import { useAuthStore } from "./store-zustand/authStore";
 import { RouterProvider } from "react-router-dom";
-
 import './App.css';
 
 function App() {

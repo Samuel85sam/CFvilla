@@ -1,6 +1,6 @@
 import { create } from "zustand"
 import { persist, devtools } from 'zustand/middleware'
-import { setUserJwt } from "../business/api-requests/CRUD";
+import axios from "axios";
 
 const initialUserState = {
     currentUser: 'the dev User',
@@ -24,13 +24,13 @@ export const useAuthStore = create(
             ))
         })
     )
-    ,
-    {
-        name: "authStorage",
-        onRehydrateStorage: (state) => {
-            setUserJwt(state.jwt)
-        }
-    })
+        ,
+        {
+            name: "authStorage",
+            onRehydrateStorage: (state) => {
+                axios.defaults.headers.common['Authorization'] = `Bearer ${state.jwt}`; // → injection du jwt dans le header des requêtes 
+            }
+        })
 
 
 )

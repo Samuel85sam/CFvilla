@@ -30,7 +30,7 @@ const CRUD = {
 
     postForm: async (route, data) => {
         console.log('data in CRUD.postform ==> ==> ', data);
-        const response = await axios.post(`${import.meta.env.VITE_API_HOST}${route}`, data);
+        const response = await axios.post(`${import.meta.env.VITE_API_HOST}/${route}`, data);
         console.log('response CRUD.post ==>', response);
         if (response.status === 200) {
             return response
@@ -40,7 +40,7 @@ const CRUD = {
 
     getForm: async (route, params) => {
 
-        const response = await axios.get(`${import.meta.env.VITE_API_HOST}${route}`, { params });
+        const response = await axios.get(`${import.meta.env.VITE_API_HOST}/${route}`, { params });
         console.log('response CRUD.get ==>', response);
         if (response.status === 200) {
             return response.data
@@ -49,7 +49,7 @@ const CRUD = {
 
     patchFormById: async (route, data) => {
         try {
-            const response = await axios.patch(`${import.meta.env.VITE_API_HOST}${route}`, data)
+            const response = await axios.patch(`${import.meta.env.VITE_API_HOST}/${route}`, data)
             console.log('response CRUD.patch ==>', response);
             if (response === 200) {
                 return response
@@ -64,7 +64,7 @@ const CRUD = {
 
     deleteFormById: async (route) => {
 
-        const response = await axios.delete(`${import.meta.env.VITE_API_HOST}${route}`);
+        const response = await axios.delete(`${import.meta.env.VITE_API_HOST}/${route}`);
         console.log('response CRUD.delete ==>', response);
         if (response === 200) {
             return response

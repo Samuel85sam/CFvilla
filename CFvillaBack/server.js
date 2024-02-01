@@ -37,8 +37,8 @@ app.listen(port, () => {
   console.log(`Server is running on port ${PORT}.`);
 })
 var corsOptions = {
-//origin: "https://cfvillabackend.onrender.com"
-origin:"http://localhost:5173" //! attention !!! pas de "/"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+origin: "https://cfvillabackend.onrender.com"
+//origin:"http://localhost:5173" //! attention !!! pas de "/"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 };
 app.use(cors(corsOptions));
 

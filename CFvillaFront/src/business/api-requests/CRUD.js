@@ -3,6 +3,7 @@ import { useAuthStore } from "../../store-zustand/authStore";
 
 
 
+
 axios.interceptors.response.use(
     response => response,
     error => {
@@ -29,7 +30,7 @@ const CRUD = {
 
     postForm: async (route, data) => {
         console.log('data in CRUD.postform ==> ==> ', data);
-        const response = await axios.post(`http://localhost:3000/api/${route}`, data);
+        const response = await axios.post(`${process.env.API_HOST}${route}`, data);
         console.log('response CRUD.post ==>', response);
 
 
@@ -41,7 +42,7 @@ const CRUD = {
 
     getForm: async (route, params) => {
 
-        const response = await axios.get(`http://localhost:3000/api/${route}`, { params });
+        const response = await axios.get(`${process.env.API_HOST}${route}`, { params });
         console.log('response CRUD.get ==>', response);
         if (response.status === 200) {
             return response.data
@@ -51,7 +52,7 @@ const CRUD = {
 
     patchFormById: async (route, data) => {
         try {
-            const response = await axios.patch(`http://localhost:3000/api/${route}`, data)
+            const response = await axios.patch(`${process.env.API_HOST}${route}`, data)
             console.log('response CRUD.patch ==>', response);
 
             if (response === 200) {
@@ -67,7 +68,7 @@ const CRUD = {
 
     deleteFormById: async (route) => {
 
-        const response = await axios.delete(`http://localhost:3000/api/${route}`);
+        const response = await axios.delete(`${process.env.API_HOST}${route}`);
         console.log('response CRUD.delete ==>', response);
         if (response === 200) {
             return response

@@ -30,11 +30,7 @@ const CRUD = {
 
     postForm: async (route, data) => {
         console.log('data in CRUD.postform ==> ==> ', data);
-<<<<<<< HEAD
-        const response = await axios.post(`${process.env.API_HOST}`,`${route}`, data);
-=======
         const response = await axios.post(`${import.meta.env.VITE_API_HOST}${route}`, data);
->>>>>>> dev
         console.log('response CRUD.post ==>', response);
         if (response.status === 200) {
             return response

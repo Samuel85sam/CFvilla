@@ -31,7 +31,8 @@ const CRUD = {
     postForm: async (route, data) => {
         console.log('data in CRUD.postform ==> ==> ', data);
         const response = await axios.post(`${import.meta.env.VITE_API_HOST}/${route}`, data);
-        console.log('response CRUD.post ==>', response);
+        console.log('axios.post ; data =>',data);
+        console.log('axios.post response =>', response);
         if (response.status === 200) {
             return response
         }
@@ -41,7 +42,10 @@ const CRUD = {
     getForm: async (route, params) => {
 
         const response = await axios.get(`${import.meta.env.VITE_API_HOST}/${route}`, { params });
-        console.log('response CRUD.get ==>', response);
+        console.log('axios.post ; json.str ({params}) => ',JSON.stringify({params}) );
+        console.log('axios.post ; {params} => ',{params});
+        console.log('axios.post ; params => ',params)
+        console.log('axios.post response =>', response);
         if (response.status === 200) {
             return response.data
         }

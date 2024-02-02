@@ -48,7 +48,8 @@ var corsOptions = {
   //origin: corsOption
   origin: true
 };
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
+app.use(cors());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));

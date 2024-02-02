@@ -3,6 +3,7 @@ import { useAuthStore } from "../../store-zustand/authStore";
 
 
 
+//axios.defaults.withCredentials = false;
 
 axios.interceptors.response.use(
     response => response,

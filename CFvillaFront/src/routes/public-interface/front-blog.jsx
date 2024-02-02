@@ -42,7 +42,7 @@ const FrontBlog = () => {
             <div>
                 <ul>
                     {posts.map((post, index) => (
-                        <li
+                        <li style={{ listStyle: 'none' }}
                             key={index}
                         >
                             <Box component="span"

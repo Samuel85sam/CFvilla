@@ -29,7 +29,6 @@ const imgController = {
 
     getAll: async (req, res) => {
         const cb = await imgService.readAll();
-        console.log('cb du readAll', cb);
         if (cb) {
             res.status(200).json(cb)
         } else {

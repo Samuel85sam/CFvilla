@@ -13,7 +13,6 @@ axios.interceptors.response.use(
         if (status === 401) {
             console.log('Handle 401');
             useAuthStore.getState().logout();
-            //console.log('authStore state ==> ', useAuthStore.getState());
         } else if (status === 404) {
             console.log('axios intercepted → Handle 404 ==> not found errors', error);
         } else {
@@ -30,11 +29,9 @@ const CRUD = {
 
 
     postForm: async (route, data) => {
-        console.log('data in CRUD.postform ==> ==> ', data);
         const response = await axios.post(`${import.meta.env.VITE_API_HOST}/${route}`, data);
-        console.log('axios.post ; data =>',data);
-        console.log('axios.post response =>', response);
         if (response.status === 200) {
+            console.log('reponse axios.post => ', response);
             return response
         }
 
@@ -43,10 +40,7 @@ const CRUD = {
     getForm: async (route, params) => {
 
         const response = await axios.get(`${import.meta.env.VITE_API_HOST}/${route}`, { params });
-        console.log('axios.post ; json.str ({params}) => ',JSON.stringify({params}) );
-        console.log('axios.post ; {params} => ',{params});
-        console.log('axios.post ; params => ',params)
-        console.log('axios.post response =>', response);
+      
         if (response.status === 200) {
             return response.data
         }
@@ -55,7 +49,6 @@ const CRUD = {
     patchFormById: async (route, data) => {
         try {
             const response = await axios.patch(`${import.meta.env.VITE_API_HOST}/${route}`, data)
-            console.log('response CRUD.patch ==>', response);
             if (response === 200) {
                 return response
             } else {

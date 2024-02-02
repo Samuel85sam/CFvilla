@@ -9,13 +9,10 @@ const PostItem = () => {
   const params = useParams();
 
   const id = params.id;
-  console.log('post-item => id : ', id);
-
   const [post, setpost] = useState();
 
   const goToPostForm = async () => {
     if (id == 'new') {
-      console.log('newPost!');
       setpost()
     } else {
       const route = `posts/${id}`;

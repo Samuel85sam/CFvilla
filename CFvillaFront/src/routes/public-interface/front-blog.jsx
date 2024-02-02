@@ -8,8 +8,6 @@ import CRUD from '../../business/api-requests/CRUD';
 
 const FrontBlog = () => {
     const [posts, setpost] = useState([]);
-    console.log('posts => blog ', posts);
-
     const fetchPosts = async () => {
         // const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
         const fetchPosts = await CRUD.getForm('posts/');

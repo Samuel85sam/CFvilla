@@ -8,9 +8,6 @@ import './App.css';
 function App() {
 
   const [isLoggedIn, setisLoggedIn] = useState(false);
-
-  console.log('LOGGED ??? ==> ', isLoggedIn);
-
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   //----------------pour utiliser seulement le local storage ↓↓↓

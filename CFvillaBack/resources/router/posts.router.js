@@ -23,7 +23,7 @@ postsRouter.route('/')
     .post(authMiddleware(), accessControl(), upload.single('uploaded_file'), validator(postValidator), postsController.post)
     //*img validator?↑↑↑
     //.post(postsController.post)
-    .get(authMiddleware(), accessControl(),postsController.getAll)
+    .get(postsController.getAll)
     .delete(authMiddleware(), accessControl(), postsController.deleteAll)
     .patch(authMiddleware(), accessControl(),validator(postValidator), postsController.populateOne)
     .all((req, res) => { res.status(405).send('request Unavalable') }

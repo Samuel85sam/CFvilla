@@ -1,39 +1,35 @@
-voici le code d'un middleware d'authentification: 
+import React from 'react';
 
-const User = require('../resources/users/users.model')
-
-const authMiddleware = ()  => {
-    return   async  (req, res, next) => {
-        console.log('req ran by authMiddleware ');
-        const bearer = await req.headers['authorization'];
-        const tokenDecoded = bearer && bearer.split(' ')[1];
-        if (!tokenDecoded) {
-            res.status(401)
-            .send({ error: 'unauthorized' })
-            console.error('!!! unauthorized !!!');
-            next('unauthorized')
-        };
-        req.currentUser =  User.findOne({ jwt: `${tokenDecoded}` }).exec();
-        console.log('current user stored');
-        next();
-    };
-
+// Composant fonctionnel PostsList
+const PostsList = ({ posts }) => {
+  return (
+    <ul>
+      {/* Utilisation de la méthode map() pour itérer à travers chaque poste */}
+      {posts.map((post, index) => (
+        <li key={index}>
+          <h2>{post.title}</h2>
+          <p>{post.body}</p>
+        </li>
+      ))}
+    </ul>
+  );
 };
 
+// Exemple d'utilisation du composant PostsList
+const App = () => {
+  // Tableau de posts
+  const posts = [
+    { id: 1, title: 'Premier Post', body: 'Contenu du premier post...' },
+    { id: 2, title: 'Deuxième Post', body: 'Contenu du deuxième post...' },
+    { id: 3, title: 'Troisième Post', body: 'Contenu du troisième post...' },
+  ];
 
+  return (
+    <div>
+      {/* Utilisation du composant PostsList avec les données posts */}
+      <PostsList posts={posts} />
+    </div>
+  );
+};
 
-module.exports = authMiddleware;
-
-et voici une partie de ce que le terminal communique comme informations:
-
-current user stored
-current user ==>  Promise { <pending> }
-req ran by accessControlMiddleware
-OK => schema validated [Object: null prototype] {
-  type: 'postToCheck',
-  title: 'test validatoMiddleware',
-  author: '65ae34869a4b3305dcfa8748',
-  body: 'popular body !'
-}
-
-pourquoi current user = Promise { <pending> } ?
+export default App;

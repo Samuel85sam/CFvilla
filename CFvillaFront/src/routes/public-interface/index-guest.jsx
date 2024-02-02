@@ -1,6 +1,8 @@
 import { Button } from '@mui/material';
 import { React } from 'react';
 import { useNavigate } from 'react-router-dom';
+import FrontBlog from './front-blog';
+
 
 const IndexGuest = () => {
 
@@ -14,7 +16,7 @@ const IndexGuest = () => {
         <>
             <h1
             >
-                FRONT GUEST 
+                <FrontBlog/>
             </h1>
             <div id='logoutButton'>
                 <Button color='primary'

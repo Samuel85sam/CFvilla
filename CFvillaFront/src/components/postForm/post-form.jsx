@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import CRUD from "../../business/api-requests/CRUD";
 import { useNavigate } from "react-router-dom";
+import { Field } from 'formik';
 
 const defaultTheme = createTheme();
 
@@ -44,21 +45,21 @@ const PostForm = (props) => {
             initialValues={{
                 type: post?.type || '',
                 title: post?.title || '',
-                // author: '',
+                author: '',
                 body: post?.body || '',
-                //  img: null
+                img: null
             }}
             onSubmit={(values) => {
                 const payload = {
                     ...values,
-                    //author: "test",
-                    // img: {
-                    //   originalName: values.img.name,
-                    //   type:  values.img.type,
-                    //   fileName:  values.img.name,
-                    //   path:  values.img.webkitRelativePath,
-                    //   size:  values.img.size
-                    // }
+                    author: "test",
+                    img: {
+                        originalName: values.img.name,
+                        type: values.img.type,
+                        fileName: values.img.name,
+                        path: values.img.webkitRelativePath,
+                        size: values.img.size
+                    }
                 }
                 console.log('{values,payload} ==> ', { values, payload });
                 sendPost(payload)
@@ -105,24 +106,24 @@ const PostForm = (props) => {
                                     value={props.values.body}
                                 />
 
-                                {/* <Field
+                                <Field
                                     id="body"
                                     name="body"
                                     type="text"
-                                /> */}
+                                />
 
-                                {/* <label htmlFor="img">image</label>
-              <input
-                id="img"
-                name="img"
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const file = e.target.files[0]
-                  console.log('file postForm==>setFileValue ',file)
-                  props.setFieldValue('img', file)
-                }}
-              /> */}
+                                <label htmlFor="img">image</label>
+                                <input
+                                    id="img"
+                                    name="img"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => {
+                                        const file = e.target.files[0]
+                                        console.log('file postForm==>setFileValue ', file)
+                                        props.setFieldValue('img', file)
+                                    }}
+                                />
                                 <Button
                                     type="submit"
                                     variant="contained"

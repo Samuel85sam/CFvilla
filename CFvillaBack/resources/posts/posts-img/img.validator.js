@@ -9,10 +9,6 @@ const imgValidator = object({
     size: yup.number().required() 
   })
 
-// const imgValidator = object({
-//   name: yup.string().required(),
-//   type: yup.string().required(),
-//   size: yup.number().required() 
-// })
+
   
 module.exports = imgValidator

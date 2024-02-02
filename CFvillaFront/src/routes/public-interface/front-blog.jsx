@@ -2,13 +2,9 @@ import { useEffect, useState } from 'react';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CRUD from '../../business/api-requests/CRUD';
-
-
 
 const FrontBlog = () => {
     const [posts, setpost] = useState([]);
@@ -24,19 +20,6 @@ const FrontBlog = () => {
         fetchPosts()
     }, []);
 
-    // const bull = (
-    //     <Box
-    //         component="span"
-    //         sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-    //     >
-
-    //     </Box>
-    // );
-
-
-
-
-
     return (
         <>
             <div>
@@ -48,7 +31,7 @@ const FrontBlog = () => {
                             <Box component="span"
                                 sx={{
                                     minWidth: "600px",
-                                    width:'50%' ,
+                                    width: '50%',
                                     display: 'inline-block',
                                     mx: '2px',
                                     transform: 'scale(0.8)'
@@ -74,12 +57,10 @@ const FrontBlog = () => {
                                 </Card>
                             </Box>
 
-
                         </li>
                     ))}
                 </ul>
             </div >
-
         </>
     )
 };

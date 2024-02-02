@@ -11,29 +11,29 @@ const postsController = {
         try {
             
        
-        // const imgData = {
-        //     originalname: req.file.originalname,
-        //     type: req.file.mimetype,
-        //     fileName: req.file.filename,
-        //     path: req.file.path,
-        //     size: req.file.size
-        // }
-        //await imgValidator.validate(imgData);
-        // const imgId = await imgService.create(imgData);
-        // const currentUser = await authService.exists('_id', req.currentUser);
+        const imgData = {
+            originalname: req.file.originalName,
+            type: req.file.mimetype,
+            fileName: req.file.filename,
+            path: req.file.path,
+            size: req.file.size
+        }
+        await imgValidator.validate(imgData);
+        const imgId = await imgService.create(imgData);
+        const currentUser = await authService.exists('_id', req.currentUser);
         const data = {
             type: req.body.type,
             title: req.body.title,
-            //author: currentUser,
+            author: currentUser,
             body: req.body.body,
-            // img: imgId
+            img: imgId
         };
         const postId = await postsService.create(data);
 
         res.status(200).json({
             message: 'post created',
             postId: `${postId}`,
-            // imgId: `${imgId}`
+            imgId: `${imgId}`
         });
     } catch (error) {
         console.log('catch postController', error.status);

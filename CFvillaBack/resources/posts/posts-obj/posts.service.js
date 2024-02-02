@@ -17,8 +17,8 @@ const postsService = {
     },
 
     readAll: async (param) => {
-        // return await Post.find().populate(param.populate).exec()
-        return await Post.find().exec()
+        return await Post.find().populate(param.populate).exec()
+        //return await Post.find().exec()
     },
 
     readOneById: async (postId, param) => {

@@ -8,6 +8,9 @@ const postsController = {
 
 
     post: async (req, res) => {
+        try {
+            
+       
         // const imgData = {
         //     originalname: req.file.originalname,
         //     type: req.file.mimetype,
@@ -32,6 +35,10 @@ const postsController = {
             postId: `${postId}`,
             // imgId: `${imgId}`
         });
+    } catch (error) {
+        console.log('catch postController', error.status);
+            console.error(error)
+    }
 
     },
 

@@ -1,7 +1,9 @@
 require('dotenv').config();
 require('express-async-errors');
+const cors = require('cors');
 const express = require('express');
 const app = express();
+
 app.use('/static', express.static('uploads'));
 
 //process.env.NODE_ENV = "production"
@@ -18,13 +20,13 @@ const errorHandling = (err, req, res, next) => {
 
 const mongoose = require('mongoose');
 const router = require('./resources/router/main.router');
-const cors = require('cors');
+
 async function server() {
   try {
     await mongoose.connect(process.env.DB_CONNECT)
     console.log('===> mongoose.connect OK');
   } catch (error) {
-    console.log(`DB connection error ===> ${error}`); //!LOG
+    console.log(`DB connection error ===> ${error}`); 
   }
 }
 server()

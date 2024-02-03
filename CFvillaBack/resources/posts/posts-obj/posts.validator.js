@@ -1,9 +1,13 @@
 const yup = require("yup");
 const { object } = require('yup');
+const Img = require("../posts-img/img.model");
 
 const postsValidator = object({
-    title: yup.string().min(2).max(100).required(),
-    body: yup.string().min(2).max(5000).required()
+    type: yup.string().required(),
+    title: yup.string().required(),
+    author: yup.string(),
+    body: yup.string().required(),
+    img: yup.object(Img)
 })
 
 

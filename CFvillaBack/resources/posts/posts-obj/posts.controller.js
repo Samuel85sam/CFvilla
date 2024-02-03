@@ -9,14 +9,23 @@ const postsController = {
 
     post: async (req, res) => {
         try {
-            
+            console.log('req.body dans postCtrlr.post => ', req.body);
+            console.log('req.file dans postCtrlr.post => ', req.file);
+            console.log('req.img dans postCtrlr.post => ', req.img);
        
         const imgData = {
-            originalname: req.file.originalName,
-            type: req.file.mimetype,
-            fileName: req.file.filename,
-            path: req.file.path,
-            size: req.file.size
+            // originalname: req.file.originalName,
+            // type: req.file.mimetype,
+            // fileName: req.file.filename,
+            // path: req.file.path,
+            // size: req.file.size
+           // originalname: values.img.name,
+           lastModified:req.body.nlastModified,
+           name: req.body.name,
+           type: req.body.type,
+           // fileName: req.body.name,
+           path: req.body.webkitRelativePath,
+           size: req.body.size
         }
         await imgValidator.validate(imgData);
         const imgId = await imgService.create(imgData);

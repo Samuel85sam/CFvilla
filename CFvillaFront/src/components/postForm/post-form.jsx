@@ -15,10 +15,8 @@ const defaultTheme = createTheme();
 const PostForm = (props) => {
 
     const navigate = useNavigate();
-    console.log(props);
+    console.log('props dans post-form => ',props);
     const post = props.post
-    // const newPost = async () =>{
-    // }
 
     const sendPost = async (data) => {
         if (post == undefined) {
@@ -47,16 +45,18 @@ const PostForm = (props) => {
                 title: post?.title || '',
                 author: '',
                 body: post?.body || '',
-                img: null
+                img: post?.file || {},
             }}
             onSubmit={(values) => {
                 const payload = {
                     ...values,
                     author: "test",
                     img: {
-                        originalName: values.img.name,
+                        // originalname: values.img.name,
+                        lastModified:values.img.lastModified,
+                        name: values.img.name,
                         type: values.img.type,
-                        fileName: values.img.name,
+                        // fileName: values.img.name,
                         path: values.img.webkitRelativePath,
                         size: values.img.size
                     }
@@ -105,13 +105,6 @@ const PostForm = (props) => {
                                     onChange={props.handleChange}
                                     value={props.values.body}
                                 />
-
-                                <Field
-                                    id="body"
-                                    name="body"
-                                    type="text"
-                                />
-
                                 <label htmlFor="img">image</label>
                                 <input
                                     id="img"

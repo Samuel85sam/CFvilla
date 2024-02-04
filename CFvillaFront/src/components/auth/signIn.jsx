@@ -30,11 +30,7 @@ const SignIn = () => {
 
   const postCheckAndRedirect = async (data) => {
     const route = 'auth';
-    const response = await CRUD.postForm(route, data,{
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
+    const response = await CRUD.postForm(route, data);
     if (response === 404) {
       console.alert('adresse mail ou password incorrect')
       navigate('/auth')

@@ -1,6 +1,7 @@
 const postsController = require('../posts/posts-obj/posts.controller');
 const postValidator = require('../posts/posts-obj/posts.validator');
 const postsRouter = require('express').Router();
+const multerError = require('../../middlewares/multer-error-handeling')
 const accessControl = require('../../middlewares/access-control.middleware');
 const authMiddleware = require('../../middlewares/auth.middleware');
 const validator = require('../../middlewares/validator.middleware')
@@ -20,7 +21,7 @@ const storage = multer.diskStorage({
 const upload = multer({ dest: 'uploads/', storage });
 
 postsRouter.route('/')
-    .post(authMiddleware(), accessControl(), upload.single('img'),logMiddleware, validator(postValidator), postsController.post)
+    .post(authMiddleware(), accessControl(), upload.single('uploaded_file'),multerError,function(req,res){  console.log('router log => ',req.file, req.body)},logMiddleware, validator(postValidator), postsController.post)
     .get(postsController.getAll)
     .delete(authMiddleware(), accessControl(), postsController.deleteAll)
     .patch(authMiddleware(), accessControl(),validator(postValidator), postsController.populateOne)

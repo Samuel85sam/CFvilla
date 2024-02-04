@@ -9,13 +9,13 @@ import Container from '@mui/material/Container';
 import CRUD from "../../business/api-requests/CRUD";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from '../../store-zustand/authStore';
+import { Field } from 'formik';
 
 const defaultTheme = createTheme();
 
 const PostForm = (props) => {
 
-    const [imgFile, setImgFile] = useState(null);
-    console.log('imgFile ==> ', imgFile);
+    // const [imgFile, setImgFile] = useState(null);
     const currentUser = useAuthStore((state) => state.currentUser);
     const navigate = useNavigate();
     const post = props.post
@@ -23,7 +23,8 @@ const PostForm = (props) => {
     const sendPost = async (data) => {
         if (post == undefined) {
             const route = 'posts';
-            await CRUD.postForm(route, data);
+            const headers = { 'Content-Type': 'multipart/form-data' }
+            await CRUD.postForm(route, data, headers);
             navigate('/');
         } else {
             const route = `posts/${post._id}`;
@@ -41,37 +42,34 @@ const PostForm = (props) => {
 
     return (
         <Formik
-            enableReinitialize //! sinon formik garde la première initialisation !!!
-
+            enableReinitialize
             initialValues={{
                 type: post?.type || 'newPostType',
                 title: post?.title || 'newPostTitle',
                 author: post?.author || '',
                 body: post?.body || 'newPostBody',
-                img: post?.file || '',
             }}
 
             onSubmit={(values) => {
-
                 const payload = {
                     ...values,
                     author: currentUser,
-                    img: {
-                        lastModified: imgFile.lastModified,
-                        name: imgFile.name,
-                        type: imgFile.type,
-                        path: imgFile.webkitRelativePath,
-                        size: imgFile.size
-                    }
+                   // ...values.file
+                    // type: values.type,
+                    // title: values.title,
+                    // author: currentUser,
+                    // body: values.body,
+                    // image: values.uploaded_file
                 }
-                console.log('imgFile !!> ', imgFile);
                 console.log('payload ==> ', payload);
 
                 sendPost(payload)
             }}
         >
             {(props) => (
-                <Form>
+                <Form
+                    encType='multipart/form-data'
+                >
                     <ThemeProvider theme={defaultTheme}>
                         <Container component="main" maxWidth="md">
                             <CssBaseline />
@@ -113,14 +111,12 @@ const PostForm = (props) => {
                                 <label htmlFor="img">image</label>
                                 <input
                                     id="img"
-                                    name="img"
+                                    name="uploaded_file"
                                     type="file"
                                     accept="image/*"
                                     onChange={
-                                        (e) => {
-                                            const file = e.target.files[0]
-                                            console.log('imgFile setState ==> ', file)
-                                            setImgFile(file)
+                                        (event) => {
+                                            props.setFieldValue('uploaded_file', event.currentTarget.files[0])
                                         }
                                     }
                                 />

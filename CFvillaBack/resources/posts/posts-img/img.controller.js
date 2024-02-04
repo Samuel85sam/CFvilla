@@ -11,13 +11,14 @@ const imgController = {
                 type: req.file.mimetype,
                 size: req.file.size
             };
+            console.log('data ===> ',data);
             const newImgId = await imgService.create(data);
-            
+
             return res.status(201).json({
                 massage: 'image created, stored, posted to db',
                 newImgId: newImgId
             })
-            
+
         } catch (error) {
             console.log(error);
             res.json({

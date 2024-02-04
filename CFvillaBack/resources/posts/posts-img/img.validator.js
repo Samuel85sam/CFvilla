@@ -8,12 +8,12 @@ const imgValidator = object({
     // path: yup.string().required(),
     // size: yup.number().required() 
            // originalname: String,
-           lastModified: yup.number().required(),
-           name: yup.string().required(),
-           type: yup.string().required(),
+           lastModified: yup.number(),//.required(),
+           name: yup.string(),//.required(),
+           type: yup.string(),//.required(),
            // fileName: yup.string().required(),
-           path: yup.string().required(),
-           size: yup.number().required()
+           path: yup.string(),//.required(),
+           size: yup.number(),//.required()
   })
 
 

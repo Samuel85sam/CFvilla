@@ -18,8 +18,8 @@ const PostList = () => {
   const [posts, setpost] = useState([])
 
   const allPosts = async () => {
-    // const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
-    const posts = await CRUD.getForm('posts/');
+    const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
+   // const posts = await CRUD.getForm('posts/');
     setpost(posts)
   };
 

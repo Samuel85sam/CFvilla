@@ -8,14 +8,16 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import CRUD from "../../business/api-requests/CRUD";
 import { useNavigate } from "react-router-dom";
-import { Field } from 'formik';
+import { useAuthStore } from '../../store-zustand/authStore';
 
 const defaultTheme = createTheme();
 
 const PostForm = (props) => {
 
+    const [imgFile, setImgFile] = useState(null);
+    console.log('imgFile ==> ', imgFile);
+    const currentUser = useAuthStore((state) => state.currentUser);
     const navigate = useNavigate();
-    console.log('props dans post-form => ',props);
     const post = props.post
 
     const sendPost = async (data) => {
@@ -40,28 +42,31 @@ const PostForm = (props) => {
     return (
         <Formik
             enableReinitialize //! sinon formik garde la première initialisation !!!
+
             initialValues={{
-                type: post?.type || '',
-                title: post?.title || '',
-                author: '',
-                body: post?.body || '',
-                img: post?.file || {},
+                type: post?.type || 'newPostType',
+                title: post?.title || 'newPostTitle',
+                author: post?.author || '',
+                body: post?.body || 'newPostBody',
+                img: post?.file || '',
             }}
+
             onSubmit={(values) => {
+
                 const payload = {
                     ...values,
-                    author: "test",
+                    author: currentUser,
                     img: {
-                        // originalname: values.img.name,
-                        lastModified:values.img.lastModified,
-                        name: values.img.name,
-                        type: values.img.type,
-                        // fileName: values.img.name,
-                        path: values.img.webkitRelativePath,
-                        size: values.img.size
+                        lastModified: imgFile.lastModified,
+                        name: imgFile.name,
+                        type: imgFile.type,
+                        path: imgFile.webkitRelativePath,
+                        size: imgFile.size
                     }
                 }
-                console.log('{values,payload} ==> ', { values, payload });
+                console.log('imgFile !!> ', imgFile);
+                console.log('payload ==> ', payload);
+
                 sendPost(payload)
             }}
         >
@@ -111,11 +116,13 @@ const PostForm = (props) => {
                                     name="img"
                                     type="file"
                                     accept="image/*"
-                                    onChange={(e) => {
-                                        const file = e.target.files[0]
-                                        console.log('file postForm==>setFileValue ', file)
-                                        props.setFieldValue('img', file)
-                                    }}
+                                    onChange={
+                                        (e) => {
+                                            const file = e.target.files[0]
+                                            console.log('imgFile setState ==> ', file)
+                                            setImgFile(file)
+                                        }
+                                    }
                                 />
                                 <Button
                                     type="submit"

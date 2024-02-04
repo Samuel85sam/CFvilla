@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 const upload = multer({ dest: 'uploads/', storage });
 
 postsRouter.route('/')
-    .post(authMiddleware(), accessControl(), upload.single('uploaded_file'), validator(postValidator), postsController.post)
+    .post(authMiddleware(), accessControl(), upload.single('img'),logMiddleware, validator(postValidator), postsController.post)
     .get(postsController.getAll)
     .delete(authMiddleware(), accessControl(), postsController.deleteAll)
     .patch(authMiddleware(), accessControl(),validator(postValidator), postsController.populateOne)
@@ -29,7 +29,7 @@ postsRouter.route('/')
 
 postsRouter.route('/:id')
     .get(postsController.getOneById)
-    .delete(authMiddleware(),accessControl(),logMiddleware,postsController.deleteOneById)
+    .delete(authMiddleware(),accessControl(),postsController.deleteOneById)
     .delete(authMiddleware(),accessControl(),postsController.deleteOneById)
     .patch(authMiddleware(),accessControl(),upload.single('uploaded_file'),validator(postValidator),postsController.updateOneById)
     .all((req, res) => { res.status(405).send('request Unavalable') }

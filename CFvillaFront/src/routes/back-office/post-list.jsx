@@ -98,7 +98,7 @@ const PostList = () => {
         </Table>
         <Button
           color='info'
-          onClick={() => redirect(`posts/new`)}
+          onClick={() => redirect(`/posts/new`)}
           fullwidth={'false'}
           size='medium'>
           {'poster du contenu'}

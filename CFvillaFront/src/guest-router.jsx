@@ -15,7 +15,6 @@ const guestRouter = createBrowserRouter([
         element: <Auth />,
         errorElement: <div>ROOT Oops! There was an error.</div>,
     },
-
 ])
 
 export default guestRouter 

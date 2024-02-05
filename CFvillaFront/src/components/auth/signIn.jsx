@@ -13,9 +13,11 @@ import CRUD from "../../business/api-requests/CRUD";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
+import { useAuthStore } from "../../store-zustand/authStore";
 
 const defaultTheme = createTheme();
 const SignIn = () => {
+  const setUserData = useAuthStore(state => state.addUserData);
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -35,9 +37,10 @@ const SignIn = () => {
           jwt: response.data.jwt,
           isAuthenticated: true
         }
-        localStorage.setItem('currentUser', JSON.stringify(userData))
+        //localStorage.setItem('currentUser', JSON.stringify(userData))
+        setUserData(userData)
         axios.defaults.headers.common['Authorization'] = `Bearer ${userData.jwt}`;
-        navigate('/')
+        navigate('/posts')
         window.location.reload()
       }
      }

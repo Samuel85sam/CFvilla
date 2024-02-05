@@ -9,7 +9,7 @@ const IndexGuest = () => {
     const navigate = useNavigate();
 
     const login = () => {
-        navigate('auth/');
+        navigate('/auth');
     };
 
     return (

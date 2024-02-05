@@ -3,7 +3,7 @@ import PostList from './post-list'
 import { Button } from '@mui/material'
 
 
-const Index = () => {
+const IndexAdmin = () => {
   const navigate = useNavigate()
 
 
@@ -28,4 +28,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default IndexAdmin

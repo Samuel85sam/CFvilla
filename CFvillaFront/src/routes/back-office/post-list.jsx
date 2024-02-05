@@ -20,7 +20,7 @@ const PostList = () => {
   const store = useAuthStore(state => state)
   const navigate = useNavigate();
   const [posts, setpost] = useState([])
-  console.log({ posts });
+
 
   const allPosts = async () => {
     const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
@@ -80,7 +80,8 @@ const PostList = () => {
                  
                   <img
                     width="50 px"
-                    src={post.img ?  `${import.meta.env.VITE_API_HOST}/${route}/${post.img.fileName}`: `${import.meta.env.VITE_API_HOST}/${route}/No-image.jpg`}
+                    // src={post.img ?  `http://localhost:3000/static/${post.img.fileName}`: 'http://localhost:3000/static/No-image.jpg'}
+                    src={post.img ?  `${import.meta.env.VITE_STATIC_HOST}/static/${post.img.fileName}`: `${import.meta.env.VITE_STATIC_HOST}/static/No-image.jpg`}
                     alt="image"
                     //alt={post.img.title}
                     loading="lazy"

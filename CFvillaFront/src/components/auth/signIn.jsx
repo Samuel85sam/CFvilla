@@ -17,7 +17,7 @@ import { useAuthStore } from "../../store-zustand/authStore";
 
 const defaultTheme = createTheme();
 const SignIn = () => {
-  const setUserData = useAuthStore(state => state.addUserData);
+  const setUserData = useAuthStore((state) => state.addUserData);
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -25,9 +25,9 @@ const SignIn = () => {
       adressMail: 'samuel@gmail.com2',
       formpassword: "password"
     },
-    onSubmit: async (values) => { 
+    onSubmit: async (values) => {
       const route = 'auth';
-      const response = await CRUD.postForm(route, values);
+      const response = await CRUD.post(route, values);
       if (response.status === 404) {
         console.alert('adresse mail ou password incorrect')
         navigate('/auth')
@@ -37,13 +37,12 @@ const SignIn = () => {
           jwt: response.data.jwt,
           isAuthenticated: true
         }
-        //localStorage.setItem('currentUser', JSON.stringify(userData))
         setUserData(userData)
-        axios.defaults.headers.common['Authorization'] = `Bearer ${userData.jwt}`;
+        console.log('bearer in! ');
         navigate('/posts')
-        window.location.reload()
+        //window.location.reload()
       }
-     }
+    }
   });
 
 

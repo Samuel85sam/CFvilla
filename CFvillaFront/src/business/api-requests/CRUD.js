@@ -2,35 +2,50 @@ import axios from "axios";
 
 
 
-//axios.defaults.withCredentials = false;
 
-/* axios.interceptors.response.use(
-    response => response,
-    error => {
-        const status = error.response ? error.response.status : null;
+ //axios.defaults.withCredentials = false;
 
-        if (status === 401) {
-            console.log('Handle 401');
-        } else if (status === 404) {
-            console.log('axios intercepted → Handle 404 ==> not found errors', error);
-        } else {
-            console.log('axios intercepted →  Handle other error',error);
-        }
+//  axios.interceptors.response.use(
+//     response => response,
+//     error => {
+//         const status = error.response ? error.response.status : null;
+
+//         if (status === 401) {
+//             console.log('Handle 401');
+//         } else if (status === 404) {
+//             console.log('axios intercepted → Handle 404 ==> not found errors', error);
+//         } else {
+//             console.log('axios intercepted →  Handle other error',error);
+//         }
         
-        return Promise.reject(error);
-    }
-    )
-     */
+//         return Promise.reject(error);
+//     }
+//     )
+
+    // axios.interceptors.request.use(function (config) {
+    //     const token = useAuthStore(state=>state.jwt )
+    //     config.headers.Authorization =  `Bearer ${token}`;
+         
+    //     return config;
+    // });
+     
 
 const CRUD = {
 
-
-
-    postForm: async (route, data, headers) => {
-        const response = await axios.post(`${import.meta.env.VITE_API_HOST}/${route}`, data, headers);
+    post: async (route, data) => {
+        const response = await axios.post(`${import.meta.env.VITE_API_HOST}/${route}`, data);
        
         if (response.status === 200) {
-            console.log('reponse axios.post => ', response);
+            return response
+        }
+
+    },
+
+    postForm: async (route, data, headers) => {
+        console.log({route, data, headers});
+        const response = await axios.postForm(`${import.meta.env.VITE_API_HOST}/${route}`, data, headers);
+       
+        if (response.status === 200) {
             return response
         }
 

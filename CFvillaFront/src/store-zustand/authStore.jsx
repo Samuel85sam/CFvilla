@@ -3,7 +3,7 @@ import { persist, devtools } from 'zustand/middleware'
 import axios from "axios";
 
 const initialUserState = {
-    currentUser: 'the dev User',
+    currentUser: 'nobody',
     jwt: null,
     isAuthenticated: false,
 };
@@ -19,17 +19,14 @@ export const useAuthStore = create(
                     isAuthenticated: true
                 }
             )),
-            logout: ()=> set((state) =>(
-                {...initialUserState}
+            logout: () => set((state) => (
+                { ...initialUserState }
             ))
         })
     )
         ,
         {
             name: "authStorage",
-            onRehydrateStorage: (state) => {
-                axios.defaults.headers.common['Authorization'] = `Bearer ${state.jwt}`; // → injection du jwt dans le header des requêtes 
-            }
         })
 
 

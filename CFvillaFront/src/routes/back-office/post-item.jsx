@@ -5,13 +5,11 @@ import PostForm from '../../components/postForm/post-form'
 
 
 const PostItem = () => {
-  console.log('ici')
 
   const params = useParams();
-
   const id = params.id;
   const [post, setpost] = useState();
-
+  
   const goToPostForm = async () => {
     if (id == 'new') {
       setpost()

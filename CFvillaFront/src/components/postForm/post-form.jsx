@@ -8,19 +8,24 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import CRUD from "../../business/api-requests/CRUD";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from '../../store-zustand/authStore';
 
 const defaultTheme = createTheme();
 
 const PostForm = (props) => {
-
+    const currentUser = useAuthStore(state => state.currentUser)
+    const jwt = useAuthStore(state=>state.jwt )
+    console.log({currentUser,jwt});
     const navigate = useNavigate();
-    console.log('props', props);
     const post = props.post
 
     const sendPost = async (data) => {
         if (post == undefined) {
             const route = 'posts';
-            const headers = { 'Content-Type': 'multipart/form-data' }
+            const headers = { 
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${jwt}`
+            }
             await CRUD.postForm(route, data, headers);
             navigate('/');
         } else {
@@ -31,7 +36,7 @@ const PostForm = (props) => {
     };
 
     const redirect = () => {
-        navigate('../');
+        navigate('/posts');
     };
 
     useEffect(() => {
@@ -50,9 +55,11 @@ const PostForm = (props) => {
             onSubmit={(values) => {
                 const payload = {
                     ...values,
-                    author: JSON.parse(localStorage.getItem('currentUser')).currentUser._id
+                    // author: JSON.parse(localStorage.getItem('currentUser')).currentUser._id
+                    author: currentUser
+
                 }
-                console.log('post-form payload ==> ', payload);
+
 
                 sendPost(payload)
             }}

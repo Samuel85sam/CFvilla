@@ -9,17 +9,20 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from '../../store-zustand/authStore';
+import axios from 'axios';
+
 
 
 
 const PostList = () => {
-
+  const store = useAuthStore(state=> state)
+  console.log({store}, axios.defaults.headers.common);
   const navigate = useNavigate();
   const [posts, setpost] = useState([])
 
   const allPosts = async () => {
     const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
-   // const posts = await CRUD.getForm('posts/');
     setpost(posts)
   };
 

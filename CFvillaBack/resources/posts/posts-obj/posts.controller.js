@@ -8,41 +8,39 @@ const postsController = {
 
 
     post: async (req, res) => {
+        console.log(req.body);
         try {
-            console.log('req.body.image dans postCtrlr.post => ', req.body.image);
             console.log('req.file dans postCtrlr.post => ', req.file);
-            console.log('req.files dans postCtrlr.post => ', req.files);
-           
-       
-        const imgData = {
-            lastModified: req.body.image.lastModified,
-            name: req.body.image.name,
-            type: req.body.image.type,
-            path: req.body.image.webkitRelativePath,
-            size: req.body.image.size
-        }
-        await imgValidator.validate(imgData);
-        const imgId = await imgService.create(imgData);
-        const currentUser = await authService.exists('_id', req.currentUser);
-        const data = {
-            type: req.body.type,
-            title: req.body.title,
-            author: currentUser,
-            body: req.body.body,
-         
-        };
-        const postId = await postsService.create(data);
+            
+            const imgData = {
+                originalname: req.file.originalname,
+                fileName: req.file.filename,
+                type: req.file.mimetype,
+                path: req.file.path,
+                size:  req.file.size
+            }
 
-        res.status(200).json({
-            message: 'post created',
-            postId: `${postId}`,
-            authorId:`${JSON.stringify(currentUser)}`,
-            imgId: `${imgId}`
-        });
-    } catch (error) {
-        console.log('catch postController', error.status);
+            await imgValidator.validate(imgData);
+            const imgId = await imgService.create(imgData);
+            const currentUser = await authService.exists('_id', req.currentUser);
+            const data = {
+                type: req.body.type,
+                title: req.body.title,
+                author: currentUser,
+                body: req.body.body,
+            };
+            const postId = await postsService.create(data);
+
+            res.status(200).json({
+                message: 'post created',
+                postId: `${postId}`,
+                authorId: `${JSON.stringify(currentUser)}`,
+                imgId: `${imgId}`
+            });
+        } catch (error) {
+            console.log('catch postController', error.status);
             console.error(error)
-    }
+        }
 
     },
 
@@ -59,7 +57,7 @@ const postsController = {
     },
 
     getAll: async (req, res) => {
-     
+
         const allPosts = await postsService.readAll(req.query);
         if (allPosts) {
             res.status(200).json(allPosts)

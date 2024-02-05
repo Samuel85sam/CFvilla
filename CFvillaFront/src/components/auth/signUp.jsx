@@ -51,11 +51,9 @@ const SignUp = () => {
     try {
       if (result.status === 201) {
         window.location.reload(true)
-        console.log(" → User STORED ");
       }
       else {
         alert("REGISTER FAILED Fail");
-        console.log("REGISTER FAILED ==> reload login page ");
         navigate('/auth')
       };
 

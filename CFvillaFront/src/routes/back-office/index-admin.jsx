@@ -1,15 +1,16 @@
-import { React } from 'react'
+import { useNavigate } from 'react-router-dom';
 import PostList from './post-list'
 import { Button } from '@mui/material'
-import { useAuthStore } from "../../store-zustand/authStore";
 
 
 const Index = () => {
+  const navigate = useNavigate()
 
-  const setInitialState = useAuthStore((state) => state.logout);
 
     const logout = () => {
-        setInitialState()
+        localStorage.removeItem('currentUser')
+        window.location.reload();
+        navigate('/')
     };
   return (
 

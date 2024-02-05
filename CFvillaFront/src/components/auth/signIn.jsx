@@ -10,14 +10,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import CRUD from "../../business/api-requests/CRUD";
-import { useAuthStore } from "../../store-zustand/authStore";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
 
 const defaultTheme = createTheme();
 const SignIn = () => {
-  const setUser = useAuthStore((state) => state.addUserData)
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -25,26 +23,26 @@ const SignIn = () => {
       adressMail: 'samuel@gmail.com2',
       formpassword: "password"
     },
-    onSubmit: (values) => { postCheckAndRedirect(values) }
+    onSubmit: async (values) => { 
+      const route = 'auth';
+      const response = await CRUD.postForm(route, values);
+      if (response.status === 404) {
+        console.alert('adresse mail ou password incorrect')
+        navigate('/auth')
+      } else {
+        const userData = {
+          currentUser: response.data.id,
+          jwt: response.data.jwt,
+          isAuthenticated: true
+        }
+        localStorage.setItem('currentUser', JSON.stringify(userData))
+        axios.defaults.headers.common['Authorization'] = `Bearer ${userData.jwt}`;
+        navigate('/')
+        window.location.reload()
+      }
+     }
   });
 
-  const postCheckAndRedirect = async (data) => {
-    const route = 'auth';
-    const response = await CRUD.postForm(route, data);
-    if (response === 404) {
-      console.alert('adresse mail ou password incorrect')
-      navigate('/auth')
-    } else {
-      const userData = {
-        currentUser: response.data.id,
-        jwt: response.data.jwt,
-        isAuthenticated: true
-      }
-      axios.defaults.headers.common['Authorization'] = `Bearer ${userData.jwt}`;
-      setUser(userData);
-      navigate('/')
-    }
-  };
 
   return (
     <form onSubmit={formik.handleSubmit}>

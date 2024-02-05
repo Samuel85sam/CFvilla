@@ -1,18 +1,16 @@
 import axios from "axios";
-import { useAuthStore } from "../../store-zustand/authStore";
 
 
 
 //axios.defaults.withCredentials = false;
 
-axios.interceptors.response.use(
+/* axios.interceptors.response.use(
     response => response,
     error => {
         const status = error.response ? error.response.status : null;
 
         if (status === 401) {
             console.log('Handle 401');
-            useAuthStore.getState().logout();
         } else if (status === 404) {
             console.log('axios intercepted → Handle 404 ==> not found errors', error);
         } else {
@@ -22,7 +20,7 @@ axios.interceptors.response.use(
         return Promise.reject(error);
     }
     )
-    
+     */
 
 const CRUD = {
 
@@ -67,10 +65,10 @@ const CRUD = {
         console.log('response CRUD.delete ==>', response);
         if (response === 200) {
             return response
-        };
+        }
         if (response === 401) {
             return response
-        };
+        }
 
     },
 

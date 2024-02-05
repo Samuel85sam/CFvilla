@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Form, Formik } from 'formik';
 import Button from '@mui/material/Button';
@@ -8,14 +8,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import CRUD from "../../business/api-requests/CRUD";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from '../../store-zustand/authStore';
-import { Field } from 'formik';
 
 const defaultTheme = createTheme();
 
 const PostForm = (props) => {
 
-    const currentUser = useAuthStore((state) => state.currentUser);
     const navigate = useNavigate();
     console.log('props', props);
     const post = props.post
@@ -53,7 +50,7 @@ const PostForm = (props) => {
             onSubmit={(values) => {
                 const payload = {
                     ...values,
-                    author: currentUser
+                    author: JSON.parse(localStorage.getItem('currentUser')).currentUser._id
                 }
                 console.log('post-form payload ==> ', payload);
 

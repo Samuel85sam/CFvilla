@@ -5,6 +5,7 @@ import PostForm from '../../components/postForm/post-form'
 
 
 const PostItem = () => {
+  console.log('ici')
 
   const params = useParams();
 
@@ -18,7 +19,7 @@ const PostItem = () => {
       const route = `posts/${id}`;
       const post = await CRUD.getForm(route);
       setpost(post)
-    };
+    }
   };
 
   useEffect(() => {

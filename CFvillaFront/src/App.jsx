@@ -1,37 +1,40 @@
 import mainRouter from "./main-router";
 import guestRouter from "./guest-router";
-import { React, useState, useEffect } from 'react';
-import { useAuthStore } from "./store-zustand/authStore";
 import { RouterProvider } from "react-router-dom";
 import './App.css';
+import { useEffect, useState } from "react";
+import axios from 'axios'
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(null)
 
-  const [isLoggedIn, setisLoggedIn] = useState(false);
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  useEffect(
+    () => {
+      try {
+        const localStorageUserData = JSON.parse(localStorage.getItem('currentUser'))
+        if (localStorageUserData.isAuthenticated) {
+          axios.defaults.headers.common['Authorization'] = `Bearer ${localStorageUserData.jwt}`;
+          console.log('user logged')
+          setIsAuthenticated(true)
+        }
+        else {
+          setIsAuthenticated(false)
+        }
+      }
+      catch (err) {
+        console.log('user NOT logged', err)
+      }
+    },
+    []
+  )
+  isAuthenticated ? console.log('yes') : console.log('no')
 
-  //----------------pour utiliser seulement le local storage ↓↓↓
-  //   console.log('localStorage == >', localStorage);
-  //   const isAuthenticated = localStorage.getItem('authStorage')
-  //   console.log(JSON.parse(isAuthenticated));
-  //   const bool = JSON.parse(isAuthenticated).state.isAuthenticated
-  //   console.log('bool', bool);
-  //------------------------------------------------------------
-
-  useEffect(() => {
-    if (isAuthenticated == true) {
-      setisLoggedIn(true);
-      console.log('User LOGGED !!!');
-    } else {
-      setisLoggedIn(false);
-      console.log('User NOT logged !!!');
-    }
-  }, [isAuthenticated])
+  isAuthenticated === null && <>loading</>
 
   return (
     <>
-      {isLoggedIn ? '-------------ADMIN-----------------' : '-------------GUEST-----------------' }
-      {isLoggedIn ? <RouterProvider router={mainRouter} /> : <RouterProvider router={guestRouter} />}
+      {isAuthenticated ? '-------------ADMIN-----------------' : '-------------GUEST-----------------'}
+      {isAuthenticated ? <RouterProvider router={mainRouter} /> : <RouterProvider router={guestRouter} />}
     </>
   )
 }

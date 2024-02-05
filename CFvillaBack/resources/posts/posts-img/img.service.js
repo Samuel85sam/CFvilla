@@ -3,7 +3,8 @@ const imgService = {
 
     create: async (data) => {
         const img = new Img(data);
-        createdImg =  await img.save();
+        const createdImg =  await img.save();
+        console.log({createdImg});
         return img.id
     },
 

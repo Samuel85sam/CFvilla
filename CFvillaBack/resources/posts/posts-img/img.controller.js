@@ -6,9 +6,10 @@ const imgController = {
     post: async (req, res) => {
         try {
             const data = {
-                fileName: req.file.filename,
-                originalFileName: req.file.originalname,
+                originalname: req.file.originalname,
                 type: req.file.mimetype,
+                fileName: req.file.filename,
+                path:req.file.path,
                 size: req.file.size
             };
             const newImgId = await imgService.create(data);

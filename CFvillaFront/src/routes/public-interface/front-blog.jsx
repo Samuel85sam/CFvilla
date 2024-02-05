@@ -37,6 +37,12 @@ const FrontBlog = () => {
                             >
                                 <Card variant="outlined">
                                     <CardContent>
+                                        {/* <CardMedia
+                                            sx={{ height: 140 }}
+                                            image="/static/images/cards/contemplative-reptile.jpg"
+                                            title="green iguana"
+                                        /> */}
+                                        <img src="post.img.path" alt="post.img.fileName" />
                                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                                             {post.type}
                                         </Typography>

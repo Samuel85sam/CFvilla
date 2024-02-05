@@ -8,7 +8,10 @@ const postsController = {
 
 
     post: async (req, res) => {
-        try {            
+        try {   
+            if (req.file) {
+                
+                   
             const imgData = {
                 originalname: req.file.originalname,
                 fileName: req.file.filename,
@@ -16,10 +19,10 @@ const postsController = {
                 path: req.file.path,
                 size:  req.file.size
             }
-
             await imgValidator.validate(imgData);
-            const imgId = await imgService.create(imgData);
-            const reqUsr = req.currentUser;
+            var imgId = await imgService.create(imgData);
+        }
+            
             const currentUser = await authService.exists('_id', req.currentUser);
             const data = {
                 type: req.body.type,
@@ -40,7 +43,6 @@ const postsController = {
             console.log('catch postController', error.status);
             console.error(error)
         }
-
     },
 
     getOneById: async (req, res) => {

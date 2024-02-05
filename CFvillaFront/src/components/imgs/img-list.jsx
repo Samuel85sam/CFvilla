@@ -1,36 +1,18 @@
-import { React, useState, useEffect } from 'react'
-import CRUD from '../../business/api-requests/CRUD'
-import { ImageList, ImageListItem } from '@mui/material'
+import React from 'react'
 
-const ImgList = () => {
 
-  const [imgs, setimgs] = useState([])
-  const allImgs = async () => {
-    const imgs = await CRUD.getForm('imgs/')
-    setimgs(imgs)
-  };
-
-  useEffect(() => {
-    allImgs()
-  }, [])
+const Img = (props) => {
   
+
+  const img = props.image;
+  console.log({img});
+  
+
   return (
-    <div>
-      <ImageList sx={{ width: 1, height: 1 }} variant="woven" cols={3} gap={30}>
-        {imgs.map((img) => (
-          <ImageListItem
-            key={img._id}
-          >
-            <img
-              src={`http://localhost:3000/static/${img.fileName}`}
-              alt={img.title}
-              loading="lazy"
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
-    </div>
+    <>
+    {img? props.img.fileName : 'pas de props'}
+    </>
   )
 }
 
-export default ImgList
+export default Img

@@ -14,14 +14,15 @@ const defaultTheme = createTheme();
 
 const PostForm = (props) => {
     const currentUser = useAuthStore(state => state.currentUser)
-    const jwt = useAuthStore(state=>state.jwt )
+    const jwt = useAuthStore(state => state.jwt)
     const navigate = useNavigate();
     const post = props.post
+    console.log({post});
 
     const sendPost = async (data) => {
         if (post == undefined) {
             const route = 'posts';
-            const headers = { 
+            const headers = {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${jwt}`
             }

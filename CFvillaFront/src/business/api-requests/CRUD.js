@@ -42,7 +42,6 @@ const CRUD = {
     },
 
     postForm: async (route, data, headers) => {
-        console.log({route, data, headers});
         const response = await axios.postForm(`${import.meta.env.VITE_API_HOST}/${route}`, data, headers);
        
         if (response.status === 200) {
@@ -69,7 +68,6 @@ const CRUD = {
                 return response.status
             }
         } catch (err) {
-            console.log('patchForm err ===> ', err.response);
             return err.response //!  ← ?? utile?
         }
     },
@@ -77,7 +75,6 @@ const CRUD = {
     deleteFormById: async (route) => {
 
         const response = await axios.delete(`${import.meta.env.VITE_API_HOST}/${route}`);
-        console.log('response CRUD.delete ==>', response);
         if (response === 200) {
             return response
         }

@@ -4,7 +4,6 @@ const imgValidator = require('./img.validator')
 const imgController = {
 
     post: async (req, res) => {
-        console.log('req.file =======> ',req.file);
         try {
             const data = {
                 fileName: req.file.filename,
@@ -12,7 +11,6 @@ const imgController = {
                 type: req.file.mimetype,
                 size: req.file.size
             };
-            console.log('data ===> ',data);
             const newImgId = await imgService.create(data);
 
             return res.status(201).json({

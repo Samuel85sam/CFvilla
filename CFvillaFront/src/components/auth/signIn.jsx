@@ -38,7 +38,6 @@ const SignIn = () => {
           isAuthenticated: true
         }
         setUserData(userData)
-        console.log('bearer in! ');
         navigate('/posts')
         //window.location.reload()
       }

@@ -79,16 +79,8 @@ const postToUpdate = async (postId) => {
       onSubmit={(values) => {
         const payload = {
           ...values,
-          //author: "test",
-          // img: {
-          //   originalName: values.img.name,
-          //   type:  values.img.type,
-          //   fileName:  values.img.name,
-          //   path:  values.img.webkitRelativePath,
-          //   size:  values.img.size
-          // }
+      
         }
-        console.log('{values,payload} ==> ', { values, payload });
         updatePost(payload)
       }}
 

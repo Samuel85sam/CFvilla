@@ -11,7 +11,6 @@
             // Transmettre l'erreur à la prochaine fonction middleware
             next(err);
         } else {
-            console.log('multer ==> OK');
             // Le téléchargement s'est déroulé sans erreur
             next();
         }

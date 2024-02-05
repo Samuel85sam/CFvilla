@@ -17,7 +17,6 @@ import axios from 'axios';
 
 const PostList = () => {
   const store = useAuthStore(state=> state)
-  console.log({store}, axios.defaults.headers.common);
   const navigate = useNavigate();
   const [posts, setpost] = useState([])
 
@@ -50,12 +49,12 @@ const PostList = () => {
           <TableHead>
             <TableRow>
               <TableCell>List des posts</TableCell>
-              <TableCell align="right">id</TableCell>
               <TableCell align="right">type</TableCell>
-              {/* <TableCell align="right">author</TableCell>
-              <TableCell align="right">img</TableCell> */}
+              <TableCell align="right">author</TableCell>
+              <TableCell align="right">img</TableCell>
               <TableCell align="right">title</TableCell>
               <TableCell align="right">body</TableCell>
+              {/* <TableCell align="right">id</TableCell> */}
               <TableCell align="right"> ******** </TableCell>
             </TableRow>
           </TableHead>
@@ -66,17 +65,16 @@ const PostList = () => {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row"></TableCell>
-                <TableCell align="right">{post._id}</TableCell>
+                {/* <TableCell align="right">{post._id}</TableCell> */}
                 <TableCell align="right">{post.type}</TableCell>
-                {/* <TableCell align="right">{post.author.firstName}</TableCell> */}
+                <TableCell align="right">{post.author.firstName}</TableCell>
                 {/* <TableCell align="right">{post.img.path}</TableCell> */}
-                {/* <img
-                  with= "50 px"
-                  height="50 px"
+                <img
+                  width="50 px"
                   src={`http://localhost:3000/static/${post.img.fileName}`}
                   alt={post.img.title}
                   loading="lazy"
-                /> */}
+                />
                 <TableCell align="right">{post.title}</TableCell>
                 <TableCell align="right">{post.body}</TableCell>
                 <TableCell align="justify">

@@ -8,10 +8,7 @@ const postsController = {
 
 
     post: async (req, res) => {
-        console.log(req.body);
-        try {
-            console.log('req.file dans postCtrlr.post => ', req.file);
-            
+        try {            
             const imgData = {
                 originalname: req.file.originalname,
                 fileName: req.file.filename,
@@ -22,12 +19,14 @@ const postsController = {
 
             await imgValidator.validate(imgData);
             const imgId = await imgService.create(imgData);
+            const reqUsr = req.currentUser;
             const currentUser = await authService.exists('_id', req.currentUser);
             const data = {
                 type: req.body.type,
                 title: req.body.title,
                 author: currentUser,
                 body: req.body.body,
+                img:imgId
             };
             const postId = await postsService.create(data);
 
@@ -49,7 +48,8 @@ const postsController = {
         const post = await postsService.readOneById(id)
         if (post) {
             res.status(200)
-                .json(post)
+            .json(post)
+            return post
         } else {
             console.log(`post not found`)//!LOG;
             res.status(404)
@@ -57,7 +57,7 @@ const postsController = {
     },
 
     getAll: async (req, res) => {
-
+        console.log('req.query => ', req.query);
         const allPosts = await postsService.readAll(req.query);
         if (allPosts) {
             res.status(200).json(allPosts)
@@ -68,7 +68,6 @@ const postsController = {
     },
 
     updateOneById: async (req, res) => {
-        //throw new Error ('erreur test')
         const id = req.params.id;
         const updatedData = {
             type: req.body.type,

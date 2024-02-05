@@ -15,7 +15,6 @@ const defaultTheme = createTheme();
 const PostForm = (props) => {
     const currentUser = useAuthStore(state => state.currentUser)
     const jwt = useAuthStore(state=>state.jwt )
-    console.log({currentUser,jwt});
     const navigate = useNavigate();
     const post = props.post
 
@@ -27,11 +26,11 @@ const PostForm = (props) => {
                 'Authorization': `Bearer ${jwt}`
             }
             await CRUD.postForm(route, data, headers);
-            navigate('/');
+            navigate('/posts');
         } else {
             const route = `posts/${post._id}`;
             await CRUD.patchFormById(route, data);
-            navigate('/');
+            navigate('/posts');
         }
     };
 

@@ -15,9 +15,9 @@ const defaultTheme = createTheme();
 
 const PostForm = (props) => {
 
-    // const [imgFile, setImgFile] = useState(null);
     const currentUser = useAuthStore((state) => state.currentUser);
     const navigate = useNavigate();
+    console.log('props', props);
     const post = props.post
 
     const sendPost = async (data) => {
@@ -53,15 +53,9 @@ const PostForm = (props) => {
             onSubmit={(values) => {
                 const payload = {
                     ...values,
-                    author: currentUser,
-                   // ...values.file
-                    // type: values.type,
-                    // title: values.title,
-                    // author: currentUser,
-                    // body: values.body,
-                    // image: values.uploaded_file
+                    author: currentUser
                 }
-                console.log('payload ==> ', payload);
+                console.log('post-form payload ==> ', payload);
 
                 sendPost(payload)
             }}

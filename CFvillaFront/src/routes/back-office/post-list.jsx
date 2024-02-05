@@ -80,7 +80,7 @@ const PostList = () => {
                  
                   <img
                     width="50 px"
-                    src={post.img ?  `http://localhost:3000/static/${post.img.fileName}`: 'http://localhost:3000/static/No-image.jpg'}
+                    src={post.img ?  `${import.meta.env.VITE_API_HOST}/${route}${post.img.fileName}`: `${import.meta.env.VITE_API_HOST}/${route}No-image.jpg`}
                     alt="image"
                     //alt={post.img.title}
                     loading="lazy"

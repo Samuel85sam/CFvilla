@@ -1,4 +1,4 @@
-img {
+/* img {
   border-radius: 8px;
 }
 
@@ -7,4 +7,10 @@ img {
   border-radius: 4px;
   padding: 5px;
   width: 150px;
+} */
+
+body {
+  background-image: url("http://localhost:3000/static/backGround.jpeg");
+  background-size: cover;
+  background-attachment: fixed;
 }

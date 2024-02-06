@@ -12,7 +12,6 @@ const IndexAdmin = () => {
   const logout = () => {
     // localStorage.removeItem('currentUser')
     rmvData()
-    window.location.reload();
     navigate('/')
   };
   return (

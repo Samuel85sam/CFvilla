@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Post } from "./CRUD.types";
+import { Post, PostPopulatableKeys } from "./CRUD.types";
 
 
 
@@ -51,9 +51,9 @@ const CRUD = {
 
     },
 
-    getForm: async (route: string, params?: string) => {
+    getForm: async (route: string, params?: { populate: PostPopulatableKeys[] }) => {
 
-        const response = await axios.get<Post>(`${import.meta.env.VITE_API_HOST}/${route}`, { params });
+        const response = await axios.get<Post | Post[]>(`${import.meta.env.VITE_API_HOST}/${route}`, { params });
 
         if (response.status === 200) {
             return response.data

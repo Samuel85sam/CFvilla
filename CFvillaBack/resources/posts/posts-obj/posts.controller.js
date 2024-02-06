@@ -8,6 +8,7 @@ const postsController = {
 
 
     post: async (req, res) => {
+        let imgId
         try {
             if (req.file) {
 
@@ -19,7 +20,7 @@ const postsController = {
                     size: req.file.size
                 }
                 await imgValidator.validate(imgData);
-                var imgId = await imgService.create(imgData);
+                 imgId = await imgService.create(imgData);
             };
 
             const currentUser = await authService.exists('_id', req.currentUser);

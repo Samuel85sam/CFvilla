@@ -9,6 +9,7 @@ import Container from '@mui/material/Container';
 import CRUD from "../../business/api-requests/CRUD";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from '../../store-zustand/authStore';
+import React from 'react';
 
 const defaultTheme = createTheme();
 
@@ -57,15 +58,11 @@ const PostForm = (props) => {
                 author: post?.author || '',
                 body: post?.body || 'newPostBody',
             }}
-
             onSubmit={(values) => {
                 const payload = {
                     ...values,
-                    // author: JSON.parse(localStorage.getItem('currentUser')).currentUser._id
                     author: currentUser
-
-                }
-
+                };
 
                 sendPost(payload)
             }}
@@ -120,7 +117,12 @@ const PostForm = (props) => {
                                     accept="image/*"
                                     onChange={
                                         (event) => {
-                                            props.setFieldValue('uploaded_file', event.currentTarget.files[0])
+
+                                            if (event.currentTarget.files) {
+                                                props.setFieldValue('uploaded_file', event.currentTarget.files[0])
+                                            }else{
+                                                props.setFieldValue('uploaded_file', null)
+                                            }
                                         }
                                     }
                                 />
@@ -133,7 +135,6 @@ const PostForm = (props) => {
                                 </Button>
                                 <Button color='inherit'
                                     onClick={redirect}
-                                    fullwidth={'false'}
                                     size='medium'>
                                     {'liste des contenus'}
                                 </Button>

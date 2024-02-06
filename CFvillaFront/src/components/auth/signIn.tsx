@@ -1,4 +1,4 @@
-import { React } from "react";
+import  React  from "react";
 import { useFormik } from 'formik';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -28,18 +28,21 @@ const SignIn = () => {
     onSubmit: async (values) => {
       const route = 'auth';
       const response = await CRUD.post(route, values);
-      if (response.status === 404) {
-        console.alert('adresse mail ou password incorrect')
+    
+      if (response?.status === 404) {
+        console.log('adresse mail ou password incorrect')
         navigate('/auth')
       } else {
-        const userData = {
-          currentUser: response.data.id,
-          jwt: response.data.jwt,
-          isAuthenticated: true
-        }
-        setUserData(userData)
-        navigate('/posts')
-        //window.location.reload()
+        if (response !== undefined) {
+          const userData = {
+            currentUser: response.data.id,
+            jwt: response.data.jwt,
+            isAuthenticated: true
+          }
+          setUserData(userData)
+          navigate('/posts')
+          //window.location.reload()
+        }   
       }
     }
   });

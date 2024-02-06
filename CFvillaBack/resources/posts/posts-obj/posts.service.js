@@ -27,6 +27,14 @@ const postsService = {
 
     updateOneById: async (postId, data) => {
         const updatedPost = await Post.findByIdAndUpdate(postId, data, { new: "true" });
+        const param = {
+            populate: [
+                'img',
+                'author'
+            ]
+        };
+
+        await postsService.readOneById(postId, param);
 
         return updatedPost;
     },

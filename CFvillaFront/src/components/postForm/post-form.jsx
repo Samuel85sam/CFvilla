@@ -17,20 +17,26 @@ const PostForm = (props) => {
     const jwt = useAuthStore(state => state.jwt)
     const navigate = useNavigate();
     const post = props.post
-    console.log({post});
+    const headers = {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${jwt}`
+    };
 
     const sendPost = async (data) => {
+        console.log({ data });
+
         if (post == undefined) {
+
             const route = 'posts';
-            const headers = {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${jwt}`
-            }
             await CRUD.postForm(route, data, headers);
+
             navigate('/posts');
+
         } else {
+
             const route = `posts/${post._id}`;
-            await CRUD.patchFormById(route, data);
+            await CRUD.patchFormById(route, data, headers);
+
             navigate('/posts');
         }
     };

@@ -8,29 +8,29 @@ const postsController = {
 
 
     post: async (req, res) => {
-        try {   
+        try {
             if (req.file) {
-                
-                   
-            const imgData = {
-                originalname: req.file.originalname,
-                fileName: req.file.filename,
-                type: req.file.mimetype,
-                path: req.file.path,
-                size:  req.file.size
-            }
-            await imgValidator.validate(imgData);
-            var imgId = await imgService.create(imgData);
-        }
-            
+
+                const imgData = {
+                    originalname: req.file.originalname,
+                    fileName: req.file.filename,
+                    type: req.file.mimetype,
+                    path: req.file.path,
+                    size: req.file.size
+                }
+                await imgValidator.validate(imgData);
+                var imgId = await imgService.create(imgData);
+            };
+
             const currentUser = await authService.exists('_id', req.currentUser);
             const data = {
                 type: req.body.type,
                 title: req.body.title,
                 author: currentUser,
                 body: req.body.body,
-                img:imgId
+                img: imgId
             };
+
             const postId = await postsService.create(data);
 
             res.status(200).json({
@@ -50,7 +50,7 @@ const postsController = {
         const post = await postsService.readOneById(id)
         if (post) {
             res.status(200)
-            .json(post)
+                .json(post)
             return post
         } else {
             console.log(`post not found`)//!LOG;
@@ -70,13 +70,31 @@ const postsController = {
     },
 
     updateOneById: async (req, res) => {
+
+        if (req.file) {
+
+            const imgData = {
+                originalname: req.file.originalname,
+                fileName: req.file.filename,
+                type: req.file.mimetype,
+                path: req.file.path,
+                size: req.file.size
+            }
+            await imgValidator.validate(imgData);
+            var imgId = await imgService.create(imgData);
+        };
+
         const id = req.params.id;
+        const currentUser = await authService.exists('_id', req.currentUser);
         const updatedData = {
             type: req.body.type,
             title: req.body.title,
-            body: req.body.body
-        }
-        const postUpdated = await postsService.updateOneById(id, updatedData)
+            author: currentUser,
+            body: req.body.body,
+            img: imgId
+        };
+        try {
+            const postUpdated = await postsService.updateOneById(id, updatedData)
         if (postUpdated) {
             res.status(200).json({ message: "post updated" })
 
@@ -84,6 +102,11 @@ const postsController = {
             console.log(`post not found`)//!LOG;
             res.status(404)
         }
+        } catch (error) {
+            console.alert(error)
+            console.log('catch postCTRLR ==> ',error);
+        }
+        
     },
 
     populateOne: async (req, res) => {

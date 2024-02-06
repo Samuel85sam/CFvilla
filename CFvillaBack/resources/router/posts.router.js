@@ -24,7 +24,7 @@ postsRouter.route('/')
     .post(authMiddleware(), accessControl(), upload.single('uploaded_file'),function(req,res,next){  console.log('router log => ',req.file, req.body); next()},logMiddleware, validator(postValidator), postsController.post)
     .get(postsController.getAll)
     .delete(authMiddleware(), accessControl(), postsController.deleteAll)
-    .patch(authMiddleware(), accessControl(),validator(postValidator), postsController.populateOne)
+    .patch(authMiddleware(), accessControl(), upload.single('uploaded_file'),validator(postValidator), postsController.populateOne)
     .all((req, res) => { res.status(405).send('request Unavalable') }
     );
 

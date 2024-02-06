@@ -101,7 +101,7 @@ const PostList = () => {
                     </Button>
                     <Button
                       color='info'
-                      onClick={() => redirect(`posts/${post._id}`)}
+                      onClick={() => redirect(`/posts/${post._id}`)}
                       fullwidth={'false'}
                       size='small'>
                       {'Update'}

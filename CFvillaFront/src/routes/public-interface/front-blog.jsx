@@ -8,10 +8,10 @@ import CRUD from '../../business/api-requests/CRUD';
 
 const FrontBlog = () => {
     const [posts, setpost] = useState([]);
+
     const fetchPosts = async () => {
-        // const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
-        const fetchPosts = await CRUD.getForm('posts/');
-        setpost(fetchPosts)
+        const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })       
+        setpost(posts)
     };
 
     useEffect(() => {
@@ -22,9 +22,9 @@ const FrontBlog = () => {
         <>
             <div>
                 <ul>
-                    {posts.map((post, index) => (
+                    {posts.map((post, ) => (
                         <li style={{ listStyle: 'none' }}
-                            key={index}
+                            key={post._id}
                         >
                             <Box component="span"
                                 sx={{
@@ -37,12 +37,14 @@ const FrontBlog = () => {
                             >
                                 <Card variant="outlined">
                                     <CardContent>
-                                        <CardMedia
+                                        {/* <CardMedia
                                             sx={{ height: 140 }}
-                                            image={post.img ?  `${import.meta.env.VITE_STATIC_HOST}/static/${post.img.fileName}`: `${import.meta.env.VITE_STATIC_HOST}/static/No-image.jpg`}
-
+                                            image="/static/images/cards/contemplative-reptile.jpg"
                                             title="green iguana"
-                                        />
+                                        /> */}
+                                        <img
+                                            src={post.img ? `${import.meta.env.VITE_STATIC_HOST}/static/${post.img.fileName}` : `${import.meta.env.VITE_STATIC_HOST}/static/No-image.jpg`}
+                                            alt="post.img.fileName" />
                                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                                             {post.type}
                                         </Typography>

@@ -34,10 +34,12 @@ import { AuthResponse, Post, PostPopulatableKeys } from "../types/CRUD.types";
 const CRUD = {
 
     auth: async (data) => {
-        const response = await axios.post<AuthResponse>(`${import.meta.env.VITE_API_HOST}/auth`, data);
-
-        if (response.status === 200) {
+        try {
+            const response = await axios.post<AuthResponse>(`${import.meta.env.VITE_API_HOST}/auth`, data);  
             return response
+        } catch (error) {
+            console.error(error);
+            
         }
 
     },

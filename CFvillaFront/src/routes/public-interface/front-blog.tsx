@@ -26,7 +26,7 @@ const FrontBlog = () => {
 
     return (
         <>
-             <Card sx={{ maxWidth: 1200 }}>
+            <Card sx={{ width: 1200 }}>
                 <ul>
                     {posts.map((post ) => (
                         <li style={{ listStyle: 'none' }}
@@ -35,10 +35,9 @@ const FrontBlog = () => {
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
-                                    height="140"
+                                    sizes="font-size: 0.125em"
                                     image={post.img && typeof post.img !== 'string' ? `${import.meta.env.VITE_STATIC_HOST}/static/${post.img.fileName}` : `${import.meta.env.VITE_STATIC_HOST}/static/No-image;jpg`}
-                                    alt="post.img.fileName" />  
-
+                                    alt={post.img?.toString.name} />  
                                     <CardContent>                
                                         <Typography gutterBottom variant="h5" component="div">
                                             {post.title}

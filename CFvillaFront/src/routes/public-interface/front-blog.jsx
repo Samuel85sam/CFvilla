@@ -22,7 +22,7 @@ const FrontBlog = () => {
         <>
             <div>
                 <ul>
-                    {posts.map((post, ) => (
+                    {posts.map((post ) => (
                         <li style={{ listStyle: 'none' }}
                             key={post._id}
                         >

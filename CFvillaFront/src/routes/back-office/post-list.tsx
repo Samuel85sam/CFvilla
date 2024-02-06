@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import CRUD from '../../business/api-requests/CRUD';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
@@ -12,25 +12,25 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from '../../store-zustand/authStore';
 import Img from '../../components/imgs/img-list';
 import { Card } from '@mui/material';
-
-
-
+import { Post } from '../../business/api-requests/CRUD.types';
 
 const PostList = () => {
   const store = useAuthStore(state => state)
   const navigate = useNavigate();
-  const [posts, setpost] = useState([])
+  const [posts, setpost] = useState<Post[]>([])
 
 
   const allPosts = async () => {
     const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
-    setpost(posts)
+    if (posts !== undefined && Array.isArray(posts)) {
+      setpost(posts)
+    }
   };
 
   const deletePost = async (postId) => {
     const route = `posts/${postId}`
     const response = await CRUD.deleteFormById(route);
-    if (response === 401) {
+    if (response?.status === 401) {
       navigate('auth/')
     }
     allPosts()
@@ -73,19 +73,19 @@ const PostList = () => {
                   <TableCell component="th" scope="row"></TableCell>
                   {/* <TableCell align="right">{post._id}</TableCell> */}
                   <TableCell align="right">{post.type}</TableCell>
-                  <TableCell align="right">{post.author.firstName}</TableCell>
+                  <TableCell align="right">{typeof post.author !== 'string' ? post.author.firstName : post.author}</TableCell>
                   <TableCell align="right">{post.title}</TableCell>
                   <TableCell align="right">{post.body}</TableCell>
                   <TableCell align="right">
-                 
-                  <img
-                    width="50 px"
-                    // src={post.img ?  `http://localhost:3000/static/${post.img.fileName}`: 'http://localhost:3000/static/No-image.jpg'}
-                    src={post.img ?  `${import.meta.env.VITE_STATIC_HOST}/static/${post.img.fileName}`: `${import.meta.env.VITE_STATIC_HOST}/static/No-image.jpg`}
-                    alt="image"
-                    //alt={post.img.title}
-                    loading="lazy"
-                  />
+
+                    <img
+                      width="50 px"
+                      // src={post.img ?  `http://localhost:3000/static/${post.img.fileName}`: 'http://localhost:3000/static/No-image.jpg'}
+                      src={post.img && typeof post.img !== 'string' ? `${import.meta.env.VITE_STATIC_HOST}/static/${post.img.fileName}` : `${import.meta.env.VITE_STATIC_HOST}/static/No-image.jpg`}
+                      alt="image"
+                      //alt={post.img.title}
+                      loading="lazy"
+                    />
 
                     {/* <Img
                       props={post} /> */}
@@ -95,16 +95,16 @@ const PostList = () => {
                     <Button
                       color='error'
                       onClick={() => deletePost(post._id)}
-                      fullwidth={'false'}
-                      size='small'>
-                      {'SUPPRIMER'}
+                      size='small'
+                    >
+                      SUPPRIMER
                     </Button>
                     <Button
                       color='info'
                       onClick={() => redirect(`/posts/${post._id}`)}
-                      fullwidth={'false'}
-                      size='small'>
-                      {'Update'}
+                      size='small'
+                    >
+                      Update
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -114,9 +114,9 @@ const PostList = () => {
           <Button
             color='info'
             onClick={() => redirect(`/posts/new`)}
-            fullwidth={'false'}
-            size='medium'>
-            {'poster du contenu'}
+            size='medium'
+          >
+            poster du contenu
           </Button>
         </TableContainer>
       </>
@@ -125,14 +125,14 @@ const PostList = () => {
     return (
       <>
         <Card>
-          {'aucun post à afficher'}
+          aucun post à afficher
         </Card>
         <Button
           color='info'
           onClick={() => redirect(`/posts/new`)}
-          fullwidth={'false'}
-          size='medium'>
-          {'poster du contenu'}
+          size='medium'
+        >
+          poster du contenu
         </Button>
       </>
     )

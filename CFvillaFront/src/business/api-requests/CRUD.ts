@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Post, PostPopulatableKeys } from "./CRUD.types";
 
 
 
@@ -50,9 +51,9 @@ const CRUD = {
 
     },
 
-    getForm: async (route, params) => {
+    getForm: async (route: string, params?: { populate: PostPopulatableKeys[] }) => {
 
-        const response = await axios.get(`${import.meta.env.VITE_API_HOST}/${route}`, { params });
+        const response = await axios.get<Post | Post[]>(`${import.meta.env.VITE_API_HOST}/${route}`, { params });
 
         if (response.status === 200) {
             return response.data
@@ -70,7 +71,7 @@ const CRUD = {
             }
         } catch (err) {
             console.error(err);
-            console.log({err});
+            console.log({ err });
         }
     },
 
@@ -85,7 +86,7 @@ const CRUD = {
             }
         } catch (err) {
             console.error(err);
-            console.log({err});
+            console.log({ err });
         }
     },
 

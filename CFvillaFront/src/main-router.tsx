@@ -14,8 +14,7 @@ const mainRouter = createBrowserRouter([
     path: "/",
     element: <IndexGuest />,
     errorElement: <div>ROOT Oops! There was an error.</div>,
-    exact: true,//← !!! pour éviter que chaque url inconnue se retrouve là
-  },
+    },
   {
     path: "auth",
     element: <GuestRoute><Auth /></GuestRoute>,
@@ -25,7 +24,6 @@ const mainRouter = createBrowserRouter([
     path: "posts",
     element: <ProtectedRoute><IndexAdmin /></ProtectedRoute>,
     errorElement: <div>/ ROOT Oops! There was an error.</div>,
-    exact: true,//← !!! pour éviter que chaque url inconnue se retrouve là
   },
   {
     path: "posts/:id",

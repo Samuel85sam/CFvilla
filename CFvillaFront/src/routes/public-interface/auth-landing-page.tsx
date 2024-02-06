@@ -17,7 +17,6 @@ const Auth = () => {
       <Button
       color = 'info'
       onClick={handleAction}
-      fullwidh= {'false'}
       size= 'large'
       >
         {isRegistered ? "Enregistrer un nouvel Admin" : "Déjà enregistré? → Se Connecter"}

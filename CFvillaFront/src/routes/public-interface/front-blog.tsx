@@ -5,14 +5,18 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CRUD from '../../business/api-requests/CRUD';
+import {Post} from '../../business/types/CRUD.types'
+
 
 const FrontBlog = () => {
-    const [posts, setpost] = useState([]);
+    const [posts, setpost] = useState<  Post[] >([]);
 
     const fetchPosts = async () => {
         const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })       
-        setpost(posts)
-    };
+        if (posts !== undefined && Array.isArray(posts)) {
+            setpost(posts)
+          }
+            };
 
     useEffect(() => {
         fetchPosts()
@@ -43,7 +47,7 @@ const FrontBlog = () => {
                                             title="green iguana"
                                         /> */}
                                         <img
-                                            src={post.img ? `${import.meta.env.VITE_STATIC_HOST}/static/${post.img.fileName}` : `${import.meta.env.VITE_STATIC_HOST}/static/No-image.jpg`}
+                                            src={post.img && typeof post.img !== 'string' ? `${import.meta.env.VITE_STATIC_HOST}/static/${post.img.fileName}` : `${import.meta.env.VITE_STATIC_HOST}/static/No-image.jpg`}
                                             alt="post.img.fileName" />
                                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                                             {post.type}

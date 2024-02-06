@@ -10,9 +10,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from '../../store-zustand/authStore';
-import Img from '../../components/imgs/img-list';
 import { Card } from '@mui/material';
-import { Post } from '../../business/api-requests/CRUD.types';
+import { Post } from '../../business/types/CRUD.types';
 
 const PostList = () => {
   const store = useAuthStore(state => state)

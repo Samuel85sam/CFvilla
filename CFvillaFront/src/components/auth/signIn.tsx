@@ -13,7 +13,7 @@ import CRUD from "../../business/api-requests/CRUD";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
-import { useAuthStore } from "../../store-zustand/authStore";
+import { NewUserData, useAuthStore } from "../../store-zustand/authStore";
 
 const defaultTheme = createTheme();
 const SignIn = () => {
@@ -26,27 +26,25 @@ const SignIn = () => {
       formpassword: "password"
     },
     onSubmit: async (values) => {
-      const route = 'auth';
-      const response = await CRUD.post(route, values);
+      
+      const response = await CRUD.auth( values);
     
       if (response?.status === 404) {
         console.log('adresse mail ou password incorrect')
         navigate('/auth')
       } else {
         if (response !== undefined) {
-          const userData = {
+          const userData: NewUserData = {
             currentUser: response.data.id,
             jwt: response.data.jwt,
             isAuthenticated: true
           }
           setUserData(userData)
           navigate('/posts')
-          //window.location.reload()
         }   
       }
     }
   });
-
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -78,7 +76,7 @@ const SignIn = () => {
             <label htmlFor="password">Password</label>
             <input
               id="password"
-              formpassword="password"
+              name="password"
               type="password"
               onChange={formik.handleChange}
               value={formik.values.formpassword}

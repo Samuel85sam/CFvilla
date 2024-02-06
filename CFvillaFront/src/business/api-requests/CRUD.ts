@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Post, PostPopulatableKeys } from "./CRUD.types";
+import { AuthResponse, Post, PostPopulatableKeys } from "../types/CRUD.types";
 
 
 
@@ -32,6 +32,15 @@ import { Post, PostPopulatableKeys } from "./CRUD.types";
 
 
 const CRUD = {
+
+    auth: async (data) => {
+        const response = await axios.post<AuthResponse>(`${import.meta.env.VITE_API_HOST}/auth`, data);
+
+        if (response.status === 200) {
+            return response
+        }
+
+    },
 
     post: async (route, data) => {
         const response = await axios.post(`${import.meta.env.VITE_API_HOST}/${route}`, data);

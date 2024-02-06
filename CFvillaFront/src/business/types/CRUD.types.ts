@@ -25,4 +25,9 @@ export interface Img {
   size: number
 }
 
+export interface AuthResponse {
+  id: User["_id"]
+  jwt: User["jwt"]
+}
+
 export type PostPopulatableKeys = keyof Pick<Post, 'author' | 'img'>

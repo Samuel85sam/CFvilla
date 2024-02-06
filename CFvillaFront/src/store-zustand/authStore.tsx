@@ -1,14 +1,27 @@
 import { create } from "zustand"
 import { persist, devtools } from 'zustand/middleware'
-import axios from "axios";
+import { User } from "../business/types/CRUD.types"
+
+export interface NewUserData {
+    currentUser: User['_id'] ,
+    jwt: User['jwt'] ,
+    isAuthenticated: boolean
+}
+
+interface AuthStore{
+    currentUser: string | null,
+    jwt: string | null,
+    isAuthenticated: boolean
+    addUserData: (newUserData: NewUserData) => void
+};
 
 const initialUserState = {
-    currentUser: 'nobody',
+    currentUser: null,
     jwt: null,
     isAuthenticated: false,
 };
 
-export const useAuthStore = create(
+export const useAuthStore = create<AuthStore>()(
     persist(devtools(
         (set, get) => ({
             ...initialUserState,

@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { React } from 'react';
+import  React  from 'react';
 import { useNavigate } from 'react-router-dom';
 import FrontBlog from './front-blog';
 
@@ -21,7 +21,6 @@ const IndexGuest = () => {
             <div id='logoutButton'>
                 <Button color='primary'
                     onClick={login}
-                    fullwidth={'false'}
                     size='medium'>
                     {"se connecter"}
                 </Button>

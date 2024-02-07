@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from '../../store-zustand/authStore';
 import { Card } from '@mui/material';
 import { Post } from '../../business/types/CRUD.types';
+import { getImageUrl } from '../../utils/images';
 
 const PostList = () => {
   const store = useAuthStore(state => state)
@@ -80,7 +81,7 @@ const PostList = () => {
                     <img
                       width="50 px"
                       // src={post.img ?  `http://localhost:3000/static/${post.img.fileName}`: 'http://localhost:3000/static/No-image.jpg'}
-                      src={post.img && typeof post.img !== 'string' ? `${import.meta.env.VITE_STATIC_HOST}/static/${post.img.fileName}` : `${import.meta.env.VITE_STATIC_HOST}/static/No-image.jpg`}
+                      src={getImageUrl(post.img)}
                       alt="image"
                       //alt={post.img.title}
                       loading="lazy"

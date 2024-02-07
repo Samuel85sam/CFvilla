@@ -18,6 +18,13 @@ interface PostFormProps {
     post:Post
 }
 
+interface PostFormValues {
+    type: Post['type']
+    title: Post['title'],
+    body: Post['body'],
+    img?:  Pick<File,  'name'| 'type'| 'size'>
+}
+
 const PostForm: React.FC<PostFormProps> = ({post}) => {
     const currentUser = useAuthStore(state => state.currentUser)
     const jwt = useAuthStore(state => state.jwt)
@@ -30,7 +37,7 @@ const PostForm: React.FC<PostFormProps> = ({post}) => {
     const sendPost = async (data: CreatePostPayload) => {
         console.log({ data });
 
-        if (post == undefined) {
+        if (post === undefined) {
 
             const route = 'posts';
             await CRUD.postForm(route, data, headers);
@@ -54,18 +61,21 @@ const PostForm: React.FC<PostFormProps> = ({post}) => {
     }, []);
 
     return (
-        <Formik
+        <Formik<PostFormValues>
             enableReinitialize
             initialValues={{
                 type: post?.type || 'newPostType',
                 title: post?.title || 'newPostTitle',
                 body: post?.body || 'newPostBody',
+                img: undefined
             }}
             onSubmit={(values) => {
                 if(currentUser === null) return
-                
+                if(values.img === undefined) return
+
                 const payload: CreatePostPayload = {
                     ...values,
+                    img: values.img,
                     author: currentUser
                 };
 

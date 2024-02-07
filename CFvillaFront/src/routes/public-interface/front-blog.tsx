@@ -4,6 +4,7 @@ import { Post } from '../../business/types/CRUD.types';
 import { SimpleGrid, Card, Image, Text, Container, AspectRatio } from '@mantine/core';
 import classes from '../../App.module.css';
 import { useNavigate } from "react-router-dom";
+import { getImageUrl } from '../../utils/images';
 
 
 
@@ -31,7 +32,7 @@ const FrontBlog = () => {
   const cards = posts.map((article) => (
     <Card key={article._id} p="md" radius="md" component="a" href="#" className={classes.card}>
       <AspectRatio ratio={1920 / 1080}>
-        <Image src={article.img && typeof article.img !== 'string' ? `${import.meta.env.VITE_STATIC_HOST}/static/${article.img.fileName}` : `${import.meta.env.VITE_STATIC_HOST}/static/No-image.jpg`} 
+        <Image src={getImageUrl(article.img)} 
         onClick={()=>{goToArticle(article._id)}}/>
       </AspectRatio>
       {/* <Text c="dimmed" size="xs" tt="uppercase" fw={700} mt="md">

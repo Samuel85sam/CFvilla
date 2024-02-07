@@ -4,65 +4,82 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CRUD from '../../business/api-requests/CRUD';
-import {Post} from '../../business/types/CRUD.types';
+import { Post } from '../../business/types/CRUD.types';
 import CardMedia from '@mui/material/CardMedia';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Button, CardActionArea, CardActions, rgbToHex } from '@mui/material';
+import { Container, Box, Grid } from '@mui/material';
+/// <reference types="vite/client" />
+
+interface ImportMetaEnv {
+  readonly VITE_API_HOST: string
+  readonly VITE_STATIC_HOST: string
+}
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}
+
 
 
 
 const FrontBlog = () => {
-    const [posts, setpost] = useState<  Post[] >([]);
+  const [posts, setpost] = useState<Post[]>([]);
 
-    const fetchPosts = async () => {
-        const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })       
-        if (posts !== undefined && Array.isArray(posts)) {
-            setpost(posts)
-          }
-            };
+  const fetchPosts = async () => {
+    const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
+    if (posts !== undefined && Array.isArray(posts)) {
+      setpost(posts)
+    }
+  };
 
-    useEffect(() => {
-        fetchPosts()
-    }, []);
+  useEffect(() => {
+    fetchPosts()
+  }, []);
 
-    return (
-        <>
-             <Card sx={{ maxWidth: 1200 }}>
-                <ul>
-                    {posts.map((post ) => (
-                        <li style={{ listStyle: 'none' }}
-                            key={post._id}
-                        >
-                            <CardActionArea>
-                                <CardMedia
-                                    component="img"
-                                    height="140"
-                                    image={post.img && typeof post.img !== 'string' ? `${import.meta.env.VITE_STATIC_HOST}/static/${post.img.fileName}` : `${import.meta.env.VITE_STATIC_HOST}/static/No-image;jpg`}
-                                    alt="post.img.fileName" />  
+  return (
+    <>
+      <Box sx={{
+        flexGrow: 1,
+        height: '100vh',
+        backgroundImage: (`${import.meta.env.VITE_STATIC_HOST}/static/backGround.jpeg`),
+        backgroundSize: 'cover'
+      }}>
+        <Container sx={{ paddingTop: 4 }}>
+          <Grid container spacing={2}>
+            {posts.map((post, index) => (
+              <Grid item key={index} xs={12} sm={6} md={4}>
+                <Card
 
-                                    <CardContent>                
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            {post.title}
-                                        </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            {post.body}
-                                        </Typography>
-                                    </CardContent>
-                                
-                                </CardActionArea>
-                            <CardActions>
-                     <Button size="small" color="primary">
-                        Like
-                    </Button>
-                    <Button size="small" color="primary">
-                        Contact
-                    </Button>
-                    </CardActions>
-                        </li>
-                    ))}
-                </ul>
-            </Card>
-        </>
-    )
+                  sx={{
+                    bgcolor: 'darkcyan',
+                    maxWidth: '75%'
+                  }}>
+                  <CardMedia
+                    sx={{ height: 140 }}
+                    image={post.img && typeof post.img !== 'string' ? `${import.meta.env.VITE_STATIC_HOST}/static/${post.img.fileName}` : `${import.meta.env.VITE_STATIC_HOST}/static/No-image.jpg`}
+                    title={post.title}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {post.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {post.body}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small">Learn More</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+
+    </>
+  )
 };
 
 export default FrontBlog
+//{ }

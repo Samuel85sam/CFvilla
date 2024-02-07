@@ -26,7 +26,7 @@ const PostList = () => {
     }
   };
 
-  const deletePost = async (postId) => {
+  const deletePost = async (postId: Post["_id"]) => {
     const route = `posts/${postId}`
     const response = await CRUD.deleteFormById(route);
     if (response?.status === 401) {
@@ -35,7 +35,7 @@ const PostList = () => {
     allPosts()
   };
 
-  const redirect = (route) => {
+  const redirect = (route: string) => {
     navigate(route)
   };
 

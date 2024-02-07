@@ -12,9 +12,14 @@ export interface Post {
   _id: string
   type: string
   title: string
-  author: string | User
+  author: User
   body: string
-  img?: string | Img
+  //img?: string | Img
+  img?:  Img
+}
+
+export interface CreatePostPayload extends Omit<Post, '_id' | 'img' | 'author'> {
+  author: User['_id']
 }
 
 export interface Img {

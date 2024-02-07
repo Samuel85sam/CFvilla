@@ -10,20 +10,24 @@ import CRUD from "../../business/api-requests/CRUD";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from '../../store-zustand/authStore';
 import React from 'react';
+import { CreatePostPayload, Post } from '../../business/types/CRUD.types';
 
 const defaultTheme = createTheme();
 
-const PostForm = (props) => {
+interface PostFormProps {
+    post:Post
+}
+
+const PostForm: React.FC<PostFormProps> = ({post}) => {
     const currentUser = useAuthStore(state => state.currentUser)
     const jwt = useAuthStore(state => state.jwt)
     const navigate = useNavigate();
-    const post = props.post
     const headers = {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${jwt}`
     };
 
-    const sendPost = async (data) => {
+    const sendPost = async (data: CreatePostPayload) => {
         console.log({ data });
 
         if (post == undefined) {
@@ -55,11 +59,12 @@ const PostForm = (props) => {
             initialValues={{
                 type: post?.type || 'newPostType',
                 title: post?.title || 'newPostTitle',
-                author: post?.author || '',
                 body: post?.body || 'newPostBody',
             }}
             onSubmit={(values) => {
-                const payload = {
+                if(currentUser === null) return
+                
+                const payload: CreatePostPayload = {
                     ...values,
                     author: currentUser
                 };

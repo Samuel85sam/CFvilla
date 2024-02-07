@@ -19,9 +19,9 @@ const FrontBlog = () => {
     }
   };
 
-  const goToArticle = (idArticle) => {
+  const goToArticle = (idArticle : Post['_id']) => {
 
-    navigate(`article-item/${idArticle}/`);
+    navigate(`/posts/${idArticle}/`);
   };
 
   useEffect(() => {

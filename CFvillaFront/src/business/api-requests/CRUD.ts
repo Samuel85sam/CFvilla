@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AuthResponse, Post, PostPopulatableKeys } from "../types/CRUD.types";
+import { AuthResponse, CreatePostPayload, Post, PostPopulatableKeys } from "../types/CRUD.types";
 
 
 
@@ -53,7 +53,7 @@ const CRUD = {
 
     },
 
-    postForm: async (route, data, headers) => {
+    postForm: async (route : string, data: CreatePostPayload, headers ) => {
         const response = await axios.postForm(`${import.meta.env.VITE_API_HOST}/${route}`, data, headers);
 
         if (response.status === 200) {

@@ -60,7 +60,6 @@ const postsController = {
     },
 
     getAll: async (req, res) => {
-        console.log('req.query => ', req.query);
         const allPosts = await postsService.readAll(req.query);
         if (allPosts) {
             res.status(200).json(allPosts)

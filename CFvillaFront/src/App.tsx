@@ -4,24 +4,28 @@ import './App.css';
 import React, { useEffect } from "react";
 import axios from 'axios'
 import { useAuthStore } from "./store-zustand/authStore";
+import '@mantine/core/styles.css';
+import { MantineProvider } from '@mantine/core';
 
 function App() {
   const token = useAuthStore(state => state.jwt)
   useEffect(() => {
-if (token) {
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  
-}else{
-  console.log('NO Bearer !!!');
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-  delete axios.defaults.headers.common.Authorization 
-}
+    } else {
+      console.log('NO Bearer !!!');
+
+      delete axios.defaults.headers.common.Authorization
+    }
 
   }, [token])
 
   return (
     <>
-      <RouterProvider router={mainRouter} />
+      <MantineProvider>
+        <RouterProvider router={mainRouter} />
+      </MantineProvider>
     </>
   )
 }

@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const authController = {
 
     login: async (req, res) => {
-        const userId = await authService.exists('adressMail', req.body.adressMail);
+        const {_id: userId} = await authService.exists('adressMail', req.body.adressMail);
         if (userId === null) {
             return res.status(401).json({ message: "USER NOT FOUND" });
         } else {
@@ -23,7 +23,7 @@ const authController = {
                 return res.status(200)
                     .json({
                         jwt: token,
-                        id: userId
+                        id: userId.toString()
                     });
             };
         };

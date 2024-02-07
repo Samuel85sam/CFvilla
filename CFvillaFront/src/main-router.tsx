@@ -6,6 +6,7 @@ import ProtectedRoute from './components/routes/protected-route';
 import IndexGuest from './routes/public-interface/index-guest';
 import Auth from './routes/public-interface/auth-landing-page';
 import GuestRoute from './components/routes/guest-route';
+import ArticleItem from './routes/public-interface/article-item';
 
 
 
@@ -30,6 +31,11 @@ const mainRouter = createBrowserRouter([
     element: <ProtectedRoute><PostItem /></ProtectedRoute>,
     errorElement: <div>/posts/:id ROOT Oops! There was an error.</div>,
   },
+  {
+    path: "article-item/:id",
+    element: <ArticleItem/>,
+    errorElement: <div>/posts/:id ROOT Oops! There was an error.</div>,
+  }
 ])
 
 export default mainRouter

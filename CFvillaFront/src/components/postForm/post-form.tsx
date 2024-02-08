@@ -10,23 +10,36 @@ import CRUD from "../../business/api-requests/CRUD";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from '../../store-zustand/authStore';
 import React from 'react';
+import { CreatePostPayload, Post } from '../../business/types/CRUD.types';
 
 const defaultTheme = createTheme();
 
-const PostForm = (props) => {
+interface PostFormProps {
+    post:Post | undefined
+}
+
+interface PostFormValues {
+    type: Post['type']
+    title: Post['title'],
+    body: Post['body'],
+    img?:  Pick<File,  'name'| 'type'| 'size'>
+}
+
+const PostForm: React.FC<PostFormProps> = ({post}) => {
     const currentUser = useAuthStore(state => state.currentUser)
+    console.log({currentUser});
+    
     const jwt = useAuthStore(state => state.jwt)
     const navigate = useNavigate();
-    const post = props.post
     const headers = {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${jwt}`
     };
+    
+    const sendPost = async (data: CreatePostPayload) => {
+console.log('sendPost');
 
-    const sendPost = async (data) => {
-        console.log({ data });
-
-        if (post == undefined) {
+        if (post === undefined) {
 
             const route = 'posts';
             await CRUD.postForm(route, data, headers);
@@ -37,7 +50,7 @@ const PostForm = (props) => {
 
             const route = `posts/${post._id}`;
             await CRUD.patchFormById(route, data, headers);
-
+            
             navigate('/posts');
         }
     };
@@ -50,17 +63,23 @@ const PostForm = (props) => {
     }, []);
 
     return (
-        <Formik
+        <Formik<PostFormValues>
             enableReinitialize
             initialValues={{
                 type: post?.type || 'newPostType',
                 title: post?.title || 'newPostTitle',
-                author: post?.author || '',
                 body: post?.body || 'newPostBody',
+                img: undefined
             }}
             onSubmit={(values) => {
-                const payload = {
+                
+                if(currentUser === null) return
+                console.log(values.img);
+                //if(values.img === undefined) return
+
+                const payload: CreatePostPayload = {
                     ...values,
+                    img: values.img ,
                     author: currentUser
                 };
 
@@ -125,11 +144,13 @@ const PostForm = (props) => {
                                             }
                                         }
                                     }
+                                    
                                 />
                                 <Button
                                     type="submit"
                                     variant="contained"
                                     sx={{ mt: 3, mb: 2 }}
+                                  
                                 >
                                     UPLOAD
                                 </Button>

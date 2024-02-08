@@ -27,17 +27,19 @@ const postsController = {
             const data = {
                 type: req.body.type,
                 title: req.body.title,
-                author: currentUser,
                 body: req.body.body,
+                author: currentUser,
                 img: imgId
             };
-
+            
+            console.log(data.author);
             const postId = await postsService.create(data);
 
             res.status(200).json({
                 message: 'post created',
                 postId: `${postId}`,
-                authorId: `${JSON.stringify(currentUser)}`,
+                // authorId: `${JSON.stringify(currentUser)}`,
+                authorId: currentUser,
                 imgId: `${imgId}`
             });
         } catch (error) {
@@ -48,7 +50,8 @@ const postsController = {
 
     getOneById: async (req, res) => {
         id = req.params.id;
-        const post = await postsService.readOneById(id)
+        console.log(req.query);
+        const post = await postsService.readOneById(id,req.query)
         if (post) {
             res.status(200)
                 .json(post)
@@ -60,7 +63,6 @@ const postsController = {
     },
 
     getAll: async (req, res) => {
-        console.log('req.query => ', req.query);
         const allPosts = await postsService.readAll(req.query);
         if (allPosts) {
             res.status(200).json(allPosts)

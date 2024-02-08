@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AuthResponse, Post, PostPopulatableKeys } from "../types/CRUD.types";
+import { AuthResponse, CreatePostPayload, Post, PostPopulatableKeys } from "../types/CRUD.types";
 
 
 
@@ -45,15 +45,17 @@ const CRUD = {
     },
 
     post: async (route, data) => {
+        
         const response = await axios.post(`${import.meta.env.VITE_API_HOST}/${route}`, data);
-
+        
         if (response.status === 200) {
             return response
         }
-
+        
     },
-
-    postForm: async (route, data, headers) => {
+    
+    postForm: async (route : string, data: CreatePostPayload, headers ) => {
+        console.log({data});
         const response = await axios.postForm(`${import.meta.env.VITE_API_HOST}/${route}`, data, headers);
 
         if (response.status === 200) {
@@ -62,11 +64,12 @@ const CRUD = {
 
     },
 
-    getForm: async (route: string, params?: { populate: PostPopulatableKeys[] }) => {
-
+    getForm: async (route: string, params?:  {populate: PostPopulatableKeys[]} ) => {  
         const response = await axios.get<Post | Post[]>(`${import.meta.env.VITE_API_HOST}/${route}`, { params });
+        
 
         if (response.status === 200) {
+            
             return response.data
         }
     },

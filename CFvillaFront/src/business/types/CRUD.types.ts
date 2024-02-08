@@ -12,9 +12,15 @@ export interface Post {
   _id: string
   type: string
   title: string
-  author: string | User
+  author: User
   body: string
-  img?: string | Img
+  //img?: string | Img
+  img?:  Img |undefined
+}
+
+export interface CreatePostPayload extends Omit<Post, '_id' | 'img' | 'author'> {
+  author: User['_id']
+  img: Pick<File,  'name'| 'type'| 'size'> | undefined
 }
 
 export interface Img {
@@ -31,3 +37,4 @@ export interface AuthResponse {
 }
 
 export type PostPopulatableKeys = keyof Pick<Post, 'author' | 'img'>
+

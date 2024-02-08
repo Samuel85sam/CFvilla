@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import CRUD from '../../business/api-requests/CRUD';
-import { Post } from '../../business/types/CRUD.types';
+import { Post, Img} from '../../business/types/CRUD.types';
 import {
   Card,
   Image,
@@ -12,7 +12,7 @@ import {
   Badge,
   useMantineTheme,
   rem,
-} from '@mantine/core';
+  } from '@mantine/core';
 //import { IconHeart, IconBookmark, IconShare } from '@tabler/icons-react';
 import classes from './article-item.module.css';
 import { getImageUrl } from '../../utils/images';
@@ -26,8 +26,11 @@ const ArticleItem = () => {
 
   const getPost = async () => {
     const route = `posts/${idArticle}`
-    const article = await CRUD.getForm(route)
+    // const article = await CRUD.getForm(route)
+    const article = await CRUD.getForm(route, { populate: ['img', 'author'] })
     if (article !== undefined && '_id' in article) {
+      console.log(article.img);
+      
       setArticle(article)
     }
   };
@@ -38,9 +41,11 @@ const ArticleItem = () => {
 
   if (!article) return <>loading...</>
 
-  return (
+  
 
-    <Card withBorder padding="lg" radius="md" className={classes.card}>
+return (
+  <>
+   <Card withBorder padding="lg" radius="md" className={classes.card}>
       <Card.Section mb="sm">
         <Image
           src={getImageUrl(article.img)}
@@ -102,8 +107,9 @@ const ArticleItem = () => {
         </Group>
       </Card.Section>
     </Card>
-
-  )
+     
+  </>
+ )
 }
 
 export default ArticleItem

@@ -22,7 +22,7 @@ const FrontBlog = () => {
 
   const goToArticle = (idArticle : Post['_id']) => {
 
-    navigate(`/posts/${idArticle}/`);
+    navigate(`/article-item/${idArticle}`);
   };
 
   useEffect(() => {

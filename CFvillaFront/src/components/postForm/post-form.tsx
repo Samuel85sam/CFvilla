@@ -33,9 +33,9 @@ const PostForm: React.FC<PostFormProps> = ({post}) => {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${jwt}`
     };
-
+    console.log({post});
+    
     const sendPost = async (data: CreatePostPayload) => {
-        console.log({ data });
 
         if (post === undefined) {
 
@@ -48,7 +48,7 @@ const PostForm: React.FC<PostFormProps> = ({post}) => {
 
             const route = `posts/${post._id}`;
             await CRUD.patchFormById(route, data, headers);
-
+            
             navigate('/posts');
         }
     };

@@ -37,3 +37,4 @@ export interface AuthResponse {
 }
 
 export type PostPopulatableKeys = keyof Pick<Post, 'author' | 'img'>
+

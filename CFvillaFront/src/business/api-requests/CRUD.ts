@@ -62,9 +62,9 @@ const CRUD = {
 
     },
 
-    getForm: async (route: string, params?: { populate: PostPopulatableKeys[] }) => {
-
+    getForm: async (route: string, params?: { populate: PostPopulatableKeys[] }) => {    
         const response = await axios.get<Post | Post[]>(`${import.meta.env.VITE_API_HOST}/${route}`, { params });
+        
 
         if (response.status === 200) {
             return response.data

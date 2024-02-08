@@ -10,7 +10,10 @@ const PostItem = () => {
   const params = useParams();
   const id = params.id;
   const isAuthenticated = useAuthStore(state => state.isAuthenticated)
+  console.log({isAuthenticated});
+  
   const [post, setpost] = useState<Post>();
+console.log({post});
 
   const redirect = async () => {
     if (isAuthenticated === false) {
@@ -21,7 +24,8 @@ const PostItem = () => {
         setpost(undefined)
       } else {
         const route = `posts/${id}`;
-        const post = await CRUD.getForm(route);
+        //const post = await CRUD.getForm(route);
+        const post = await CRUD.getForm(route,{ populate: ['img', 'author'] });
         if (post !== undefined && '_id' in post) {
           setpost(post)
         };

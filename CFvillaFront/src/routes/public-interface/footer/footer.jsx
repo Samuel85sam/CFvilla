@@ -22,7 +22,7 @@ const Footer = () => {
                 <Button 
                     onClick={login}
                    >
-                    {"se connecter"}
+                    {"espace admin → "}
                 </Button>
             </div>
         {/* <ActionIcon size="lg" color="gray" variant="subtle">

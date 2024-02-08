@@ -1,6 +1,5 @@
 import mainRouter from "./main-router";
 import { RouterProvider } from "react-router-dom";
-import './App.module.css';
 import React, { useEffect } from "react";
 import axios from 'axios'
 import { useAuthStore } from "./store-zustand/authStore";

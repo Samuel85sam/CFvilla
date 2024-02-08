@@ -115,13 +115,13 @@ const PostList = () => {
               ))}
             </TableBody>
           </Table>
-          <Button
+          {/* <Button
             color='info'
             onClick={() => redirect(`/posts/new`)}
             size='medium'
           >
             poster du contenu
-          </Button>
+          </Button> */}
         </TableContainer>
       </>
     );
@@ -131,13 +131,7 @@ const PostList = () => {
         <Card>
           aucun post à afficher
         </Card>
-        <Button
-          color='info'
-          onClick={() => redirect(`/posts/new`)}
-          size='medium'
-        >
-          poster du contenu
-        </Button>
+        
       </>
     )
   }

@@ -9,6 +9,7 @@ export interface NewUserData {
 }
 
 interface AuthStore{
+    logout: any
     currentUser: User['_id'] | null,
     jwt: string | null,
     isAuthenticated: boolean

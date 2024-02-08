@@ -77,7 +77,7 @@ const SignIn = () => {
             <input
               id="password"
               name="password"
-              type="password"
+              type="text"
               onChange={formik.handleChange}
               value={formik.values.formpassword}
             />

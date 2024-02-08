@@ -28,6 +28,7 @@ const SignIn = () => {
     onSubmit: async (values) => {
       
       const response = await CRUD.auth( values);
+    console.log({response});
     
       if (response?.status === 404) {
         console.log('adresse mail ou password incorrect')

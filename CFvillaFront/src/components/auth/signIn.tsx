@@ -23,7 +23,7 @@ const SignIn = () => {
   const formik = useFormik({
     initialValues: {
       adressMail: 'samuel@gmail.com2',
-      formpassword: "password"
+      formpassword: ""
     },
     onSubmit: async (values) => {
       
@@ -77,7 +77,7 @@ const SignIn = () => {
             <input
               id="password"
               name="password"
-              type="text"
+              type="password"
               onChange={formik.handleChange}
               value={formik.values.formpassword}
             />

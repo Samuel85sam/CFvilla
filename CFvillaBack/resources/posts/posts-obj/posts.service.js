@@ -22,7 +22,8 @@ const postsService = {
     },
 
     readOneById: async (postId, param) => {
-        return await Post.findById(postId).exec();
+        console.log({param});
+        return await Post.findById(postId).populate(param.populate).exec()
     },
 
     updateOneById: async (postId, data) => {

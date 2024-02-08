@@ -62,7 +62,9 @@ const CRUD = {
 
     },
 
-    getForm: async (route: string, params?: { populate: PostPopulatableKeys[] }) => {    
+    getForm: async (route: string, params?:  {populate: PostPopulatableKeys[]} ) => {  
+        console.log('dans CRUD ==> getForm',{params});
+          
         const response = await axios.get<Post | Post[]>(`${import.meta.env.VITE_API_HOST}/${route}`, { params });
         
 

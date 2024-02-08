@@ -26,7 +26,7 @@ const ArticleItem = () => {
 
   const getPost = async () => {
     const route = `posts/${idArticle}`
-    // const article = await CRUD.getForm(route)
+     //const article = await CRUD.getForm(route)
     const article = await CRUD.getForm(route, { populate: ['img', 'author'] })
     if (article !== undefined && '_id' in article) {
       console.log(article.img);

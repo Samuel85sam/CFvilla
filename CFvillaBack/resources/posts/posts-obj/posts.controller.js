@@ -48,7 +48,8 @@ const postsController = {
 
     getOneById: async (req, res) => {
         id = req.params.id;
-        const post = await postsService.readOneById(id)
+        console.log(req.query);
+        const post = await postsService.readOneById(id,req.query)
         if (post) {
             res.status(200)
                 .json(post)

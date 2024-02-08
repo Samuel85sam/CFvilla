@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import CRUD from "../../business/api-requests/CRUD";
+import CRUD from "../../../business/api-requests/CRUD";
 import { useNavigate, useParams } from "react-router-dom";
-import PostForm from '../../components/postForm/post-form'
-import { Post } from '../../business/types/CRUD.types';
-import { useAuthStore } from '../../store-zustand/authStore';
+import PostForm from '../../../components/postForm/post-form'
+import { Post } from '../../../business/types/CRUD.types';
+import { useAuthStore } from '../../../store-zustand/authStore';
 
 const PostItem = () => {
   const navigate = useNavigate()
   const params = useParams();
   const id = params.id;
   const isAuthenticated = useAuthStore(state => state.isAuthenticated)
-  console.log({isAuthenticated});
   
-  const [post, setpost] = useState<Post>();
-console.log({post});
+  const [post, setPost] = useState<Post>();
 
   const redirect = async () => {
     if (isAuthenticated === false) {
@@ -21,13 +19,14 @@ console.log({post});
     }
     else {
       if (id === 'new') {
-        setpost(undefined)
+       
+        setPost(undefined)
       } else {
         const route = `posts/${id}`;
         //const post = await CRUD.getForm(route);
         const post = await CRUD.getForm(route,{ populate: ['img', 'author'] });
         if (post !== undefined && '_id' in post) {
-          setpost(post)
+          setPost(post)
         };
       };
     };
@@ -36,6 +35,8 @@ console.log({post});
   useEffect(() => {
     redirect();
   }, [id]);
+
+
 
   if (!post && id !== 'new') return <>loading...</>
 

@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import PostList from './post-list'
+import PostList from './post-list/post-list'
 import { Button } from '@mui/material'
 import { useAuthStore } from '../../store-zustand/authStore'
+import Footer from '../public-interface/footer/footer';
+
 
 
 const IndexAdmin = () => {
@@ -24,6 +26,7 @@ const IndexAdmin = () => {
           se Déconnecter
         </Button>
       </div>
+      <Footer />
     </>
   )
 }

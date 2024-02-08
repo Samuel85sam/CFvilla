@@ -5,7 +5,7 @@ const Img = require("../posts-img/img.model");
 const postsValidator = object({
     type: yup.string().required(),
     title: yup.string().required(),
-    author: yup.object().required(),
+    author: yup.object() | yup.string().required(),
     body: yup.string().required(),
     img: yup.object()
 })

@@ -1,30 +1,22 @@
-import { Button } from '@mui/material';
-import  React  from 'react';
-import { useNavigate } from 'react-router-dom';
-import FrontBlog from './front-blog';
+import React from 'react';
+import FrontBlog from './article-list/front-blog';
+import Header from './header/header';
+import Footer from './footer/footer';
+
+
 
 
 const IndexGuest = () => {
 
-    const navigate = useNavigate();
-
-    const login = () => {
-        navigate('/auth');
-    };
-
     return (
         <>
-            <h1
-            >
-                <FrontBlog/>
-            </h1>
-            <div id='logoutButton'>
-                <Button color='primary'
-                    onClick={login}
-                    size='medium'>
-                    {"se connecter"}
-                </Button>
+            <header>
+                <Header />
+            </header>
+            <div>
+                <FrontBlog />
             </div>
+            <Footer />
         </>
     )
 }

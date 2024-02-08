@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import CRUD from '../../business/api-requests/CRUD';
-import { Post } from '../../business/types/CRUD.types';
+import CRUD from '../../../business/api-requests/CRUD';
+import { Post } from '../../../business/types/CRUD.types';
 import { SimpleGrid, Card, Image, Text, Container, AspectRatio } from '@mantine/core';
-import classes from '../../App.module.css';
+import classes from '../../../App.module.css';
 import { useNavigate } from "react-router-dom";
-import { getImageUrl } from '../../utils/images';
+import { getImageUrl } from '../../../utils/images';
 
 
 

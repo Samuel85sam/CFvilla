@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate} from "react-router-dom";
-import CRUD from '../../business/api-requests/CRUD';
-import { Post, Img } from '../../business/types/CRUD.types';
+import CRUD from '../../../business/api-requests/CRUD';
+import { Post, Img } from '../../../business/types/CRUD.types';
 import {
   Card,
   Image,
@@ -16,7 +16,7 @@ import {
 } from '@mantine/core';
 //import { IconHeart, IconBookmark, IconShare } from '@tabler/icons-react';
 import classes from './article-item.module.css';
-import { getImageUrl } from '../../utils/images';
+import { getImageUrl } from '../../../utils/images';
 
 
 const ArticleItem = () => {
@@ -31,7 +31,6 @@ const ArticleItem = () => {
     //const article = await CRUD.getForm(route)
     const article = await CRUD.getForm(route, { populate: ['img', 'author'] })
     if (article !== undefined && '_id' in article) {
-      console.log(article.img);
 
       setArticle(article)
     }

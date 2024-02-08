@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import CRUD from '../../business/api-requests/CRUD';
+import CRUD from '../../../business/api-requests/CRUD';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import TableBody from '@mui/material/TableBody';
@@ -9,10 +9,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from '../../store-zustand/authStore';
+import { useAuthStore } from '../../../store-zustand/authStore';
 import { Card } from '@mui/material';
-import { Post } from '../../business/types/CRUD.types';
-import { getImageUrl } from '../../utils/images';
+import { Post } from '../../../business/types/CRUD.types';
+import { getImageUrl } from '../../../utils/images';
 
 const PostList = () => {
   const store = useAuthStore(state => state)
@@ -20,9 +20,13 @@ const PostList = () => {
   const [posts, setpost] = useState<Post[]>([])
 
 
+
+
   const allPosts = async () => {
     const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
     if (posts !== undefined && Array.isArray(posts)) {
+      console.log({posts});
+      
       setpost(posts)
     }
   };
@@ -65,7 +69,7 @@ const PostList = () => {
             </TableHead>
             <TableBody>
               {posts.map((post) => (
-
+                  
                 <TableRow
                   key={post._id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

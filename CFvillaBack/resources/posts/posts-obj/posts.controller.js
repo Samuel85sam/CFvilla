@@ -27,17 +27,19 @@ const postsController = {
             const data = {
                 type: req.body.type,
                 title: req.body.title,
-                author: currentUser,
                 body: req.body.body,
+                author: currentUser,
                 img: imgId
             };
-
+            
+            console.log(data.author);
             const postId = await postsService.create(data);
 
             res.status(200).json({
                 message: 'post created',
                 postId: `${postId}`,
-                authorId: `${JSON.stringify(currentUser)}`,
+                // authorId: `${JSON.stringify(currentUser)}`,
+                authorId: currentUser,
                 imgId: `${imgId}`
             });
         } catch (error) {

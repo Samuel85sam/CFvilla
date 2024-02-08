@@ -15,7 +15,7 @@ import { CreatePostPayload, Post } from '../../business/types/CRUD.types';
 const defaultTheme = createTheme();
 
 interface PostFormProps {
-    post:Post
+    post:Post | undefined
 }
 
 interface PostFormValues {
@@ -27,15 +27,17 @@ interface PostFormValues {
 
 const PostForm: React.FC<PostFormProps> = ({post}) => {
     const currentUser = useAuthStore(state => state.currentUser)
+    console.log({currentUser});
+    
     const jwt = useAuthStore(state => state.jwt)
     const navigate = useNavigate();
     const headers = {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${jwt}`
     };
-    console.log({post});
     
     const sendPost = async (data: CreatePostPayload) => {
+console.log('sendPost');
 
         if (post === undefined) {
 
@@ -70,12 +72,14 @@ const PostForm: React.FC<PostFormProps> = ({post}) => {
                 img: undefined
             }}
             onSubmit={(values) => {
+                
                 if(currentUser === null) return
-                if(values.img === undefined) return
+                console.log(values.img);
+                //if(values.img === undefined) return
 
                 const payload: CreatePostPayload = {
                     ...values,
-                    img: values.img,
+                    img: values.img ,
                     author: currentUser
                 };
 
@@ -140,11 +144,13 @@ const PostForm: React.FC<PostFormProps> = ({post}) => {
                                             }
                                         }
                                     }
+                                    
                                 />
                                 <Button
                                     type="submit"
                                     variant="contained"
                                     sx={{ mt: 3, mb: 2 }}
+                                  
                                 >
                                     UPLOAD
                                 </Button>

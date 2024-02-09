@@ -40,9 +40,9 @@ const Header = () => {
           {items}
         </Group>
         <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
-       <Button>
-        villakalokairi@yahoo.com
-       </Button>
+       
+       <a href="villakalokairi@yahoo.com">villakalokairi@yahoo.com</a>
+      
       </Container>
     </header>
   );

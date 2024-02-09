@@ -23,11 +23,12 @@ const SignIn = () => {
   const formik = useFormik({
     initialValues: {
       adressMail: 'samuel@gmail.com2',
-      formpassword: "password"
+      formpassword: ""
     },
     onSubmit: async (values) => {
       
       const response = await CRUD.auth( values);
+    console.log({response});
     
       if (response?.status === 404) {
         console.log('adresse mail ou password incorrect')

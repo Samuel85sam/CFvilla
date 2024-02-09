@@ -3,13 +3,18 @@ import { useState, useEffect } from 'react';
 import { Container, Group, Burger, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import classes from './header.module.css';
+import Pricing from '../../../components/header/pricing';
+import Contact from '../../../components/header/contact';
+
 
 const Header = () => {
   const links = [
    // { link: '/about', label: 'Features' },
    // { link: '/learn', label: 'Learn' },
-    { link: '/pricing', label: 'Pricing' },
-    { link: 'Contact', label: 'Contact' },
+   { link: 'Contact', label: 'Contact' },
+   { link: '/pricing', label: 'Pricing' },
+  //  { link: <Pricing/>, label: 'Pricing' },
+  //  { link: <Contact/>, label: 'Contact Us' },
   ];
 
   const [opened, { toggle }] = useDisclosure(false);

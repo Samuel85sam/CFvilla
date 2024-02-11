@@ -32,7 +32,6 @@ const postsController = {
                 img: imgId
             };
             
-            console.log(data.author);
             const postId = await postsService.create(data);
 
             res.status(200).json({
@@ -50,7 +49,6 @@ const postsController = {
 
     getOneById: async (req, res) => {
         id = req.params.id;
-        console.log(req.query);
         const post = await postsService.readOneById(id,req.query)
         if (post) {
             res.status(200)

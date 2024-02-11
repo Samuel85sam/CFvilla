@@ -35,7 +35,11 @@ const CRUD = {
 
     auth: async (data) => {
         try {
+            console.log({data});
+            
             const response = await axios.post<AuthResponse>(`${import.meta.env.VITE_API_HOST}/auth`, data);  
+            console.log('CRUD==>',{response});
+            
             return response
         } catch (error) {
             console.error(error);

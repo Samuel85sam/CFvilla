@@ -23,15 +23,18 @@ const SignIn = () => {
   const formik = useFormik({
     initialValues: {
       adressMail: 'samuel@gmail.com2',
-      formpassword: ""
+      password: ""
     },
     onSubmit: async (values) => {
       
       const response = await CRUD.auth( values);
-    console.log({response});
     
-      if (response?.status === 404) {
+      if (response?.status === 401) {
         console.log('adresse mail ou password incorrect')
+        alert('adresse mail ou password incorrect')
+        navigate('/auth')
+      }
+      if (response?.status === 404) {
         navigate('/auth')
       } else {
         if (response !== undefined) {
@@ -78,9 +81,9 @@ const SignIn = () => {
             <input
               id="password"
               name="password"
-              type="formpassword"
+              type="password"
               onChange={formik.handleChange}
-              value={formik.values.formpassword}
+              value={formik.values.password}
             />
             <Button
               type="submit"

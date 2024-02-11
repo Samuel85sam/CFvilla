@@ -5,15 +5,17 @@ const bcrypt = require('bcryptjs');
 const authController = {
 
     login: async (req, res) => {
+        console.log('req.body : ', req.body);
         const {_id: userId} = await authService.exists('adressMail', req.body.adressMail);
         if (userId === null) {
             return res.status(401).json({ message: "USER NOT FOUND" });
         } else {
             const user = await usersService.readOneById(userId);
             const hashedPassword = user.password
-            const passwordMatch = bcrypt.compare(req.body.formpassword, hashedPassword);
+            const passwordMatch =await bcrypt.compare(req.body.password, hashedPassword);
+            console.log({passwordMatch});
             const token = await authService.newJwt(userId)
-            if (!passwordMatch) {
+            if (passwordMatch === false) {
                 return res.status(401).json({ message: "Mot de passe incorrect" });
             };
             if (token) {

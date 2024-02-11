@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Group, Code, Button} from '@mantine/core';
 import classes from './nav-bar.module.css';
 import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '../../../store-zustand/authStore';
+import { useAuthStore } from '../../store-zustand/authStore';
 
 
 const data = [

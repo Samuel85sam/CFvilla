@@ -22,22 +22,26 @@ const SignIn = () => {
   const setUserData = useAuthStore((state) => state.addUserData);
   const navigate = useNavigate();
 
-  const SignupSchema= Yup.object().shape({
+  const SignupSchema = Yup.object().shape({
     adressMail: Yup.string()
-    .email('Invalid email')
-    .required('Required'),
+      .email('Invalid email')
+      .required('Required'),
     password: Yup.string()
+      .min(6,'must be min 6 char')
       .required('Required')
   })
 
   const formik = useFormik({
+
     initialValues: {
       adressMail: 'samuel@gmail.com2',
       password: ""
     },
+    validationSchema: SignupSchema,
+
     onSubmit: async (values) => {
       console.log('test');
-      
+
       const response = await CRUD.auth(values);
 
       if (response?.status === 401) {
@@ -60,35 +64,43 @@ const SignIn = () => {
       }
     }
   });
+  console.log(formik);
 
   return (
     <>
       <Container size={420} my={40}>
-        <Title ta="center" className={classes.title}>
-          Welcome back!
-        </Title>
-        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <TextInput label="Email" placeholder="you@mantine.dev" required 
-            id="email"
-            name="adressMail"
-            type="email"
-            onChange={formik.handleChange}
-            value={formik.values.adressMail}/>
-          <PasswordInput label="Password" placeholder="Your password" required mt="md" 
-            id="password"
-            name="password"
-            type="password"
-            onChange={formik.handleChange}
-            value={formik.values.password}/>
-          <Group justify="space-between" mt="lg">
-          </Group>
-          <Button 
-            fullWidth mt="xl" 
-            onClick={()=>formik.handleSubmit()}
+        <form
+        onSubmit={formik.handleSubmit}
+        >
+          <Title ta="center" className={classes.title}>
+            Welcome back!
+          </Title>
+          <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+            <TextInput label="Email" placeholder="you@mantine.dev" required
+              id="email"
+              name="adressMail"
+              type="email"
+              error={formik.errors.adressMail}
+              onChange={formik.handleChange}
+
+              value={formik.values.adressMail} />
+            <PasswordInput label="Password" placeholder="Your password" required mt="md"
+              id="password"
+              name="password"
+              type="password"
+              error={formik.errors.password}
+              onChange={formik.handleChange}
+              value={formik.values.password} />
+            <Group justify="space-between" mt="lg">
+            </Group>
+            <Button
+              fullWidth mt="xl"
+              type="submit"
             >
-            Sign in
-          </Button>
-        </Paper>
+              Sign in
+            </Button>
+          </Paper>
+        </form>
       </Container>
     </>
 

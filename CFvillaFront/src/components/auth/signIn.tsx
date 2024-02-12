@@ -1,24 +1,34 @@
-import  React  from "react";
-import { useFormik } from 'formik';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import React from "react";
+import { useFormik, Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 import CRUD from "../../business/api-requests/CRUD";
 import { useNavigate } from "react-router-dom";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from "axios";
 import { NewUserData, useAuthStore } from "../../store-zustand/authStore";
+import {
+  TextInput,
+  PasswordInput,
+  Checkbox,
+  Anchor,
+  Paper,
+  Title,
+  Text,
+  Container,
+  Group,
+  Button,
+} from '@mantine/core';
+import classes from './signIn.module.css';
 
-const defaultTheme = createTheme();
 const SignIn = () => {
   const setUserData = useAuthStore((state) => state.addUserData);
   const navigate = useNavigate();
+
+  const SignupSchema= Yup.object().shape({
+    adressMail: Yup.string()
+    .email('Invalid email')
+    .required('Required'),
+    password: Yup.string()
+      .required('Required')
+  })
 
   const formik = useFormik({
     initialValues: {
@@ -26,9 +36,10 @@ const SignIn = () => {
       password: ""
     },
     onSubmit: async (values) => {
+      console.log('test');
       
-      const response = await CRUD.auth( values);
-    
+      const response = await CRUD.auth(values);
+
       if (response?.status === 401) {
         console.log('adresse mail ou password incorrect')
         alert('adresse mail ou password incorrect')
@@ -45,65 +56,85 @@ const SignIn = () => {
           }
           setUserData(userData)
           navigate('/posts')
-        }   
+        }
       }
     }
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <ThemeProvider theme={defaultTheme}>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Connexion à votre espace personnel
-            </Typography>
-            <label htmlFor="email">email Address</label>
-            <input
-              id="email"
-              name="adressMail"
-              type="email"
-              onChange={formik.handleChange}
-              value={formik.values.adressMail}
-            />
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              onChange={formik.handleChange}
-              value={formik.values.password}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+    <>
+      <Container size={420} my={40}>
+        <Title ta="center" className={classes.title}>
+          Welcome back!
+        </Title>
+        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+          <TextInput label="Email" placeholder="you@mantine.dev" required 
+            id="email"
+            name="adressMail"
+            type="email"
+            onChange={formik.handleChange}
+            value={formik.values.adressMail}/>
+          <PasswordInput label="Password" placeholder="Your password" required mt="md" 
+            id="password"
+            name="password"
+            type="password"
+            onChange={formik.handleChange}
+            value={formik.values.password}/>
+          <Group justify="space-between" mt="lg">
+          </Group>
+          <Button 
+            fullWidth mt="xl" 
+            onClick={()=>formik.handleSubmit()}
             >
-              Sign In
-            </Button>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-          </Box>
-        </Container>
-      </ThemeProvider>
-    </form>
+            Sign in
+          </Button>
+        </Paper>
+      </Container>
+    </>
+
   )
 }
 
 
 export default SignIn
+
+{/* < form onSubmit = { formik.handleSubmit } >
+  <ThemeProvider theme={defaultTheme}>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Connexion à votre espace personnel
+        </Typography>
+        <label htmlFor="email">email Address</label>
+        <input
+         
+        />
+        <label htmlFor="password">Password</label>
+        <input
+          
+        />
+        <Button
+         
+        >
+          Sign In
+        </Button>
+        <Grid item xs>
+          <Link href="#" variant="body2">
+            Forgot password?
+          </Link>
+        </Grid>
+      </Box>
+    </Container>
+  </ThemeProvider>
+  </form > */}

@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormik, Formik, Form, Field } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import CRUD from "../../business/api-requests/CRUD";
 import { useNavigate } from "react-router-dom";
@@ -7,11 +7,8 @@ import { NewUserData, useAuthStore } from "../../store-zustand/authStore";
 import {
   TextInput,
   PasswordInput,
-  Checkbox,
-  Anchor,
   Paper,
   Title,
-  Text,
   Container,
   Group,
   Button,
@@ -27,7 +24,7 @@ const SignIn = () => {
       .email('Invalid email')
       .required('Required'),
     password: Yup.string()
-      .min(6,'must be min 6 char')
+      .min(6, 'must be min 6 char')
       .required('Required')
   })
 
@@ -70,7 +67,7 @@ const SignIn = () => {
     <>
       <Container size={420} my={40}>
         <form
-        onSubmit={formik.handleSubmit}
+          onSubmit={formik.handleSubmit}
         >
           <Title ta="center" className={classes.title}>
             Welcome back!
@@ -110,43 +107,4 @@ const SignIn = () => {
 
 export default SignIn
 
-{/* < form onSubmit = { formik.handleSubmit } >
-  <ThemeProvider theme={defaultTheme}>
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Connexion à votre espace personnel
-        </Typography>
-        <label htmlFor="email">email Address</label>
-        <input
-         
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          
-        />
-        <Button
-         
-        >
-          Sign In
-        </Button>
-        <Grid item xs>
-          <Link href="#" variant="body2">
-            Forgot password?
-          </Link>
-        </Grid>
-      </Box>
-    </Container>
-  </ThemeProvider>
-  </form > */}
+

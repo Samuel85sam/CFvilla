@@ -5,7 +5,7 @@ import { SimpleGrid, Card, Image, Text, Container, AspectRatio } from '@mantine/
 import { useNavigate } from "react-router-dom";
 import { getImageUrl } from '../../../utils/images';
 import classes from '../index-guest.module.css'
-import {Link} from '../header/header'
+import { Link } from '../header/header'
 
 interface FrontProps {
   // links: typeof Link[],
@@ -16,7 +16,7 @@ const FrontBlog: FC<FrontProps> = (props) => {
   const [posts, setpost] = useState<Post[]>([]);
   const state = props.state
 
-  
+
   const navigate = useNavigate();
 
   const fetchPosts = async () => {
@@ -26,7 +26,7 @@ const FrontBlog: FC<FrontProps> = (props) => {
     }
   };
 
-  const goToArticle = (idArticle : Post['_id']) => {
+  const goToArticle = (idArticle: Post['_id']) => {
 
     navigate(`/article-item/${idArticle}`);
   };
@@ -38,12 +38,9 @@ const FrontBlog: FC<FrontProps> = (props) => {
   const cards = posts.map((article) => (
     <Card key={article._id} p="md" radius="md" component="a" href="#" className={classes.card}>
       <AspectRatio ratio={1920 / 1080}>
-        <Image src={getImageUrl(article.img)} 
-        onClick={()=>{goToArticle(article._id)}}/>
+        <Image src={getImageUrl(article.img)}
+          onClick={() => { goToArticle(article._id) }} />
       </AspectRatio>
-      {/* <Text c="dimmed" size="xs" tt="uppercase" fw={700} mt="md">
-        {article.date}
-      </Text> */}
       <Text className={classes.title} mt={5}>
         {article.title}
       </Text>
@@ -52,9 +49,8 @@ const FrontBlog: FC<FrontProps> = (props) => {
   return (
     <>
       <Container py="xl">
-
-      <SimpleGrid cols={{ base: 1, sm: 2 }}>{cards}</SimpleGrid>
-    </Container>
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>{cards}</SimpleGrid>
+      </Container>
     </>
   )
 };

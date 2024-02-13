@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import CRUD from '../../../business/api-requests/CRUD';
 import { Post } from '../../../business/types/CRUD.types';
 import { SimpleGrid, Card, Image, Text, Container, AspectRatio } from '@mantine/core';
 import { useNavigate } from "react-router-dom";
 import { getImageUrl } from '../../../utils/images';
 import classes from '../index-guest.module.css'
+import {Link} from '../header/header'
 
+interface FrontProps {
+  // links: typeof Link[],
+  state: Link
+}
 
-
-const FrontBlog = () => {
+const FrontBlog: FC<FrontProps> = (props) => {
   const [posts, setpost] = useState<Post[]>([]);
+  const state = props.state
+
   
   const navigate = useNavigate();
 
@@ -46,6 +52,7 @@ const FrontBlog = () => {
   return (
     <>
       <Container py="xl">
+
       <SimpleGrid cols={{ base: 1, sm: 2 }}>{cards}</SimpleGrid>
     </Container>
     </>

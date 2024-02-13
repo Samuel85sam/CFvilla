@@ -42,7 +42,7 @@ const PostList = () => {
   };
 
   const cards = posts.map((post) => (
-    <Card key={post._id} p="md" radius="md" component="a" href="#" className={classes.card}>
+    <Card key={post._id} p="xl" radius="md" component="a" href="#" className={classes.card}>
       <AspectRatio ratio={1920 / 1080}>
         <Image src={getImageUrl(post.img)}
           onClick={() => { redirect(`/posts/${post._id}`) }} />
@@ -79,8 +79,8 @@ const PostList = () => {
 
     return (
       <>
-        <Container py="xl">
-          <SimpleGrid cols={{ base: 1, sm: 2 }}>{cards}</SimpleGrid>
+        <Container py="sm" >
+          <SimpleGrid cols={{ base: 1, sm: 1 }}>{cards}</SimpleGrid>
         </Container>
       </>
     );

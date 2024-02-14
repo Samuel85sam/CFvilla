@@ -1,17 +1,26 @@
 import { useEffect } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Form, Formik } from 'formik';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
+import { Form, Formik } from 'formik'; import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import CRUD from "../../business/api-requests/CRUD";
-import { useNavigate } from "react-router-dom";
-import { useAuthStore } from '../../store-zustand/authStore';
-import React from 'react';
 import { CreatePostPayload, Post } from '../../business/types/CRUD.types';
-
+import React from "react";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useNavigate } from "react-router-dom";
+import { NewUserData, useAuthStore } from "../../store-zustand/authStore";
+import {
+    TextInput,
+    PasswordInput,
+    Paper,
+    Title,
+    Container,
+    Group,
+    Button,
+    Textarea,
+} from '@mantine/core';
+import classes from './post-form.module.css';
 const defaultTheme = createTheme();
 
 interface PostFormProps {
@@ -27,14 +36,36 @@ interface PostFormValues {
 
 const PostForm: React.FC<PostFormProps> = ({ post }) => {
     const currentUser = useAuthStore(state => state.currentUser)
-    console.log({ currentUser });
-
     const jwt = useAuthStore(state => state.jwt)
     const navigate = useNavigate();
     const headers = {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${jwt}`
     };
+    const SignupSchema = Yup.object().shape({
+        type: Yup.string().required(),
+        title: Yup.string().required(),
+        body: Yup.string().required(),
+        img:Yup.mixed()
+    });
+
+    const formik = useFormik({
+
+        initialValues: {
+            type: post?.type || 'newPostType',
+            title: post?.title || 'newPostTitle',
+            body: post?.body || 'newPostBody',
+            img: undefined,
+            author: post?.author._id || undefined //gérer depuit backend
+        },
+
+        validationSchema: SignupSchema,
+
+        onSubmit: async (values) => {
+            sendPost(values)
+        }
+
+    })
 
     const sendPost = async (data: CreatePostPayload) => {
         console.log('sendPost');
@@ -63,115 +94,99 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
     }, []);
 
     return (
-        <Formik<PostFormValues>
-            enableReinitialize
-            initialValues={{
-                type: post?.type || 'newPostType',
-                title: post?.title || 'newPostTitle',
-                body: post?.body || 'newPostBody',
-                img: undefined
-            }}
-            onSubmit={(values) => {
+        <Container size={420} my={40}>
 
-                if (currentUser === null) return
-                console.log(values.img);
-                //if(values.img === undefined) return
+            <Formik<PostFormValues>
+                enableReinitialize
+                initialValues={{
+                    type: post?.type || 'newPostType',
+                    title: post?.title || 'newPostTitle',
+                    body: post?.body || 'newPostBody',
+                    img: undefined
+                }}
+                onSubmit={(values) => {
 
-                const payload: CreatePostPayload = {
-                    ...values,
-                    img: values.img,
-                    author: currentUser
-                };
+                    if (currentUser === null) return
+                    console.log(values.img);
+                    const payload: CreatePostPayload = {
+                        ...values,
+                        img: values.img,
+                        author: currentUser
+                    };
 
-                sendPost(payload)
-            }}
-        >
-            {(props) => (
-                <Form
-                    encType='multipart/form-data'
-                >
-                    <ThemeProvider theme={defaultTheme}>
-                        <Container component="main" maxWidth="md">
-                            <CssBaseline />
-                            <Box
-                                sx={{
-                                    marginTop: 8,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <Typography component="h1" variant="h5">
-                                    nouveau post
-                                </Typography>
-                                <label htmlFor="type">type</label>
-                                <input
-                                    id="type"
-                                    name="type"
-                                    type="text"
-                                    onChange={props.handleChange}
-                                    value={props.values.type}
-                                />
-                                <label htmlFor="title">titre</label>
-                                <input
-                                    id="title"
-                                    name="title"
-                                    type="text"
-                                    onChange={props.handleChange}
-                                    value={props.values.title}
-                                />
-                                <label htmlFor="body">corps du message</label>
-                                {/* <input
-                                    id="body"
-                                    name="body"
-                                    type="text"
-                                    onChange={props.handleChange}
-                                    value={props.values.body}
-                                /> */}
-                                <textarea 
-                                id="body" 
-                                name="body" 
-                                rows={4} 
+                    sendPost(payload)
+                }}
+            >
+                {(props) => (
+                    <form
+                        encType='multipart/form-data'
+                    >
+                        <Title ta="center" className={classes.title}>
+                            Nouvel Article:
+                        </Title>
+                        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+                            <TextInput label="Zone" placeholder="Zone de la Villa" required
+                                id="type"
+                                name="type"
+                                type="text"
+                                onChange={formik.handleChange}
+                                value={formik.values.type}
+                            />
+                            <label htmlFor="title">titre</label>
+                            <TextInput
+                                id="title"
+                                name="title"
+                                type="text"
+                                onChange={formik.handleChange}
+                                value={formik.values.title}
+                            />
+                            <label htmlFor="body">corps du message</label>
+                            <Textarea
+                                id="body"
+                                name="body"
+                                rows={4}
                                 cols={50}
-                                onChange={props.handleChange}
-                                    value={props.values.body}></textarea>
-                                <br/>
-                                <label htmlFor="img">image</label>
-                                <input
-                                    id="img"
-                                    name="uploaded_file"
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={
-                                        (event) => {
+                                onChange={formik.handleChange}
+                                value={formik.values.body}></Textarea>
+                            <br />
+                            <label htmlFor="img">image</label>
+                            <TextInput
+                                id="img"
+                                name="uploaded_file"
+                                type="file"
+                                accept="image/*"
+                                onChange={
+                                    (event) => {
 
-                                            if (event.currentTarget.files) {
-                                                props.setFieldValue('uploaded_file', event.currentTarget.files[0])
-                                            } else {
-                                                props.setFieldValue('uploaded_file', null)
-                                            }
+                                        if (event.currentTarget.files) {
+                                            formik.setFieldValue('uploaded_file', event.currentTarget.files[0])
+                                        } else {
+                                            formik.setFieldValue('uploaded_file', null)
                                         }
                                     }
+                                }
 
-                                />
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
+                            />
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
 
-                                >
-                                    UPLOAD
-                                </Button>
-                                <Button color='inherit'
-                                    onClick={redirect}
-                                    size='medium'>
-                                    {'liste des contenus'}
-                                </Button>
-                            </Box>
-                        </Container>
-                    </ThemeProvider>
-                </Form>)}
-        </Formik >
+                            >
+                                UPLOAD
+                            </Button>
+                            <Button color='inherit'
+                                onClick={redirect}
+                                size='medium'>
+                                {'liste des contenus'}
+                            </Button>
+                        </Paper>
+
+                    </form>
+                )}
+            </Formik >
+        </Container>
+
     )
 }
 

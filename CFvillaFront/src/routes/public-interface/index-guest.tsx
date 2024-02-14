@@ -39,12 +39,10 @@ const IndexGuest = () => {
         <>
             <header  >
                 <Affix position={{ top: 20 }} >
-                    <div >
                         <Header
                             state={state}
                             links={links}
                             setState={setState} />
-                    </div>
                 </Affix>
             </header>
             <div>

@@ -65,12 +65,12 @@ const ArticleItem = () => {
             </Text>
           </div>
         </Group>
-        <Card.Section className={classes.footer}>
+        {/* <Card.Section className={classes.footer}>
           <Group justify="space-between">
             <Group gap={0}>
             </Group>
           </Group>
-        </Card.Section>
+        </Card.Section> */}
       </Card>
     </>
   )

@@ -37,7 +37,6 @@ const SignIn = () => {
     validationSchema: SignupSchema,
 
     onSubmit: async (values) => {
-      console.log('test');
 
       const response = await CRUD.auth(values);
 

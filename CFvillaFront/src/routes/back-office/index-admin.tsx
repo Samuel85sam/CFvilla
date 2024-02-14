@@ -21,7 +21,7 @@ const IndexAdmin = () => {
       </div>
       <footer>
         <Affix >
-          {<NavBar />}
+          <NavBar />
         </Affix>
       </footer>
     </>

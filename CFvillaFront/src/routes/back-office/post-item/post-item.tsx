@@ -5,6 +5,7 @@ import PostForm from '../../../components/postForm/post-form'
 import { Post } from '../../../business/types/CRUD.types';
 import { useAuthStore } from '../../../store-zustand/authStore';
 
+
 const PostItem = () => {
   const navigate = useNavigate()
   const params = useParams();
@@ -23,7 +24,6 @@ const PostItem = () => {
         setPost(undefined)
       } else {
         const route = `posts/${id}`;
-        //const post = await CRUD.getForm(route);
         const post = await CRUD.getForm(route,{ populate: ['img', 'author'] });
         if (post !== undefined && '_id' in post) {
           setPost(post)

@@ -16,3 +16,23 @@
 .backGround{
   background-color: rgb(8, 52, 102);
 }
+.centeredElements {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.leftContent {
+  display: flex;
+  align-items: center;
+}
+
+.rightContent {
+  display: flex;
+  align-items: center;
+}

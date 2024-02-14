@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import { useState, useEffect } from 'react';
 import { Container, Group, Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import classes from './header.module.css';
@@ -44,12 +43,16 @@ const Header: FC<HeaderProps> = (props) => {
   return (
     <header className={classes.header}>
       <Container size="lg" className={classes.inner}>
-        Villa Kalokairi
-        <Group gap={5} visibleFrom="xs">
-          {items}
-        </Group>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
-        <a href="mailto:villakalokairi@yahoo.com">villakalokairi@yahoo.com</a>
+        <div className={classes.leftContent}>
+          Villa Kalokairi
+          <Group gap={5} visibleFrom="xs">
+            {items}
+          </Group>
+          <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
+        </div>
+        <div className={classes.rightContent}>
+          <a href="mailto:villakalokairi@yahoo.com">villakalokairi@yahoo.com</a>
+        </div>
       </Container>
     </header>
   );

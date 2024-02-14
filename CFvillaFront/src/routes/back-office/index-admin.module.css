@@ -1,29 +1,4 @@
-.flexContainer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: normal;
-  align-content: normal;
-}
 
-.flexItems:nth-child(1) {
-  display: block;
-  flex-grow: 0;
-  flex-shrink: 1;
-  flex-basis: auto;
-  align-self: auto;
-  order: 0;
-}
-
-.flexItems:nth-child(2) {
-  display: block;
-  flex-grow: 0;
-  flex-shrink: 1;
-  flex-basis: auto;
-  align-self: auto;
-  order: 2;
-}
 
 .card {
   transition:
@@ -42,6 +17,12 @@
 }
 .backGround{
   background-color: rgb(8, 52, 102);
+}
+
+.centeredElements {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 

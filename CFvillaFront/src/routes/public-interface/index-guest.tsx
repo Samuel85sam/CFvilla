@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import FrontBlog from './article-list/front-blog';
-import Header from './header/header';
-import Footer from './footer/footer';
+import FrontBlog from '../../components/article-list/front-blog';
+import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
 import '@mantine/core/styles/BackgroundImage.css';
 import Pricing from '../../components/header/pricing';
 import Contact from '../../components/contact/contact';
-import { Link } from './header/header'
+import { Affix } from '@mantine/core';
 
 
 
@@ -33,24 +33,30 @@ const IndexGuest = () => {
     }, [state])
 
 
-   
+
 
     return (
         <>
-            <header>
-                <Header
-                    state={state}
-                    links={links}
-                    setState={setState} />
+            <header  >
+                <Affix position={{ top: 20 }} >
+                    <div >
+                        <Header
+                            state={state}
+                            links={links}
+                            setState={setState} />
+                    </div>
+                </Affix>
             </header>
             <div>
-                {state === links[0]?  < Contact /> :  <Pricing />}               
-                 <FrontBlog
+                {state === links[0] ? < Contact /> : <Pricing />}
+                <FrontBlog
                     state={state}
                 />
             </div>
             <footer>
-                <Footer />
+                <Affix position={{ bottom: 20 }}>
+                    <Footer />
+                </Affix>
             </footer>
         </>
     )

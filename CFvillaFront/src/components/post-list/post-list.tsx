@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import CRUD from '../../../business/api-requests/CRUD';
+import CRUD from '../../business/api-requests/CRUD';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import TableBody from '@mui/material/TableBody';
@@ -9,10 +9,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from '../../../store-zustand/authStore';
-import { Post } from '../../../business/types/CRUD.types';
+import { useAuthStore } from '../../store-zustand/authStore';
+import { Post } from '../../business/types/CRUD.types';
 import { SimpleGrid, Card, Image, Text, Container, AspectRatio } from '@mantine/core';
-import { getImageUrl } from '../../../utils/images';
+import { getImageUrl } from '../../utils/images';
 import classes from './post-list.module.css'
 //import { Link } from '../header/header'
 

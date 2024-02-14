@@ -2,7 +2,7 @@ import React from 'react'
 import { Group, Text, Button } from '@mantine/core';
 import classes from './nav-bar.module.css';
 import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '../../../store-zustand/authStore';
+import { useAuthStore } from '../../store-zustand/authStore';
 import { useWindowScroll } from '@mantine/hooks';  
 
 

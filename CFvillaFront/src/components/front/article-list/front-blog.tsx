@@ -48,8 +48,8 @@ const FrontBlog: FC<FrontProps> = (props) => {
   ));
   return (
     <>
-      <Container py="xl">
-        <SimpleGrid cols={{ base: 1, sm: 2 }}>{cards}</SimpleGrid>
+      <Container py="lg">
+        <SimpleGrid cols={{ base: 1, sm: 3 }}>{cards}</SimpleGrid>
       </Container>
     </>
   )

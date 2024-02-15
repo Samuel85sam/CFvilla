@@ -13,10 +13,7 @@ const Footer = () => {
 
   return (
     <Center>
-      <Grid gutter={{ base: 5, xs: 'md', md: 'xl', xl: 400 }}>
-        <Grid.Col span={6}>
-          VILLA-KALOKAIRI (logo)
-        </Grid.Col>
+      <Grid gutter={{ base: 5, xs: 'md', md: 'xl', xl: 1000 }}>
         <Grid.Col span={6}>
           <Button
             onClick={login}
@@ -24,6 +21,9 @@ const Footer = () => {
           >
             {"ADMIN → "}
           </Button>
+        </Grid.Col>
+        <Grid.Col span={6}>
+          VILLA-KALOKAIRI (logo)
         </Grid.Col >
       </Grid >
     </Center>

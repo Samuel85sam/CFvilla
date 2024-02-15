@@ -46,7 +46,9 @@ const Header: FC<HeaderProps> = (props) => {
         <Grid gutter={{ base: 5, xs: 'md', md: 'xl', xl: 400 }}>
 
           <Grid.Col span={4}>
-            <div></div>
+          <Button >
+            <a href="mailto:villakalokairi@yahoo.com">villakalokairi@yahoo.com</a>
+          </Button>
           </Grid.Col>
 
           <Grid.Col span={4} >
@@ -57,9 +59,8 @@ const Header: FC<HeaderProps> = (props) => {
           </Grid.Col>
 
           <Grid.Col span={4}  >
-            <Button >
-              <a href="mailto:villakalokairi@yahoo.com">villakalokairi@yahoo.com</a>
-            </Button>
+          <div></div>
+           
           </Grid.Col >
 
         </Grid>

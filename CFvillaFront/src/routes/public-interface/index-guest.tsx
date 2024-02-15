@@ -38,21 +38,40 @@ const IndexGuest = () => {
 
     return (
         <>
-            <AppShell>
+            <AppShell
+            >
                 <AppShell.Header 
+                    withBorder= {false}
+                    style={{
+                        backgroundColor:'transparent'
+                      
+                    }}
                     >
+                          
                         <Header
                             state={state}
                             links={links}
                             setState={setState} />
                 </AppShell.Header>
+             
                 <AppShell.Main>
-                    {state === links[0] ? < Contact /> : <Pricing />}
+        
                     <FrontBlog
                         state={state}
-                    />
+                        />
                 </AppShell.Main>
-                <AppShell.Footer>
+                <AppShell.Aside
+                withBorder= {false}
+                style={{width: 250, backgroundColor:'transparent'}}>
+                    {state === links[0] ? < Contact /> : <Pricing />}
+                </AppShell.Aside>
+                <AppShell.Footer
+                    withBorder={false}
+                    style={{
+                        backgroundColor: 'transparent'
+
+                    }}
+                    >
                         <Footer />
                 </AppShell.Footer>
             </AppShell>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import CRUD from "../../../business/api-requests/CRUD";
 import { useNavigate, useParams } from "react-router-dom";
-import PostForm from '../../../components/postForm/post-form'
+import PostForm from '../../../components/back/postForm/post-form'
 import { Post } from '../../../business/types/CRUD.types';
 import { useAuthStore } from '../../../store-zustand/authStore';
 

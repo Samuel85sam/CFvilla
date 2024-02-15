@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import FrontBlog from '../../components/article-list/front-blog';
-import Header from '../../components/header/header';
-import Footer from '../../components/footer/footer';
+import FrontBlog from '../../components/front/article-list/front-blog';
+import Header from '../../components/front/header/header';
+import Footer from '../../components/front/footer/footer';
 import '@mantine/core/styles/BackgroundImage.css';
-import Pricing from '../../components/header/pricing';
-import Contact from '../../components/contact/contact';
-import { Affix } from '@mantine/core';
+import Pricing from '../../components/front/header/pricing';
+import Contact from '../../components/back/contact/contact';
+import {  AppShell } from '@mantine/core';
+
 
 
 
@@ -37,25 +38,24 @@ const IndexGuest = () => {
 
     return (
         <>
-            <header  >
-                <Affix position={{ top: 20 }} >
+            <AppShell>
+                <AppShell.Header 
+                    >
                         <Header
                             state={state}
                             links={links}
                             setState={setState} />
-                </Affix>
-            </header>
-            <div>
-                {state === links[0] ? < Contact /> : <Pricing />}
-                <FrontBlog
-                    state={state}
-                />
-            </div>
-            <footer>
-                <Affix position={{ bottom: 20 }}>
-                    <Footer />
-                </Affix>
-            </footer>
+                </AppShell.Header>
+                <AppShell.Main>
+                    {state === links[0] ? < Contact /> : <Pricing />}
+                    <FrontBlog
+                        state={state}
+                    />
+                </AppShell.Main>
+                <AppShell.Footer>
+                        <Footer />
+                </AppShell.Footer>
+            </AppShell>
         </>
     )
 }

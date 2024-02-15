@@ -1,5 +1,5 @@
 import React from 'react';
-import SignIn from '../../../components/auth/signIn';
+import SignIn from '../../../components/front/auth/signIn';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {

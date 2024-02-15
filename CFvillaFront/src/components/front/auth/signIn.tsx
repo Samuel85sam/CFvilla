@@ -1,9 +1,9 @@
 import React from "react";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import CRUD from "../../business/api-requests/CRUD";
+import CRUD from "../../../business/api-requests/CRUD";
 import { useNavigate } from "react-router-dom";
-import { NewUserData, useAuthStore } from "../../store-zustand/authStore";
+import { NewUserData, useAuthStore } from "../../../store-zustand/authStore";
 import {
   TextInput,
   PasswordInput,

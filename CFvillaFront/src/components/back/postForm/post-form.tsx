@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { createTheme } from '@mui/material/styles';
 import CRUD from "../../../business/api-requests/CRUD";
 import { CreatePostPayload, Post, User } from '../../../business/types/CRUD.types';
@@ -14,7 +14,9 @@ import {
     Container,
     Button,
     Textarea,
+    Group,
 } from '@mantine/core';
+import { Radio } from '@mantine/core';
 const defaultTheme = createTheme();
 
 interface PostFormProps {
@@ -37,6 +39,8 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${jwt}`
     };
+    
+    const [value, setValue] = useState('autre');
     const SignupSchema = Yup.object().shape({
         type: Yup.string().required(),
         title: Yup.string().required(),
@@ -47,11 +51,11 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
     const formik = useFormik({
 
         initialValues: {
-            type: post?.type || 'newPostType',
-            title: post?.title || 'newPostTitle',
-            body: post?.body || 'newPostBody',
+            type: post?.type || 'Autre',
+            title: post?.title || '',
+            body: post?.body || '',
             img: undefined,
-            author: post?.author._id || currentUser!  
+            author: post?.author._id || currentUser!
         },
 
         validationSchema: SignupSchema,
@@ -89,7 +93,7 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
     }, []);
 
     return (
-        <Container size={420} my={40}>
+        <Container size={'md'} my={40}>
             <form
                 encType='multipart/form-data'
                 onSubmit={formik.handleSubmit}
@@ -98,13 +102,27 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
                     Nouvel Article:
                 </Title>
                 <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-                    <TextInput label="Zone" placeholder="Zone de la Villa" required
+
+
+
+                    <Radio.Group
                         id="type"
                         name="type"
-                        type="text"
-                        onChange={formik.handleChange}
+                        label="séléctionnez la zone concernée"
+                        description="zones:"
                         value={formik.values.type}
-                    />
+                        onChange={(e)=>{console.log({e}); formik.setFieldValue('type', e)}}                        
+                        withAsterisk
+                        required
+                    >
+                        <Group mt="xs">
+                            <Radio value="Intérieur" label="Intérieur"  />
+                            <Radio value="Extérieur" label="Extérieur"  />
+                            <Radio value="Piscine" label="Piscine" />
+                            <Radio value="Autre" label="Autre" />
+                        </Group>
+                    </Radio.Group>
+
                     <label htmlFor="title">titre</label>
                     <TextInput
                         id="title"
@@ -113,11 +131,11 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
                         onChange={formik.handleChange}
                         value={formik.values.title}
                     />
-                    <label htmlFor="body">corps du message</label>
+                    <label htmlFor="body">description</label>
                     <Textarea
                         id="body"
                         name="body"
-                        rows={4}
+                        rows={8}
                         cols={50}
                         onChange={formik.handleChange}
                         value={formik.values.body}></Textarea>
@@ -143,7 +161,7 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
                     <Button
                         type="submit"
                         variant="contained"
-                        // sx={{ mt: 3, mb: 2 }}
+                    // sx={{ mt: 3, mb: 2 }}
 
                     >
                         UPLOAD

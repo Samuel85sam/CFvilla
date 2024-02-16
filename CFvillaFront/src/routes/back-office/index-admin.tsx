@@ -1,8 +1,7 @@
 import React from 'react';
-import PostList from '../../components/back/post-list/post-list'
+import PostList from '../../components/back/posts-lists/posts-lists'
 import NavBar from '../../components/back/nav-bar/nav-bar';
-import classes from './index-admin.module.css';
-import { Affix, AppShell } from '@mantine/core';
+import { AppShell } from '@mantine/core';
 import Header from '../../components/back/header/header';
 
 

@@ -6,6 +6,7 @@ import { useAuthStore } from "./store-zustand/authStore";
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
 import '@mantine/dates/styles.css';
+import '@mantine/carousel/styles.css';
 
 
 function App() {

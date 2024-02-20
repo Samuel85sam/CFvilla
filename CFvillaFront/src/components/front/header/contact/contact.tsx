@@ -19,7 +19,7 @@ function Feature({ icon: Icon, title, description, className, ...others }: Conta
         <Icon style={{ width: rem(38), height: rem(38) }} className={classes.icon} stroke={1.5} />
         <Text fw={700} fz="lg" mb="xs" mt={5} className={classes.title}>
           {title}
-        </Text>
+        </Text> 
         <Text c="dimmed" fz="sm">
           {
             description

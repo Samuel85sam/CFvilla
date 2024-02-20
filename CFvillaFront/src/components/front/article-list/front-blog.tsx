@@ -8,7 +8,6 @@ import classes from './front-blog.module.css'
 import { Link } from '../header/header'
 
 interface FrontProps {
-  // links: typeof Link[],
   state: Link
 }
 

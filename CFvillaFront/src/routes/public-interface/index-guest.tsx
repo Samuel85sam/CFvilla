@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import FrontBlog from '../../components/front/article-list/front-blog';
 import Header, { Link } from '../../components/front/header/header';
 import Footer from '../../components/front/footer/footer';
@@ -7,6 +7,7 @@ import Contact from '../../components/front/header/contact/contact';
 import {  AppShell } from '@mantine/core';
 import Description  from '../../components/front/header/pricing/pricing';
 import Reservation from '../../components/front/header/reservation/reservation';
+import Autre from '../../components/front/carousels/autre/autre';
 
 const links: Link[] = [
 
@@ -37,14 +38,15 @@ const IndexGuest = () => {
                 </AppShell.Header>
              
                 <AppShell.Main>
-        
-                    <FrontBlog
+                    <Autre />
+                    {/* <FrontBlog
                         state={state}
-                        />
+                        /> */}
                 </AppShell.Main>
                 <AppShell.Aside
                 withBorder= {false}
-                style={{width: 250, backgroundColor:'transparent'}}>
+                // style={{width: 250, backgroundColor:'transparent'}}
+                >
                     {state.Component}
                 </AppShell.Aside>
                 <AppShell.Footer

@@ -4,7 +4,7 @@ import PostItem from './routes/back-office/post-item/post-item';
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from './components/routes/protected-route';
 import IndexGuest from './routes/public-interface/index-guest';
-import Auth from './routes/public-interface/auth/auth-landing-page';
+import Auth from './routes/back-office/auth/auth-landing-page';
 import GuestRoute from './components/routes/guest-route';
 import ArticleItem from './routes/public-interface/article-item/article-item';
 

@@ -15,8 +15,10 @@ import {
     Button,
     Textarea,
     Group,
+    Center,
 } from '@mantine/core';
 import { Radio } from '@mantine/core';
+import { Grid } from '@mantine/core';
 const defaultTheme = createTheme();
 
 interface PostFormProps {
@@ -39,7 +41,7 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${jwt}`
     };
-    
+
     const [value, setValue] = useState('autre');
     const SignupSchema = Yup.object().shape({
         type: Yup.string().required(),
@@ -102,27 +104,23 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
                     Nouvel Article:
                 </Title>
                 <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-
-
-
                     <Radio.Group
                         id="type"
                         name="type"
                         label="séléctionnez la zone concernée"
                         description="zones:"
                         value={formik.values.type}
-                        onChange={(e)=>{console.log({e}); formik.setFieldValue('type', e)}}                        
+                        onChange={(e) => { console.log({ e }); formik.setFieldValue('type', e) }}
                         withAsterisk
                         required
                     >
                         <Group mt="xs">
-                            <Radio value="Intérieur" label="Intérieur"  />
-                            <Radio value="Extérieur" label="Extérieur"  />
+                            <Radio value="Intérieur" label="Intérieur" />
+                            <Radio value="Extérieur" label="Extérieur" />
                             <Radio value="Piscine" label="Piscine" />
                             <Radio value="Autre" label="Autre" />
                         </Group>
                     </Radio.Group>
-
                     <label htmlFor="title">titre</label>
                     <TextInput
                         id="title"
@@ -156,25 +154,34 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
                                 }
                             }
                         }
-
+                        
                     />
-                    <Button
-                        type="submit"
-                        variant="contained"
-                    // sx={{ mt: 3, mb: 2 }}
 
-                    >
-                        UPLOAD
-                    </Button>
-                    <Button color='inherit'
-                        onClick={redirect}
-                        size='medium'>
-                        {'liste des contenus'}
-                    </Button>
+
+                    <br />
+                    <Center>
+                        <Group
+                        justify= "center" gap= "xl"
+                        >
+                            <Button
+                                type="submit"
+                                variant="gradient"
+                                gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+                            >
+                                Publier
+                            </Button>
+                            <Button
+                                type='reset'
+                                variant="gradient"
+                                gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+                                onClick={redirect}
+                                size='medium'>
+                                {'Retour à la liste'}
+                            </Button>
+                        </Group>
+                    </Center>
                 </Paper>
-
             </form>
-
         </Container>
 
     )

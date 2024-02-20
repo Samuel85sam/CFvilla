@@ -13,7 +13,6 @@ import {
   Group,
   Button,
 } from '@mantine/core';
-import classes from './signIn.module.css';
 
 const SignIn = () => {
   const setUserData = useAuthStore((state) => state.addUserData);
@@ -68,7 +67,7 @@ const SignIn = () => {
         <form
           onSubmit={formik.handleSubmit}
         >
-          <Title ta="center" className={classes.title}>
+          <Title ta="center" >
             Welcome back!
           </Title>
           <Paper withBorder shadow="md" p={30} mt={30} radius="md">
@@ -93,7 +92,7 @@ const SignIn = () => {
               fullWidth mt="xl"
               type="submit"
             >
-              Sign in
+              Se connecter
             </Button>
           </Paper>
         </form>

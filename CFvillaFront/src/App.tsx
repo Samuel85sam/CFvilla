@@ -5,6 +5,8 @@ import axios from 'axios'
 import { useAuthStore } from "./store-zustand/authStore";
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
+import '@mantine/dates/styles.css';
+
 
 function App() {
   const token = useAuthStore(state => state.jwt)

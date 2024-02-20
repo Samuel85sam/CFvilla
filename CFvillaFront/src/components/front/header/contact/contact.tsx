@@ -1,6 +1,6 @@
 import { Text, SimpleGrid, Container, rem } from '@mantine/core';
 import { IconAddressBook, IconMapPinFilled, IconRoute, IconPlaneArrival, IconSpeedboat } from '@tabler/icons-react';
-import classes from './pricing.module.css';
+import classes from './contact.module.css';
 import React from 'react';
 import { Button } from '@mui/material';
 

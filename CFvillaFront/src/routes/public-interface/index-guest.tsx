@@ -3,9 +3,9 @@ import FrontBlog from '../../components/front/article-list/front-blog';
 import Header from '../../components/front/header/header';
 import Footer from '../../components/front/footer/footer';
 import '@mantine/core/styles/BackgroundImage.css';
-import Pricing from '../../components/front/header/pricing';
 import Contact from '../../components/back/contact/contact';
 import {  AppShell } from '@mantine/core';
+import Description  from '../../components/front/header/pricing';
 
 
 
@@ -63,7 +63,7 @@ const IndexGuest = () => {
                 <AppShell.Aside
                 withBorder= {false}
                 style={{width: 250, backgroundColor:'transparent'}}>
-                    {state === links[0] ? < Contact /> : <Pricing />}
+                    {state === links[0] ? < Contact /> : <Description />}
                 </AppShell.Aside>
                 <AppShell.Footer
                     withBorder={false}

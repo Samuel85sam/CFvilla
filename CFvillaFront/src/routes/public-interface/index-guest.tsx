@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import FrontBlog from '../../components/front/article-list/front-blog';
-import Header from '../../components/front/header/header';
+import Header, { Link } from '../../components/front/header/header';
 import Footer from '../../components/front/footer/footer';
 import '@mantine/core/styles/BackgroundImage.css';
-import Contact from '../../components/back/contact/contact';
+import Contact from '../../components/front/header/contact';
 import {  AppShell } from '@mantine/core';
 import Description  from '../../components/front/header/pricing';
 
@@ -11,10 +11,11 @@ import Description  from '../../components/front/header/pricing';
 
 
 
-const links = [
+const links: Link[] = [
 
-    { link: 'Contact', label: 'Contact' },
-    { link: 'pricing', label: 'Pricing' },
+    { link: 'Contact', label: 'Contact', Component: <Contact /> },
+    { link: 'Pricing', label: 'Pricing', Component: <Description /> },
+    { link: 'Reservation', label: 'Reservation', Component: <>todo</>}
 
 ];
 
@@ -63,7 +64,7 @@ const IndexGuest = () => {
                 <AppShell.Aside
                 withBorder= {false}
                 style={{width: 250, backgroundColor:'transparent'}}>
-                    {state === links[0] ? < Contact /> : <Description />}
+                    {state.Component}
                 </AppShell.Aside>
                 <AppShell.Footer
                     withBorder={false}

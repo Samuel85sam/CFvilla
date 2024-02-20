@@ -1,12 +1,16 @@
 import { Text, SimpleGrid, Container, rem } from '@mantine/core';
-import { IconTruck, IconCertificate, IconCoin, IconUsersGroup, IconHotelService } from '@tabler/icons-react';
+import { IconCoin, IconUsersGroup, IconHotelService, IconWifi, IconAirConditioning, IconToolsKitchen2, IconWashDry1, IconDesk, IconParking, IconSwimming, IconGrill, IconIroning2, IconBath, IconBed } from '@tabler/icons-react';
 import classes from './pricing.module.css';
 import React from 'react';
 
 interface FeatureProps extends React.ComponentPropsWithoutRef<'div'> {
   icon: React.FC<any>;
   title: string;
-  description: string;
+  /* description: string | {
+    icon: React.FC<any>,
+    description: string
+  } */
+  description: string | React.JSX.Element
 }
 
 function Feature({ icon: Icon, title, description, className, ...others }: FeatureProps) {
@@ -20,14 +24,20 @@ function Feature({ icon: Icon, title, description, className, ...others }: Featu
           {title}
         </Text>
         <Text c="dimmed" fz="sm">
-          {description}
+          {
+            // typeof description === 'string'
+            //   ? description
+            //   :
+            //   description.
+            description
+          }
         </Text>
       </div>
     </div>
   );
 }
 
-const mockdata = [
+const mockdata: FeatureProps[] = [
   {
     icon: IconCoin,
     title: 'Price',
@@ -38,17 +48,34 @@ const mockdata = [
     icon: IconUsersGroup,
     title: 'Capacity',
     description:
-      '3 rooms for a maximum of 6 Guests .',
+    <ul>
+      <li>3 < IconBed /> rooms </li>
+      <li>6 <IconUsersGroup />Guests</li>
+    </ul>
+    
   },
   {
     icon: IconHotelService,
     title: 'What this home has to offer',
     description:
-      'Wifi, air-Co, kitchen, laundry - washer, parking, Pool, Desk, Fire place, iron, 2 bathrooms, family friendly',
+      <ul>
+        <li><IconWifi />Wifi</li>
+        <li>2 <IconBath /> Bathrooms</li>
+        <li><IconAirConditioning /> Air-Con</li>
+        <li>< IconToolsKitchen2 /> Kitchen</li>
+        <li><IconWashDry1 />Laundry-waser</li>
+        <li><IconIroning2 />Iron</li>
+        <li><IconParking /> Parking</li>
+        <li><IconSwimming /> Pool</li>
+        <li>< IconDesk />Desk</li>
+        <li><IconGrill />Grill</li>
+      </ul>
+    //'Wifi, air-Co, kitchen, laundry - washer, parking, Pool, Desk, Fire place, iron, 2 bathrooms, family friendly',
+
   },
 ];
 
-const Description = () =>  {
+const Description = () => {
   const items = mockdata.map((item) => <Feature {...item} key={item.title} />);
 
   return (

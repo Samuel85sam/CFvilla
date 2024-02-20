@@ -6,6 +6,7 @@ import classes from './header.module.css';
 export interface Link {
   link: string,
   label: string
+  Component: React.JSX.Element
 }
 interface HeaderProps {
   links: Link[],

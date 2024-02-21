@@ -42,30 +42,23 @@ const Header: FC<HeaderProps> = (props) => {
   ));
 
   return (
-    <>
-     
-        <Grid gutter={{ base: 5, xs: 'md', md: 'xl', xl: 400 }}>
-
+    <> 
+        <Grid>
           <Grid.Col span={4}>
           <Button >
             <a href="mailto:villakalokairi@yahoo.com">villakalokairi@yahoo.com</a>
           </Button>
           </Grid.Col>
-
           <Grid.Col span={4} >
             <Group gap={15} visibleFrom="xs">
               {items}
               <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
             </Group>
           </Grid.Col>
-
           <Grid.Col span={4}  >
-          <div></div>
-           
+          <div></div>          
           </Grid.Col >
-
-        </Grid>
-      
+        </Grid>    
     </>
   );
 };

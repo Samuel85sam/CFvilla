@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React from 'react'
 import { Button, Center, Grid } from '@mantine/core';
 import { useNavigate } from 'react-router-dom'
@@ -12,8 +11,10 @@ const Footer = () => {
   };
 
   return (
+    <>
+      background: content-box radial-gradient(crimson, skyblue);
     <Center>
-      <Grid gutter={{ base: 5, xs: 'md', md: 'xl', xl: 1000 }}>
+      <Grid >
         <Grid.Col span={6}>
           <Button
             onClick={login}
@@ -27,6 +28,7 @@ const Footer = () => {
         </Grid.Col >
       </Grid >
     </Center>
+    </>
 
   )
 }

@@ -84,7 +84,6 @@ const PostList = () => {
 
                     <img
                       width="50 px"
-                      // src={post.img ?  `http://localhost:3000/static/${post.img.fileName}`: 'http://localhost:3000/static/No-image.jpg'}
                       src={getImageUrl(post.img)}
                       alt="image"
                       //alt={post.img.title}

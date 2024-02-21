@@ -49,6 +49,8 @@ const ArticleItem = () => {
 
         </Card.Section>
         <Button
+          variant="gradient"
+          gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
           fullWidth={false}
           onClick={() => { navigate('/') }}
         >
@@ -65,12 +67,6 @@ const ArticleItem = () => {
             </Text>
           </div>
         </Group>
-        {/* <Card.Section className={classes.footer}>
-          <Group justify="space-between">
-            <Group gap={0}>
-            </Group>
-          </Group>
-        </Card.Section> */}
       </Card>
     </>
   )

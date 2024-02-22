@@ -41,7 +41,9 @@ const Autre = () => {
 
                     align="center"
                 >
-                    {posts.map((post) => (
+                    {posts.map((post) => {
+                        console.log(getImageUrl(post.img))
+                        return (
                         <Carousel.Slide
 
                             key={post._id}>
@@ -69,7 +71,7 @@ const Autre = () => {
                             </Paper>
 
 
-                        </Carousel.Slide>))}
+                        </Carousel.Slide>)})}
                 </Carousel>
             </Container>
         </>

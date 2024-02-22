@@ -4,13 +4,14 @@ import Header, { Link } from '../../components/front/header/header';
 import Footer from '../../components/front/footer/footer';
 import '@mantine/core/styles/BackgroundImage.css';
 import Contact from '../../components/front/header/contact/contact';
-import { AppShell, Box, Center, Flex } from '@mantine/core';
+import { AppShell, Box, Center, Container, Flex, Group } from '@mantine/core';
 import Description from '../../components/front/header/pricing/pricing';
 import Reservation from '../../components/front/header/reservation/reservation';
 import Autre from '../../components/front/carousels/autre/autre';
 import Exterieur from '../../components/front/carousels/exterieur/extérieur';
 import Interieur from '../../components/front/carousels/interieur/intérieur';
 import Piscine from '../../components/front/carousels/piscine/piscine';
+import { Padding } from '@mui/icons-material';
 
 const links: Link[] = [
     { link: 'Contact', label: 'Contact', Component: <Contact /> },
@@ -23,8 +24,8 @@ const IndexGuest = () => {
     return (
         <>
             <AppShell
-                // header={{ height: { base: 48, sm: 60, lg: 76 } }}
-                // footer={{ height: { base: 48, sm: 60, lg: 76 }}}
+            // header={{ height: { base: 48, sm: 60, lg: 76 } }}
+            // footer={{ height: { base: 48, sm: 60, lg: 76 }}}
             >
                 <AppShell.Header
                     withBorder={false}
@@ -39,13 +40,26 @@ const IndexGuest = () => {
                 </AppShell.Header>
 
                 <AppShell.Main>
-                    <Interieur />
-                    <br />
-                    <Exterieur />
-                    <br />
-                    <Piscine />
-                    <br />
-                    <Autre />
+                    <div
+                        style={{
+                            padding: '20% ',
+                            justifyContent:'flex-start'
+                    }}
+                    >
+                        <Group
+                            gap={300}
+                        >
+                            In-side
+                            <Interieur />
+                            Out-side
+                            <Exterieur />
+                            Pool-side
+                            <Piscine />
+                            ...more
+                            <Autre />
+
+                        </Group>
+                    </div>
 
 
                     {/* <FrontBlog
@@ -54,7 +68,7 @@ const IndexGuest = () => {
                 </AppShell.Main>
                 <AppShell.Aside
                     withBorder={false}
-                style={{width: 250, backgroundColor:'transparent'}}
+                    style={{ width: 250, backgroundColor: 'transparent' }}
                 >
                     {state.Component}
                 </AppShell.Aside>

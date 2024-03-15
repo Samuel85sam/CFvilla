@@ -31,7 +31,7 @@ const SignIn = () => {
 
     initialValues: {
       adressMail: 'samuel@gmail.com2',
-      password: ""
+      password: "password"
     },
     validationSchema: SignupSchema,
 

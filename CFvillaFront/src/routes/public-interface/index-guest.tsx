@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FrontBlog from '../../components/front/article-list/front-blog';
 import Header, { Link } from '../../components/front/header/header';
 import Footer from '../../components/front/footer/footer';
 import '@mantine/core/styles/BackgroundImage.css';
 import Contact from '../../components/front/header/contact/contact';
-import { AppShell, Box, Center, Container, Flex, Group } from '@mantine/core';
+import { AppShell, Group } from '@mantine/core';
 import Description from '../../components/front/header/pricing/pricing';
 import Reservation from '../../components/front/header/reservation/reservation';
 import Autre from '../../components/front/carousels/autre/autre';
 import Exterieur from '../../components/front/carousels/exterieur/extérieur';
 import Interieur from '../../components/front/carousels/interieur/intérieur';
 import Piscine from '../../components/front/carousels/piscine/piscine';
-import { Padding } from '@mui/icons-material';
+import classes from './index-guest.module.css';
 
 const links: Link[] = [
     { link: 'Contact', label: 'Contact', Component: <Contact /> },
@@ -21,68 +21,57 @@ const links: Link[] = [
 
 const IndexGuest = () => {
     let [state, setState] = useState(links[0]);
+    useEffect(() => {
+        function handleScroll() {
+            const scrollPosition = window.scrollY;
+            const maxScroll = document.body.scrollHeight - window.innerHeight;
+            const opacity = 1 - scrollPosition / maxScroll;
+            document.documentElement.style.setProperty('--background-opacity', opacity.toString());
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Appeler handleScroll() une fois au chargement pour initialiser l'opacité
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
         <>
-            <AppShell
-            // header={{ height: { base: 48, sm: 60, lg: 76 } }}
-            // footer={{ height: { base: 48, sm: 60, lg: 76 }}}
-            >
-                <AppShell.Header
-                    withBorder={false}
-                    style={{
-                        backgroundColor: 'transparent'
-                    }}
+            <AppShell>
+                <div
+                    className={classes.backGround}
+
                 >
-                    <Header
-                        state={state}
-                        links={links}
-                        setState={setState} />
+                <AppShell.Header withBorder={false} style={{ backgroundColor: 'transparent' }}>
+                    <Header state={state} links={links} setState={setState} />
                 </AppShell.Header>
 
                 <AppShell.Main>
-                    <div
-                        style={{
-                            padding: '20% ',
-                            justifyContent:'flex-start'
-                    }}
-                    >
-                        <Group
-                            gap={300}
+                        <div
+                            className={classes.main}
+
                         >
-                            In-side
+                   
+                        <Group gap={100} >
                             <Interieur />
-                            Out-side
                             <Exterieur />
-                            Pool-side
                             <Piscine />
-                            ...more
                             <Autre />
-
                         </Group>
-                    </div>
-
-
-                    {/* <FrontBlog
-                        state={state}
-                        /> */}
+                        </div>
+                    
                 </AppShell.Main>
-                <AppShell.Aside
-                    withBorder={false}
-                    style={{ width: 250, backgroundColor: 'transparent' }}
-                >
+
+                <AppShell.Aside withBorder={false} style={{ width: 250, backgroundColor: 'transparent' }}>
                     {state.Component}
                 </AppShell.Aside>
-                <AppShell.Footer
-                    withBorder={false}
-                    style={{
-                        backgroundColor: 'transparent'
-                    }}
-                >
+
+                <AppShell.Footer withBorder={false} style={{ backgroundColor: 'transparent' }}>
                     <Footer />
                 </AppShell.Footer>
+                </div>
             </AppShell>
         </>
-    )
+    );
 }
 
-export default IndexGuest
+export default IndexGuest;

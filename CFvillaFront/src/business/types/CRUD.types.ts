@@ -36,5 +36,5 @@ export interface AuthResponse {
   jwt: User["jwt"]
 }
 
-export type PostPopulatableKeys = keyof Pick<Post, 'author' | 'img'>
+export type PostPopulatableKeys = keyof Pick<Post, 'author' | 'img' >
 

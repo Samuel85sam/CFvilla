@@ -15,7 +15,7 @@ const Autre = () => {
 
         const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
         if (posts !== undefined && Array.isArray(posts)) {
-            console.log({ posts });
+            //console.log({ posts });
             setpost(posts)
         }
     };

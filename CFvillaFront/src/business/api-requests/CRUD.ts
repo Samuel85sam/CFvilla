@@ -59,7 +59,7 @@ const CRUD = {
     },
     
     postForm: async (route : string, data: CreatePostPayload, headers ) => {
-        console.log({data});
+        
         const response = await axios.postForm(`${import.meta.env.VITE_API_HOST}/${route}`, data, headers);
 
         if (response.status === 200) {
@@ -78,7 +78,7 @@ const CRUD = {
         }
     },
 
-    patchById: async (route, data) => {
+    patchById: async (route: String, data) => {
         try {
 
             const response = await axios.patch(`${import.meta.env.VITE_API_HOST}/${route}`, data)
@@ -93,7 +93,7 @@ const CRUD = {
         }
     },
 
-    patchFormById: async (route, data, headers) => {
+    patchFormById: async (route: string, data, headers) => {
         try {
 
             const response = await axios.patchForm(`${import.meta.env.VITE_API_HOST}/${route}`, data, headers)
@@ -108,7 +108,7 @@ const CRUD = {
         }
     },
 
-    deleteFormById: async (route) => {
+    deleteFormById: async (route: string) => {
 
         const response = await axios.delete(`${import.meta.env.VITE_API_HOST}/${route}`);
         if (response.status === 200) {

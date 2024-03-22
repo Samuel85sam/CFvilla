@@ -17,7 +17,10 @@ const postsService = {
     },
 
     readAll: async (param) => {
-        return await Post.find().populate(param.populate).exec()
+        const query = {}
+        if (param?.type)
+            query.type = param.type
+        return await Post.find(query).populate(param.populate).exec()
         //return await Post.find().exec()
     },
 

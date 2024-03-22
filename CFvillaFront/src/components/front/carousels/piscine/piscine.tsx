@@ -13,7 +13,7 @@ const Autre = () => {
 
     const allPosts = async () => {
 
-        const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'] })
+        const posts = await CRUD.getForm('posts/', { populate: ['img', 'author'], type: 'Piscine' })
         if (posts !== undefined && Array.isArray(posts)) {
             //console.log({ posts });
             setpost(posts)

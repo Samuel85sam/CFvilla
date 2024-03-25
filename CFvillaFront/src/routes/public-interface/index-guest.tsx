@@ -35,6 +35,52 @@ const IndexGuest = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Utilisation de useEffect pour démarrer le diaporama au chargement de la page
+    useEffect(() => {
+        const startSlideshow = () => {
+            const slides = document.querySelector(`.${classes.backGround}:before`);
+            let currentIndex = 0;
+
+            const nextSlide = () => {
+                slides.style.opacity = '0'; // Masque la diapositive actuelle
+                currentIndex = (currentIndex + 1) % 3; // Boucle à travers les 3 images
+                slides.style.backgroundImage = `url('../../img/${["8b8c7025.jpeg", "391ac2cc.jpeg", "dcdec63c.jpeg"][currentIndex]}')`;
+                slides.style.opacity = '1'; // Affiche la nouvelle diapositive
+            };
+
+            setInterval(nextSlide, 10000); // Change de diapositive toutes les 10 secondes
+        };
+
+        startSlideshow();
+    }, []);
+
+    // useEffect(() => {
+    //     const startSlideshow = () => {
+    //         // Sélectionner l'élément parent .backGround
+    //         const background = document.querySelector(`.${classes.backGround}`) as HTMLElement;
+
+    //         // Obtenir les styles calculés du pseudo-élément ::before
+    //         const computedStyles = window.getComputedStyle(background, '::before');
+    //         const backgroundImage = computedStyles.getPropertyValue('background-image');
+
+    //         let currentIndex = 0;
+
+    //         const images = ["8b8c7025.jpeg", "391ac2cc.jpeg", "dcdec63c.jpeg"];
+
+    //         const nextSlide = () => {
+    //             background.style.opacity = '0'; // Masque la diapositive actuelle
+    //             currentIndex = (currentIndex + 1) % 3; // Boucle à travers les 3 images
+    //             background.style.backgroundImage = `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)), ${backgroundImage}, url('../../img/${images[currentIndex]}')`;
+    //             background.style.opacity = '1'; // Affiche la nouvelle diapositive
+    //         };
+
+    //         setInterval(nextSlide, 10000); // Change de diapositive toutes les 10 secondes
+    //     };
+
+    //     startSlideshow();
+    // }, []);
+
+
     return (
         <>
             <AppShell>

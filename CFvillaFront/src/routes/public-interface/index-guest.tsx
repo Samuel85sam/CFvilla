@@ -62,9 +62,17 @@ const IndexGuest = () => {
                     
                 </AppShell.Main>
 
-                <AppShell.Aside withBorder={false} style={{ width: 250, backgroundColor: 'transparent' }}>
-                    {state.Component}
-                </AppShell.Aside>
+                    <AppShell.Aside
+                        withBorder={false}
+                        style={{
+                            width: 250,
+                            backgroundColor: 'rgba(255, 255, 255, 0.5)', // Fond semi-transparent
+                            backdropFilter: 'blur(5px)' // Effet de flou
+                        }}
+                    >
+                        {state.Component}
+                    </AppShell.Aside>
+
 
                 <AppShell.Footer withBorder={false} style={{ backgroundColor: 'transparent' }}>
                     <Footer />

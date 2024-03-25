@@ -30,7 +30,8 @@ const IndexGuest = () => {
         }
 
         window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Appeler handleScroll() une fois au chargement pour initialiser l'opacité
+        handleScroll(); 
+        // Appel handleScroll() une fois au chargement pour initialiser l'opacité
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 

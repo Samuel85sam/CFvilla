@@ -3,6 +3,7 @@ import { IconCoin, IconUsersGroup, IconHotelService, IconWifi, IconAirConditioni
 import classes from './pricing.module.css';
 import React from 'react';
 
+
 interface FeatureProps extends React.ComponentPropsWithoutRef<'div'> {
   icon: React.FC<any>;
   title: string;
@@ -23,7 +24,7 @@ function Feature({ icon: Icon, title, description, className, ...others }: Featu
         <Text fw={700} fz="lg" mb="xs" mt={5} className={classes.title}>
           {title}
         </Text>
-        <Text c="dimmed" fz="sm">
+        <Text c="dark" fz="sm">
           {
             // typeof description === 'string'
             //   ? description
@@ -42,7 +43,7 @@ const mockdata: FeatureProps[] = [
     icon: IconCoin,
     title: 'Price',
     description:
-      '450 € /day-night.',
+      ' € /day-night.',
   },
   {
     icon: IconUsersGroup,

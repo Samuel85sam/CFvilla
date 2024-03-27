@@ -52,7 +52,7 @@ const Header: FC<HeaderProps> = (props) => {
           <Grid.Col span={4} >
             <Group gap={15} visibleFrom="xs">
               {items}
-              <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
+            <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm"  />
             </Group>
           </Grid.Col>
           <Grid.Col span={4}  >

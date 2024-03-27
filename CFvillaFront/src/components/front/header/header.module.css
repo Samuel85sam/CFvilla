@@ -4,7 +4,7 @@
   margin-bottom: rem(120px);
   background-color: var(--mantine-color-body);
   border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
-  
+   
 }
 
 .inner {
@@ -12,6 +12,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* // Fond semi-transparent */
+  /* background-Color: 'rgba(255, 255, 255, 0.5)'; */
+  /* // Effet de flou */
+  /* backdrop-Filter: 'blur(5px)'; */
 }
 
 .link {
@@ -20,16 +24,31 @@
   padding: rem(8px) rem(12px);
   border-radius: var(--mantine-radius-sm);
   text-decoration: none;
-  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+  color: dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
   font-size: var(--mantine-font-size-sm);
   font-weight: 500;
+  background-color:slategray ;
 
   @mixin hover {
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  background-color: light-dark(var(--mantine-color-gray-5), var(--mantine-color-dark-6));
+
   }
 
-  [data-mantine-color-scheme] &[data-active] {
-    background-color: var(--mantine-color-blue-filled);
-    color: var(--mantine-color-white);
-  }
+    /* Styles pour les boutons non sélectionnés */
+    [data-mantine-color-scheme] {
+      background-color: var(--mantine-color-light);
+      /* Couleur de fond */
+      color: var(--mantine-color-dark);
+      /* Couleur du texte */
+    }
+  
+    /* Style pour le bouton sélectionné */
+    [data-mantine-color-scheme][data-active] {
+      background-image: linear-gradient(to right, var(--mantine-color-blue-light), var(--mantine-color-blue-dark));
+      /* Dégradé de couleur */
+      color: var(--mantine-color-white);
+      /* Couleur du texte */
+    }
+
+
 }

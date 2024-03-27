@@ -7,6 +7,7 @@ import { getImageUrl } from '../../../utils/images';
 import classes from './front-blog.module.css'
 import { Link } from '../header/header'
 
+
 interface FrontProps {
   state: Link
 }
@@ -35,12 +36,18 @@ const FrontBlog: FC<FrontProps> = (props) => {
   }, []);
 
   const cards = posts.map((article) => (
-    <Card key={article._id} p="md" radius="md" component="a" href="#" className={classes.card}>
+    <Card
+      key={article._id}
+      p="md"
+      radius="md"
+      component="a"
+      href="#"
+      className={classes.card}
+    >
       <AspectRatio ratio={1920 / 1080}>
-        <Image src={getImageUrl(article.img)}
-          onClick={() => { goToArticle(article._id) }} />
+        <Image src={getImageUrl(article.img)} onClick={() => { goToArticle(article._id) }} />
       </AspectRatio>
-      <Text className={classes.title} mt={5}>
+      <Text className={classes.title} mt={5}> 
         {article.title}
       </Text>
     </Card>

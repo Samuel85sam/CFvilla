@@ -20,7 +20,7 @@ function Feature({ icon: Icon, title, description, className, ...others }: Conta
         <Text fw={700} fz="lg" mb="xs" mt={5} className={classes.title}>
           {title}
         </Text> 
-        <Text c="dimmed" fz="sm">
+        <Text c='dark' fz="sm">
           {
             description
           }

@@ -1,4 +1,11 @@
+/* front-blog.module.css */
+
 .card {
+  --card-padding: 20px;
+  /* Définissez ici la valeur du padding souhaitée */
+
+  padding: var(--card-padding);
+  /* Utilisation de la variable pour le padding */
   transition:
     transform 150ms ease,
     box-shadow 150ms ease;
@@ -13,4 +20,3 @@
   font-family: 'Greycliff CF', var(--mantine-font-family);
   font-weight: bold;
 }
-
